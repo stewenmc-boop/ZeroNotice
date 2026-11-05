@@ -4,7 +4,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, HTMLResponse, Response
 from fastapi.staticfiles import StaticFiles
@@ -23,6 +23,7 @@ from agent import (
 )
 import assistant
 import notifier
+import paths
 import reminders
 import storage
 from scraper import (
@@ -34,11 +35,11 @@ from scraper import (
 BASE_DIR = Path(__file__).parent
 STATIC_DIR = BASE_DIR / "static"
 FRONTEND_DIST_DIR = BASE_DIR / "frontend" / "dist"
-PROFILE_PATH = BASE_DIR / "data" / "profile.json"
-SETTINGS_PATH = BASE_DIR / "data" / "settings.json"
-CHAT_PATH = BASE_DIR / "data" / "chat_history.json"
-FIELDS_PATH = BASE_DIR / "data" / "notice_fields.json"
-IMAGES_PATH = BASE_DIR / "data" / "notice_images.json"
+PROFILE_PATH = paths.writable("profile.json")
+SETTINGS_PATH = paths.writable("settings.json")
+CHAT_PATH = paths.writable("chat_history.json")
+FIELDS_PATH = paths.writable("notice_fields.json")
+IMAGES_PATH = paths.writable("notice_images.json")
 
 app = FastAPI(title="ZeroNotice (제로노티스) — 강원대학교 공지·HWP 판독 AI 비서")
 
@@ -122,10 +123,14 @@ def _read_settings() -> Dict[str, Any]:
         return {}
 
 
-def _write_settings(data: Dict[str, Any]) -> None:
-    SETTINGS_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with open(SETTINGS_PATH, "w", encoding="utf-8") as fh:
-        json.dump(data, fh, ensure_ascii=False, indent=2)
+def _write_settings(data: Dict[str, Any]) -> bool:
+    try:
+        SETTINGS_PATH.parent.mkdir(parents=True, exist_ok=True)
+        with open(SETTINGS_PATH, "w", encoding="utf-8") as fh:
+            json.dump(data, fh, ensure_ascii=False, indent=2)
+        return True
+    except Exception:
+        return False
 
 
 def _chat_history() -> List[Dict[str, Any]]:
@@ -139,10 +144,14 @@ def _chat_history() -> List[Dict[str, Any]]:
         return []
 
 
-def _save_chat(entries: List[Dict[str, Any]]) -> None:
-    CHAT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with open(CHAT_PATH, "w", encoding="utf-8") as fh:
-        json.dump(entries[-200:], fh, ensure_ascii=False, indent=2)
+def _save_chat(entries: List[Dict[str, Any]]) -> bool:
+    try:
+        CHAT_PATH.parent.mkdir(parents=True, exist_ok=True)
+        with open(CHAT_PATH, "w", encoding="utf-8") as fh:
+            json.dump(entries[-200:], fh, ensure_ascii=False, indent=2)
+        return True
+    except Exception:
+        return False
 
 
 @app.post("/api/assistant/chat")
@@ -250,10 +259,14 @@ def _remember_notify_email(email: str) -> None:
         pass
 
 
-def _save_fields(data: Dict[str, Any]) -> None:
-    FIELDS_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with open(FIELDS_PATH, "w", encoding="utf-8") as fh:
-        json.dump(data, fh, ensure_ascii=False, indent=2)
+def _save_fields(data: Dict[str, Any]) -> bool:
+    try:
+        FIELDS_PATH.parent.mkdir(parents=True, exist_ok=True)
+        with open(FIELDS_PATH, "w", encoding="utf-8") as fh:
+            json.dump(data, fh, ensure_ascii=False, indent=2)
+        return True
+    except Exception:
+        return False
 
 
 class ProfileStoreRequest(BaseModel):
@@ -368,6 +381,19 @@ def api_subscriptions_run(req: ReminderRunRequest) -> Dict[str, Any]:
     )
     return {"profile_email": profile.get("email", ""), **result}
 
+@app.get("/api/cron/reminders")
+def api_cron_reminders(request: Request, lang: str = Query("ko")) -> Dict[str, Any]:
+    """Vercel Cron entry point (GET). Protect with CRON_SECRET when set."""
+    expected = os.getenv("CRON_SECRET", "").strip()
+    if expected:
+        provided = request.headers.get("x-cron-secret") or request.query_params.get("secret", "")
+        if provided != expected:
+            raise HTTPException(status_code=401, detail="invalid cron secret")
+    profile = _read_profile() or {}
+    result = reminders.run_check(load_real_knu_notices(), profile, lang=lang)
+    return {"cron": True, "profile_email": profile.get("email", ""), **result}
+
+
 
 @app.get("/api/notify/status")
 def api_notify_status() -> Dict[str, Any]:
@@ -481,8 +507,11 @@ def api_save_profile(req: ProfileStoreRequest) -> Dict[str, Any]:
     merged = {**_read_profile(), **(req.profile or {})}
     merged["updated_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     PROFILE_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with open(PROFILE_PATH, "w", encoding="utf-8") as fh:
-        json.dump(merged, fh, ensure_ascii=False, indent=2)
+    try:
+        with open(PROFILE_PATH, "w", encoding="utf-8") as fh:
+            json.dump(merged, fh, ensure_ascii=False, indent=2)
+    except Exception:
+        pass  # serverless: memory + Supabase are the durable copies
     if storage.enabled():
         merged["_supabase"] = storage.push_profile(merged)
     return {"profile": merged, "saved": True}
@@ -656,10 +685,11 @@ def _start_reminder_worker() -> None:
                 )
     except Exception:
         pass
-    try:
-        reminders.start_background_worker(load_real_knu_notices, _read_profile)
-    except Exception:
-        pass
+    if not os.getenv("VERCEL"):
+        try:
+            reminders.start_background_worker(load_real_knu_notices, _read_profile)
+        except Exception:
+            pass
 
 
 @app.get("/", response_class=HTMLResponse)

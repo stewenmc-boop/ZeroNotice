@@ -1,0 +1,24 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/index.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxDuration": 60,
+        "memory": 1024,
+        "includeFiles": "{data/**,frontend/dist/**,static/**,docs/**}"
+      }
+    }
+  ],
+  "crons": [
+    { "path": "/api/cron/reminders", "schedule": "0 0 * * *" }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "api/index.py"
+    }
+  ]
+}

@@ -188,6 +188,40 @@ python scripts/sync_supabase.py --purge     # 공지·첨부 업로드 + 30일 �
 - UI: 우측 하단 플로팅 볼 → 패널. `?chat=1` 로 바로 열 수 있음
 - API: `POST /api/assistant/chat`, `GET/DELETE /api/assistant/history`
 
+## 6.7 Vercel 배포 (서버리스)
+
+`vercel.json` + `api/index.py` 가 FastAPI 앱을 그대로 서버리스 함수로 올립니다. `frontend/dist` 도 함께 번들되어 `/` 에서 서빙됩니다.
+
+**Vercel → Settings → Environment Variables** 에 아래를 넣고 Redeploy 하세요(저장소에는 키를 넣지 않습니다).
+
+```ini
+LLM_PROVIDER=deepseek
+LLM_API_KEY=...
+LLM_BASE_URL=https://api.deepseek.com
+LLM_MODEL=deepseek-flash
+SMTP_HOST=smtp.qq.com
+SMTP_PORT=465
+SMTP_USER=...
+SMTP_AUTH_CODE=...
+SMTP_FROM_NAME=ZeroNotice
+SUPABASE_URL=...
+SUPABASE_ANON_KEY=...
+SUPABASE_BUCKET=attachments
+SUPABASE_RETENTION_DAYS=30
+CRON_SECRET=<임의 문자열>       # /api/cron/reminders 보호용
+```
+
+서버리스 제약과 대응:
+
+| 제약 | 대응 |
+|---|---|
+| 파일시스템 읽기 전용(`/var/task`) | 런타임 쓰기는 `DATA_DIR`(기본 `/tmp/zeronotice`)로. `paths.py` 가 자동 처리하고, 번들 `data/*.json` 을 첫 사용 시 복사 |
+| 함수 실행 시간 제한 | `vercel.json` 에서 `maxDuration: 60`. LLM 호출은 4~10초라 여유 있음 |
+| 백그라운드 스레드 없음 | 마감 알림은 **Vercel Cron**(매일 00:00 UTC = 09:00 KST)이 `GET /api/cron/reminders` 호출 |
+| 콜드 스타트 | 첫 요청만 느림. 데모 전에 한 번 워밍업 권장 |
+
+> 주의: `/tmp` 는 인스턴스가 바뀌면 사라집니다. 영속 데이터는 Supabase(공지)와 사용자 브라우저(localStorage)가 기준입니다.
+
 ## 7. 프로젝트 구조
 
 ```

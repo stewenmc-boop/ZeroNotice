@@ -22,13 +22,14 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional
 
+import paths
 import requests
 from dotenv import load_dotenv
 
 load_dotenv()
 
 ROOT = Path(__file__).parent
-IDENTITY_PATH = ROOT / "data" / "identity.json"
+IDENTITY_PATH = paths.writable("identity.json")
 TIMEOUT = 20.0
 _LAST_AUTH_ERROR = ""
 _DEVICE_COLUMNS = None

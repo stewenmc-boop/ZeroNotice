@@ -13,9 +13,10 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 import notifier
+import paths
 from agent import generate_ics_content
 
-SUBS_PATH = Path(__file__).parent / "data" / "subscriptions.json"
+SUBS_PATH = paths.writable("subscriptions.json")
 REMIND_BEFORE_HOURS = 24
 _CHECK_INTERVAL_SECONDS = 300
 _lock = threading.Lock()
