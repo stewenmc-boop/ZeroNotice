@@ -42,9 +42,14 @@ def _settings_overrides() -> Dict[str, Any]:
 
 def smtp_config() -> Dict[str, Any]:
     override = _settings_overrides()
+    port = int(override.get("smtp_port") or os.getenv("SMTP_PORT", "465") or 465)
+    security = (override.get("smtp_security") or os.getenv("SMTP_SECURITY") or "").strip().lower()
+    if not security:
+        security = "ssl" if port == 465 else ("starttls" if port in (587, 25) else "ssl")
     return {
         "host": (override.get("smtp_host") or os.getenv("SMTP_HOST", "smtp.qq.com")).strip(),
-        "port": int(override.get("smtp_port") or os.getenv("SMTP_PORT", "465") or 465),
+        "port": port,
+        "security": security,
         "user": (override.get("smtp_user") or os.getenv("SMTP_USER") or "").strip(),
         "auth_code": (override.get("smtp_auth_code") or os.getenv("SMTP_AUTH_CODE") or "").strip(),
         "from_name": (override.get("smtp_from_name") or os.getenv("SMTP_FROM_NAME") or "ZeroNotice").strip(),
@@ -62,6 +67,7 @@ def smtp_status() -> Dict[str, Any]:
         "configured": bool(user and cfg["auth_code"]),
         "host": cfg["host"],
         "port": cfg["port"],
+        "security": cfg.get("security", "ssl"),
         "user": masked,
         "from_name": cfg["from_name"],
     }
@@ -76,7 +82,16 @@ def send_mail(
     """attachments: [(filename, raw_bytes, mime_subtype)] e.g. ('a.ics', b'..', 'calendar')."""
     cfg = smtp_config()
     if not (cfg["user"] and cfg["auth_code"]):
-        return {"ok": False, "error": "SMTP 자격증명이 없습니다. .env 의 SMTP_USER / SMTP_AUTH_CODE 를 확인하세요."}
+        missing = [name for name, value in
+                   (("SMTP_USER", cfg["user"]), ("SMTP_AUTH_CODE", cfg["auth_code"])) if not value]
+        return {
+            "ok": False,
+            "error": (
+                "SMTP 자격증명이 없습니다: " + ", ".join(missing) +
+                ". 배포 환경(Vercel)이라면 Settings → Environment Variables 에 추가한 뒤 Redeploy 하세요."
+            ),
+            "missing_env": missing,
+        }
     if not to_email or "@" not in to_email:
         return {"ok": False, "error": "수신 이메일 형식이 올바르지 않습니다."}
 
@@ -97,10 +112,19 @@ def send_mail(
 
     try:
         context = ssl.create_default_context()
-        with smtplib.SMTP_SSL(cfg["host"], cfg["port"], context=context, timeout=25) as server:
-            server.login(cfg["user"], cfg["auth_code"])
-            server.sendmail(cfg["user"], [to_email], message.as_string())
-        return {"ok": True, "to": to_email, "attachments": len(attachments or [])}
+        if cfg.get("security") == "starttls" or cfg["port"] in (587, 25):
+            with smtplib.SMTP(cfg["host"], cfg["port"], timeout=25) as server:
+                server.ehlo()
+                server.starttls(context=context)
+                server.ehlo()
+                server.login(cfg["user"], cfg["auth_code"])
+                server.sendmail(cfg["user"], [to_email], message.as_string())
+        else:
+            with smtplib.SMTP_SSL(cfg["host"], cfg["port"], context=context, timeout=25) as server:
+                server.login(cfg["user"], cfg["auth_code"])
+                server.sendmail(cfg["user"], [to_email], message.as_string())
+        return {"ok": True, "to": to_email, "attachments": len(attachments or []),
+                "server": f"{cfg['host']}:{cfg['port']}/{cfg.get('security', 'ssl')}"}
     except smtplib.SMTPAuthenticationError as exc:
         return {"ok": False, "error": f"SMTP 인증 실패(535). QQ메일은 '인증코드'가 필요합니다: {exc.smtp_code}"}
     except Exception as exc:  # noqa: BLE001 - never crash the demo

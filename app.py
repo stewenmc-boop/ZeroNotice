@@ -10,7 +10,13 @@ from typing import Any, Dict, List, Optional
 
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse, Response
+from fastapi.responses import (
+    FileResponse,
+    HTMLResponse,
+    JSONResponse,
+    RedirectResponse,
+    Response,
+)
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
@@ -195,6 +201,33 @@ def api_assistant_clear() -> Dict[str, Any]:
     return {"cleared": True}
 
 
+@app.get("/api/health/config")
+def api_health_config() -> Dict[str, Any]:
+    """Which environment variables are present (never reveals values)."""
+    def present(name: str) -> bool:
+        return bool((os.getenv(name) or "").strip())
+
+    return {
+        "vercel": bool(os.getenv("VERCEL")),
+        "data_dir": str(paths.DATA_DIR),
+        "env": {
+            name: present(name)
+            for name in (
+                "LLM_PROVIDER", "LLM_API_KEY", "LLM_BASE_URL", "LLM_MODEL",
+                "SMTP_HOST", "SMTP_PORT", "SMTP_USER", "SMTP_AUTH_CODE",
+                "SUPABASE_URL", "SUPABASE_ANON_KEY", "SUPABASE_SERVICE_KEY",
+                "CRON_SECRET",
+            )
+        },
+        "llm": {"provider": get_llm_status().get("provider"),
+                "model": get_llm_status().get("model"),
+                "configured": get_llm_status().get("configured")},
+        "smtp": notifier.smtp_status(),
+        "supabase": storage.status(),
+        "notices_source": __import__("scraper").notices_source(),
+    }
+
+
 @app.get("/api/auth/me")
 def api_auth_me() -> Dict[str, Any]:
     user = storage.current_user()
@@ -205,7 +238,15 @@ def api_auth_me() -> Dict[str, Any]:
 def api_auth_kakao_start(request: Request) -> Dict[str, Any]:
     c = storage.cfg()
     if not c["url"]:
-        raise HTTPException(status_code=400, detail="SUPABASE_URL 이 설정되지 않았습니다.")
+        raise HTTPException(
+            status_code=400,
+            detail=(
+                "SUPABASE_URL 환경변수가 없습니다. 배포 환경(Vercel)의 Environment Variables 에 "
+                "SUPABASE_URL / SUPABASE_ANON_KEY 를 추가하고 Redeploy 하세요. "
+                "그리고 Supabase → Authentication → URL Configuration → Redirect URLs 에 "
+                "이 앱의 /api/auth/kakao/callback 주소를 추가해야 합니다."
+            ),
+        )
     verifier = secrets.token_urlsafe(48)
     challenge = (
         base64.urlsafe_b64encode(hashlib.sha256(verifier.encode()).digest()).decode().rstrip("=")
@@ -219,13 +260,19 @@ def api_auth_kakao_start(request: Request) -> Dict[str, Any]:
         f"&redirect_to={urllib.parse.quote(redirect_to, safe='')}"
         f"&code_challenge={challenge}&code_challenge_method=s256"
     )
-    return {"url": url, "provider": "kakao"}
+    # Serverless instances do not share memory: keep the PKCE verifier in a cookie too.
+    response = JSONResponse({"url": url, "provider": "kakao"})
+    response.set_cookie(
+        "kakao_pkce", verifier, max_age=600, httponly=True, samesite="lax",
+        secure=str(request.base_url).startswith("https"),
+    )
+    return response
 
 
 @app.get("/api/auth/kakao/callback")
-def api_auth_kakao_callback(code: str = Query("")) -> Any:
+def api_auth_kakao_callback(request: Request, code: str = Query("")) -> Any:
     identity = storage._load_identity()
-    verifier = identity.get("pkce_verifier", "")
+    verifier = request.cookies.get("kakao_pkce") or identity.get("pkce_verifier", "")
     if not code or not verifier:
         return RedirectResponse(url="/?login=error")
     result = storage.exchange_pkce(code, verifier)
