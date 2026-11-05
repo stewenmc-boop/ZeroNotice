@@ -449,5 +449,31 @@
     },
     "engine": "DeepSeek · deepseek-flash · 4108ms",
     "updated_at": "2026-11-05 23:42:50"
+  },
+  "knu-live-2536": {
+    "fields": {
+      "application_url": null,
+      "application_method": null,
+      "application_method_ko": "방문 또는 우편접수(제출처: 통영시 평생교육과 평생학습팀)",
+      "application_method_zh": "本人访问或邮寄报名（提交处：统营市终身教育科终身学习组）",
+      "application_method_en": "Apply in person or by mail (submission: Tongyeong City Lifelong Education Division, Lifelong Learning Team).",
+      "contact_email": null,
+      "contact_phone": "650-2622",
+      "required_documents": [
+        "장학금 지급신청서(개인정보 수집·이용동의서 포함)",
+        "기초생활수급자 또는 차상위계층 증명서",
+        "재학증명서",
+        "성적증명서",
+        "생활기록부",
+        "주민등록초본",
+        "통장사본"
+      ],
+      "eligibility": "「국민기초생활 보장법」에 따른 기초생활수급자 및 차상위 계층 대학생으로, 학업성적 평균 C학점 이상(2026년 1학기 성적 기준)을 취득하고, 관내 고등학교 졸업자로, 공고일 현재 주민등록상 6년 이상 통영시에 주소를 두고, 통영시 관내 학교를 6년 이상 다닌 자",
+      "deadline": "2026. 11. 23.(월)",
+      "source_hint": "본문 및 첨부파일",
+      "confidence": 0.95
+    },
+    "engine": "DeepSeek · deepseek-flash · 3217ms",
+    "updated_at": "2026-11-06 02:47:02"
   }
 }

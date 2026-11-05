@@ -97,6 +97,7 @@ class ChatMessage(BaseModel):
 class ChatRequest(BaseModel):
     messages: List[ChatMessage] = []
     lang: str = "ko"
+    profile: Optional[Dict[str, Any]] = None
 
 
 def _load_fields() -> Dict[str, Any]:
@@ -146,7 +147,8 @@ def _save_chat(entries: List[Dict[str, Any]]) -> None:
 
 @app.post("/api/assistant/chat")
 def api_assistant_chat(req: ChatRequest) -> Dict[str, Any]:
-    profile = _read_profile() or {}
+    # the UI is the source of truth for what the student sees right now
+    profile = req.profile or _read_profile() or {}
     history = [{"role": m.role, "content": m.content} for m in req.messages][-12:]
     result = assistant.chat(history, profile, lang=req.lang)
 
@@ -393,8 +395,6 @@ def api_notify_notice(req: NotifyRequest) -> Dict[str, Any]:
         body,
         [(f"{notice.get('id', 'notice')}.ics", ics, "calendar")],
     )
-    if req.email:
-        _remember_notify_email(req.email)
     return result
 
 
@@ -431,8 +431,6 @@ def api_notify_digest(req: NotifyRequest) -> Dict[str, Any]:
         "\n".join(lines),
         attachments,
     )
-    if req.email:
-        _remember_notify_email(req.email)
     if result.get("ok"):
         result["notices"] = len(upcoming)
     return result

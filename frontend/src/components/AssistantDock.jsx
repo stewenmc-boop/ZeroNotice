@@ -13,7 +13,7 @@ const CHIPS = {
   en: ['Deadlines this week', 'Competitions I qualify for', 'My subscriptions'],
 };
 
-export default function AssistantDock({ lang = 'ko', onOpenNotice }) {
+export default function AssistantDock({ lang = 'ko', profile = {}, onOpenNotice }) {
   const [open, setOpen] = useState(
     () => new URLSearchParams(window.location.search).get('chat') === '1'
   );
@@ -54,6 +54,7 @@ export default function AssistantDock({ lang = 'ko', onOpenNotice }) {
         body: JSON.stringify({
           messages: next.filter((m) => m.role !== 'system').slice(-10),
           lang,
+          profile,
         }),
       });
       const data = await res.json();

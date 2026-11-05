@@ -291,7 +291,9 @@ def _execute(name: str, args: Dict[str, Any], profile: Dict[str, Any], lang: str
         return {"ok": bool(sent.get("ok")), "result": json.dumps(sent, ensure_ascii=False),
                 "error": sent.get("error")}
     if name == "get_my_profile":
-        clean = {k: v for k, v in (profile or {}).items() if not k.startswith("_")}
+        allowed = ("name", "student_id", "campus", "department", "grade",
+                   "gpa", "income_bracket", "phone", "email", "status")
+        clean = {k: (profile or {}).get(k) for k in allowed if (profile or {}).get(k) not in (None, "")}
         return {"ok": True, "result": json.dumps(clean, ensure_ascii=False)}
     return {"ok": False, "error": f"unknown tool {name}"}
 

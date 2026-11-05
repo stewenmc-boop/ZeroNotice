@@ -124,7 +124,7 @@ export default function App() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ profile }),
       }).catch(() => {});
-    }, 700);
+    }, 300);
     return () => clearTimeout(timer);
   }, [profile]);
 
@@ -334,7 +334,7 @@ export default function App() {
         onClose={() => setUrlModalOpen(false)}
       />
 
-      <AssistantDock lang={lang} onOpenNotice={setSelectedId} />
+      <AssistantDock lang={lang} profile={profile} onOpenNotice={setSelectedId} />
 
       {/* AI model connection modal */}
       <LlmConfigModal
