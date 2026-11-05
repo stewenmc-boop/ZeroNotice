@@ -429,5 +429,25 @@
     },
     "engine": "DeepSeek · deepseek-flash · 4152ms",
     "updated_at": "2026-11-05 22:40:32"
+  },
+  "knu-live-2541": {
+    "fields": {
+      "application_url": null,
+      "application_method": null,
+      "application_method_ko": "K-cloud→학부생서비스(교과)→장학→장학신청→신청장학 선택→증빙서류 파일 업로드→저장",
+      "application_method_zh": "在K-cloud中依次进入本科服务(课程)→奖学金→奖学金申请→选择申请奖学金→上传证明材料文件→保存",
+      "application_method_en": "Apply via K-cloud: Undergraduate Services (Curriculum) → Scholarship → Scholarship Application → Select Scholarship → Upload supporting documents → Save.",
+      "contact_email": null,
+      "contact_phone": null,
+      "required_documents": [
+        "증빙서류"
+      ],
+      "eligibility": "직전학기 이수학점 12학점 이상 및 직전학기 평점평균 3.0 이상인 자(수업연한초과자, 비재학생 등은 제외)",
+      "deadline": "2026. 11. 9.(월) 09:00 ~ 2026. 11.20.(금) 23:59",
+      "source_hint": "본문",
+      "confidence": 0.9
+    },
+    "engine": "DeepSeek · deepseek-flash · 4108ms",
+    "updated_at": "2026-11-05 23:42:50"
   }
 }

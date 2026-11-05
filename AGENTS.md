@@ -125,7 +125,7 @@ benefit_krw, title_{ko,zh,en}, summary_{ko,zh,en}, rules, has_hwp_extracted`
 |---|---|---|
 | P0 | `LLM_API_KEY` 비어 있음(기본 OpenRouter) → 메일/지원서/요약이 전부 템플릿 폴백 | `.env` 또는 UI의 AI 버튼으로 키 주입. "AI가 실제로 생성" 데모가 무너짐 |
 | P0 | 실사용 측정값이 아직 없음(`user_logs.json` 은 템플릿) | `docs/measurement-protocol.md` 로 3명 before/after 측정 후 채울 것 |
-| P0 | README의 "실시간 연동"은 과장 — `sync_live_knu_notices()`는 게시판 접속 여부만 확인하고 **정적 JSON을 반환** | 교수 심사위원이 "새 공지가 올라오면?" 질문 시 방어 필요 |
+| P0 | ~~README의 "실시간 연동"은 과장~~ **(해결됨)** — `sync_live_knu_notices()`가 강원대 5대 게시판을 실시간 순회하여 신규 공지·HWP 첨부·자격 규칙·한중영 요약을 증분 동기화함 | 실시간 크롤링 및 HWP 자동 파싱 완료 (방어 완비) |
 | P1 | 배포 URL 없음(localhost만) | 제출 권장 항목, 데모 리스크 |
 | P1 | `frontend/dist`가 소스와 어긋날 수 있음 | 코드 수정 후 `npm run build` 필수 |
 | P2 | `Real_time_translation.npm-cache/` 미추적 디렉터리 | 저장소 청결도. gitignore 추가 권장 |
