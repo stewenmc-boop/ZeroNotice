@@ -33,18 +33,29 @@
 
 ---
 
-## 3. 설치 및 실행 방법 (Quick Start)
+## 3. 기술 스택 및 아키텍처 (Tech Stack)
+
+- **Frontend (`frontend/`)**: React 18 + Vite 5 + TailwindCSS + Lucide Icons (`lucide-react`)
+  - 3단 미니멀리스트 워크스페이스 (`TopNavbar`, `SidebarFilter`, `NoticeListPane`, `NoticeDetailPane`, `Modals`)
+  - `localStorage` 기반 내 학적 조건, 북마크 공지, 개인별 신청 진행 상태(`미신청` / `서류 준비중` / `신청 완료`) 영구 저장
+  - 한국어(`KO`) · 중국어(`ZH`) · 영어(`EN`) 100% 완전 다국어 로컬라이제이션
+- **Backend (`app.py`, `agent.py`, `scraper.py`)**: Python FastAPI + Groq LPU (`llama-3.3-70b-versatile`) + `.hwp`/`.hwpx` 바이너리/XML 스트림 파서
+
+---
+
+## 4. 설치 및 실행 방법 (Quick Start)
 
 ```bash
-# 1. 필수 패키지 설치
+# 1. 백엔드 필수 패키지 설치 및 실행
 pip install -r requirements.txt
-
-# 2. 환경변수 설정 (.env)
 cp .env.example .env
-# .env 파일 내에 GROQ_API_KEY 입력 (웹 UI 우측 상단 'Groq API' 버튼에서도 직접 입력 가능)
-
-# 3. 서버 실행
 python app.py
+
+# 2. 프론트엔드 (React + Vite) 설치 및 개발 서버 실행
+cd frontend
+npm install
+npm run dev
 ```
 
-실행 후 브라우저에서 **`http://127.0.0.1:8000`** 으로 접속합니다.
+- **React 개발 서버 (HMR)**: `http://localhost:5173`
+- **FastAPI 통합 서버**: `http://127.0.0.1:8000` (`npm run build` 후 단일 포트로도 서빙 가능)
