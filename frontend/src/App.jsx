@@ -68,6 +68,9 @@ export default function App() {
   const [loading, setLoading] = useState(false);
 
   const [urlModalOpen, setUrlModalOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(
+    () => new URLSearchParams(window.location.search).get('sidebar') === '1'
+  );
   const [groqModalOpen, setGroqModalOpen] = useState(
     () => new URLSearchParams(window.location.search).get('modal') === 'llm'
   );
@@ -238,10 +241,17 @@ export default function App() {
         llmStatus={llmStatus}
         onOpenUrlModal={() => setUrlModalOpen(true)}
         onOpenGroqModal={() => setGroqModalOpen(true)}
+        onToggleSidebar={() => setSidebarOpen((v) => !v)}
       />
 
       {/* Main 3-Pane Workspace */}
       <div className="flex-1 flex overflow-hidden">
+        {sidebarOpen && (
+          <div
+            className="fixed inset-0 z-30 bg-ink/30 backdrop-blur-sm min-[1120px]:hidden"
+            onClick={() => setSidebarOpen(false)}
+          />
+        )}
         {/* Left Sidebar: Board Nav & Academic Profile */}
         <SidebarFilter
           t={t}
@@ -256,6 +266,8 @@ export default function App() {
           savedIds={savedIds}
           loading={loading}
           onRefresh={() => fetchNotices(true)}
+          open={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
         />
 
         {/* Middle Pane: Notice Feed List */}

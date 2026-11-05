@@ -524,7 +524,7 @@ PLACEHOLDER = {
 
 NO_INVENTION = (
     " 제공되지 않은 정보(이름, 학번, 연락처, 수상경력, 소속 등)는 절대 추측하거나 만들어내지 마세요. "
-    "값이 없으면 그 자리에 '(미입력)'이라고만 표기하세요."
+    "값이 없는 항목은 서명/목록에 아예 넣지 말고, 성명·학번처럼 반드시 필요한 항목만 '(미입력)'으로 표기하세요."
 )
 
 
@@ -535,16 +535,21 @@ def _identity(profile: Dict[str, Any], lang: str = "ko") -> Dict[str, Any]:
     sid = str(profile.get("student_id") or "").strip()
     dept = str(profile.get("department") or "").strip()
     campus = str(profile.get("campus") or "").strip()
+    phone = str(profile.get("phone") or "").strip()
+    email = str(profile.get("email") or "").strip()
     grade = profile.get("grade")
     gpa = profile.get("gpa")
 
     missing = []
-    if not name:
-        missing.append("name")
-    if not sid:
-        missing.append("student_id")
-    if not dept:
-        missing.append("department")
+    for key, value in (
+        ("name", name),
+        ("student_id", sid),
+        ("department", dept),
+        ("phone", phone),
+        ("email", email),
+    ):
+        if not value:
+            missing.append(key)
 
     who_parts = []
     if campus:
@@ -558,6 +563,8 @@ def _identity(profile: Dict[str, Any], lang: str = "ko") -> Dict[str, Any]:
     detail_parts = [f"학번: {sid}" if sid else f"학번: {ph}"]
     if gpa not in (None, ""):
         detail_parts.append(f"평점: {gpa}/4.5")
+    detail_parts.append(f"연락처: {phone}" if phone else f"연락처: {ph}")
+    detail_parts.append(f"이메일: {email}" if email else f"이메일: {ph}")
 
     return {
         "who": " ".join(who_parts),
@@ -570,6 +577,10 @@ def _identity(profile: Dict[str, Any], lang: str = "ko") -> Dict[str, Any]:
         "campus": campus,
         "grade": grade,
         "gpa": gpa,
+        "phone": phone or ph,
+        "phone_raw": phone,
+        "email": email or ph,
+        "email_raw": email,
         "missing": missing,
     }
 
@@ -605,7 +616,7 @@ def generate_polite_email_agent(
         "서명에는 위 학생 정보만 사용하고, 없는 정보는 '(미입력)'으로 두세요."
     )
 
-    llm_res = call_llm(sys_prompt, user_prompt, temperature=0.25, max_tokens=600)
+    llm_res = call_llm(sys_prompt, user_prompt, temperature=0.25, max_tokens=900)
     subject = (
         f"[문의] {title_ko[:40]} 관련 문의드립니다 "
         f"({ident['dept_raw'] or ph} {ident['sid']} {ident['name']})"
@@ -626,7 +637,8 @@ def generate_polite_email_agent(
             f"바쁘신 와중에도 읽어주셔서 감사드리며, 답변 기다리겠습니다.\n\n"
             f"감사합니다.\n"
             f"{ident['name']} 올림\n"
-            f"(학번: {ident['sid']} / 소속: {ident['dept_raw'] or ph})"
+            f"(학번: {ident['sid']} / 소속: {ident['dept_raw'] or ph})\n"
+            f"(연락처: {ident['phone']} / 이메일: {ident['email']})"
         )
         engine = "Built-in Template Engine"
 
@@ -638,7 +650,12 @@ def generate_polite_email_agent(
         "body": body,
         "engine": engine,
         "missing_fields": ident["missing"],
-        "identity_used": {"name": ident["name_raw"], "student_id": ident["sid_raw"]},
+        "identity_used": {
+            "name": ident["name_raw"],
+            "student_id": ident["sid_raw"],
+            "phone": ident["phone_raw"],
+            "email": ident["email_raw"],
+        },
     }
 
 
@@ -664,7 +681,7 @@ def generate_application_draft_agent(
         "없는 정보는 '(미입력)'으로 남기고 추측하지 마세요."
     )
 
-    llm_res = call_llm(sys_prompt, user_prompt, temperature=0.3, max_tokens=800)
+    llm_res = call_llm(sys_prompt, user_prompt, temperature=0.3, max_tokens=1200)
     if llm_res["ok"] and len(llm_res["text"]) > 100:
         draft = llm_res["text"]
         engine = llm_res["engine"]
@@ -691,5 +708,10 @@ def generate_application_draft_agent(
         "attachments": notice.get("attachments", []),
         "engine": engine,
         "missing_fields": ident["missing"],
-        "identity_used": {"name": ident["name_raw"], "student_id": ident["sid_raw"]},
+        "identity_used": {
+            "name": ident["name_raw"],
+            "student_id": ident["sid_raw"],
+            "phone": ident["phone_raw"],
+            "email": ident["email_raw"],
+        },
     }

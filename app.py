@@ -49,8 +49,10 @@ class ProfileRequest(BaseModel):
     grade: int = 3
     gpa: float = 3.8
     income_bracket: int = 3
-    name: str = "김강원"
-    student_id: str = "202411234"
+    name: str = ""
+    student_id: str = ""
+    phone: str = ""
+    email: str = ""
     live_check: bool = False
 
 
@@ -218,7 +220,7 @@ def api_parse_live_url(req: ParseUrlRequest) -> Dict[str, Any]:
         f"[내 조건] {p.campus}캠퍼스 / {p.status} / {p.department} {p.grade}학년 / GPA {p.gpa} / 소득 {p.income_bracket}구간\n\n"
         f"[공고 내용]\n{content_to_analyze[:3000]}"
     )
-    llm_res = call_llm(sys_prompt, user_prompt, temperature=0.2, max_tokens=700)
+    llm_res = call_llm(sys_prompt, user_prompt, temperature=0.2, max_tokens=900)
     if llm_res["ok"] and len(llm_res["text"]) > 40:
         summary = llm_res["text"]
         engine = llm_res["engine"]

@@ -15,11 +15,20 @@ export default function TopNavbar({
   llmStatus,
   onOpenUrlModal,
   onOpenGroqModal,
+  onToggleSidebar,
 }) {
   return (
     <header className="z-30 flex h-14 shrink-0 items-center justify-between gap-4 border-b border-line bg-white px-5">
       {/* Brand */}
       <div className="flex min-w-0 items-center gap-3">
+        <button
+          onClick={onToggleSidebar}
+          className="icon-btn min-[1120px]:hidden"
+          title="menu"
+          aria-label="menu"
+        >
+          <span className="text-body leading-none">☰</span>
+        </button>
         <div className="grid h-7 w-7 shrink-0 place-items-center rounded-[9px] bg-ink text-[13px] font-bold tracking-tighter text-white">
           Z
         </div>

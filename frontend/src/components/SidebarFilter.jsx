@@ -23,6 +23,8 @@ export default function SidebarFilter({
   savedIds,
   loading,
   onRefresh,
+  open = false,
+  onClose,
 }) {
   const navItems = [
     { key: 'ALL', label: t.catAll, icon: Layers, count: counts.ALL },
@@ -42,8 +44,20 @@ export default function SidebarFilter({
   );
 
   return (
-    <aside className="hidden w-[248px] shrink-0 select-none flex-col border-r border-line bg-canvas min-[1120px]:flex xl:w-[264px]">
-      <div className="flex-1 space-y-4 overflow-y-auto p-3">
+    <aside
+      className={`${
+        open ? "flex" : "hidden"
+      } fixed inset-y-0 left-0 z-40 w-[264px] shrink-0 select-none flex-col border-r border-line bg-canvas shadow-pop min-[1120px]:static min-[1120px]:z-auto min-[1120px]:flex min-[1120px]:w-[248px] min-[1120px]:shadow-none xl:w-[264px]`}
+    >
+      <div className="flex items-center justify-between px-3 pt-3 min-[1120px]:hidden">
+        <span className="text-meta font-semibold uppercase tracking-[0.08em] text-faint">
+          {t.profileHeader}
+        </span>
+        <button onClick={onClose} className="rounded-control p-1 text-faint hover:text-ink">
+          <span className="text-label">✕</span>
+        </button>
+      </div>
+      <div className="flex-1 space-y-3 overflow-y-auto p-3">
         {/* Boards */}
         <nav>
           <SectionLabel>{t.boardsHeader}</SectionLabel>
@@ -113,7 +127,7 @@ export default function SidebarFilter({
         {/* Academic profile */}
         <section>
           <SectionLabel>{t.profileHeader}</SectionLabel>
-          <div className="space-y-2 rounded-card border border-line bg-white p-3">
+          <div className="space-y-1.5 rounded-card border border-line bg-white p-3">
             <div className="grid grid-cols-2 gap-2">
               <div className="min-w-0">
                 <label className="mb-1 block text-meta text-faint">{t.lblName}</label>
@@ -137,6 +151,30 @@ export default function SidebarFilter({
                   className="field"
                 />
               </div>
+            </div>
+
+            <div>
+              <label className="mb-1 block text-meta text-faint">{t.lblPhone}</label>
+              <input
+                type="tel"
+                value={profile.phone || ''}
+                onChange={(e) => updateField('phone', e.target.value)}
+                placeholder="010-0000-0000"
+                autoComplete="off"
+                className="field"
+              />
+            </div>
+
+            <div>
+              <label className="mb-1 block text-meta text-faint">{t.lblEmail}</label>
+              <input
+                type="email"
+                value={profile.email || ''}
+                onChange={(e) => updateField('email', e.target.value)}
+                placeholder="name@kangwon.ac.kr"
+                autoComplete="off"
+                className="field"
+              />
             </div>
 
             <div>
