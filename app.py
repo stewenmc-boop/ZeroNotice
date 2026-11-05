@@ -804,9 +804,11 @@ def _start_reminder_worker() -> None:
 @app.get("/", response_class=HTMLResponse)
 def serve_index() -> FileResponse:
     dist_index = FRONTEND_DIST_DIR / "index.html"
-    if dist_index.exists():
-        return FileResponse(str(dist_index))
-    return FileResponse(str(STATIC_DIR / "index.html"))
+    target = dist_index if dist_index.exists() else (STATIC_DIR / "index.html")
+    return FileResponse(
+        str(target),
+        headers={"Cache-Control": "no-store, must-revalidate"},
+    )
 
 
 if __name__ == "__main__":
