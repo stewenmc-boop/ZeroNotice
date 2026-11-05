@@ -167,6 +167,23 @@ export default function App() {
     );
   };
 
+  const toggleSubscribe = async (id) => {
+    const target = notices.find((n) => n.id === id);
+    const next = !target?.subscribed;
+    setNotices((prev) =>
+      prev.map((n) => (n.id === id ? { ...n, subscribed: next } : n))
+    );
+    try {
+      await fetch('/api/subscriptions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ notice_id: id, subscribed: next }),
+      });
+    } catch (err) {
+      console.error('Failed to toggle subscription:', err);
+    }
+  };
+
   const updateProgress = (id, status) => {
     setProgressMap((prev) => ({ ...prev, [id]: status }));
   };
@@ -289,6 +306,7 @@ export default function App() {
           setSearchQuery={setSearchQuery}
           savedIds={savedIds}
           onToggleSave={toggleSave}
+          onToggleSubscribe={toggleSubscribe}
           progressMap={progressMap}
         />
 
@@ -302,6 +320,7 @@ export default function App() {
           onToggleSave={toggleSave}
           progress={selectedNotice ? progressMap[selectedNotice.id] || 'none' : 'none'}
           onChangeProgress={updateProgress}
+          onToggleSubscribe={toggleSubscribe}
         />
       </div>
 

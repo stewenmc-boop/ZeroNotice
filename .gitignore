@@ -11,3 +11,4 @@ node_modules/
 frontend/node_modules/
 *.npm-cache/
 data/profile.json
+data/subscriptions.json

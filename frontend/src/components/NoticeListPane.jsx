@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, X, Bookmark, FileText, Clock, Link2 } from 'lucide-react';
+import { Search, X, Bookmark, FileText, Clock, Link2, Bell } from 'lucide-react';
 
 const STATUS = {
   eligible: { dot: 'bg-emerald-500', text: 'text-emerald-700', key: 'badgeEligible' },
@@ -17,6 +17,7 @@ export default function NoticeListPane({
   setSearchQuery,
   savedIds,
   onToggleSave,
+  onToggleSubscribe,
   progressMap,
 }) {
   const [subFilter, setSubFilter] = useState('ALL'); // ALL | ELIGIBLE | HWP
@@ -139,6 +140,19 @@ export default function NoticeListPane({
                     >
                       {n.d_day}
                     </span>
+                    <button
+                      type="button"
+                      title={t.subTitle}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onToggleSubscribe(n.id);
+                      }}
+                      className={`grid h-6 w-6 place-items-center rounded-md transition hover:bg-accent-soft ${
+                        n.subscribed ? 'text-ink' : 'text-faint opacity-0 group-hover:opacity-100'
+                      }`}
+                    >
+                      <Bell className="h-3.5 w-3.5" fill={n.subscribed ? 'currentColor' : 'none'} />
+                    </button>
                     <button
                       type="button"
                       onClick={(e) => {

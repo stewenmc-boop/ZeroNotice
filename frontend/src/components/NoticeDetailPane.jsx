@@ -19,6 +19,7 @@ import {
   Search,
   ArrowRight,
   Link2,
+  Bell,
 } from 'lucide-react';
 
 const VERDICT_STYLE = {
@@ -67,6 +68,7 @@ export default function NoticeDetailPane({
   onToggleSave,
   progress,
   onChangeProgress,
+  onToggleSubscribe,
 }) {
   const initialTab = (() => {
     const fromUrl = new URLSearchParams(window.location.search).get('tab');
@@ -84,9 +86,9 @@ export default function NoticeDetailPane({
   const [appCopied, setAppCopied] = useState(false);
 
   const [hwpKeyword, setHwpKeyword] = useState('');
-  const [notifyEmail, setNotifyEmail] = useState(profile?.notify_email || '');
-  const [notifyLoading, setNotifyLoading] = useState(false);
-  const [notifyResult, setNotifyResult] = useState(null);
+  const [reminderLoading, setReminderLoading] = useState(false);
+  const [reminderResult, setReminderResult] = useState(null);
+  const notifyEmailLabel = profile?.email ? `→ ${profile.email}` : '';
   const [fields, setFields] = useState(null);
   const [fieldsLoading, setFieldsLoading] = useState(false);
 
@@ -162,21 +164,26 @@ export default function NoticeDetailPane({
     }
   };
 
-  const handleNotify = async () => {
-    setNotifyLoading(true);
-    setNotifyResult(null);
+  const handleReminderTest = async () => {
+    setReminderLoading(true);
+    setReminderResult(null);
     try {
-      const res = await fetch('/api/notify/digest', {
+      const res = await fetch('/api/subscriptions/run', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: notifyEmail, lang, limit: 5 }),
+        body: JSON.stringify({ lang, force_ids: [notice.id] }),
       });
       const data = await res.json();
-      setNotifyResult(data);
+      setReminderResult({
+        ok: (data.sent || []).length > 0,
+        sent: data.sent || [],
+        failed: data.failed || [],
+        error: (data.failed || [])[0]?.error,
+      });
     } catch (err) {
-      setNotifyResult({ ok: false, error: String(err) });
+      setReminderResult({ ok: false, error: String(err) });
     } finally {
-      setNotifyLoading(false);
+      setReminderLoading(false);
     }
   };
 
@@ -563,37 +570,57 @@ export default function NoticeDetailPane({
             </section>
 
             <section className="rounded-card p-5 ring-1 ring-line">
-              <div className="mb-1 flex items-center gap-1.5 text-meta font-semibold uppercase tracking-[0.08em] text-muted">
-                <Mail className="h-3.5 w-3.5" />
-                <span>{t.notifyTitle}</span>
-              </div>
-              <p className="mb-3 text-meta leading-5 text-muted">{t.notifyDesc}</p>
-              <div className="flex gap-2">
-                <input
-                  type="email"
-                  value={notifyEmail}
-                  onChange={(e) => setNotifyEmail(e.target.value)}
-                  placeholder="name@example.com"
-                  className="field flex-1"
-                />
+              <div className="flex items-start justify-between gap-4">
+                <div className="min-w-0">
+                  <div className="mb-1 flex items-center gap-1.5 text-meta font-semibold uppercase tracking-[0.08em] text-muted">
+                    <Bell className="h-3.5 w-3.5" />
+                    <span>{t.subTitle}</span>
+                  </div>
+                  <p className="text-meta leading-5 text-muted">{t.subDesc}</p>
+                  {profile?.email ? (
+                    <p className="mt-2 text-meta text-ink">
+                      {notifyEmailLabel}
+                    </p>
+                  ) : (
+                    <p className="mt-2 text-meta text-amber-700">{t.subNoEmail}</p>
+                  )}
+                </div>
                 <button
-                  onClick={handleNotify}
-                  disabled={notifyLoading || !notifyEmail}
-                  className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-control bg-ink px-4 text-label font-medium text-white transition hover:bg-ink/90 disabled:opacity-50"
-                >
-                  <Send className="h-3.5 w-3.5" />
-                  <span>{notifyLoading ? '...' : t.notifyBtn}</span>
-                </button>
-              </div>
-              {notifyResult && (
-                <div
-                  className={`mt-2 text-meta ${
-                    notifyResult.ok ? 'text-emerald-700' : 'text-amber-700'
+                  onClick={() => onToggleSubscribe(notice.id)}
+                  className={`inline-flex h-8 shrink-0 items-center gap-1.5 rounded-control px-3 text-label font-medium transition ${
+                    notice.subscribed
+                      ? 'bg-ink text-white hover:bg-ink/90'
+                      : 'text-ink ring-1 ring-line hover:ring-ink/30'
                   }`}
                 >
-                  {notifyResult.ok
-                    ? t.notifyOk(notifyResult.notices || 0)
-                    : `${t.notifyErr}: ${notifyResult.error || ''}`}
+                  <Bell className="h-3.5 w-3.5" fill={notice.subscribed ? 'currentColor' : 'none'} />
+                  <span>{notice.subscribed ? t.subOn : t.subOff}</span>
+                </button>
+              </div>
+
+              {notice.subscribed && (
+                <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-line pt-3">
+                  <span className="text-meta text-faint">{t.subPlan}</span>
+                  <button
+                    onClick={handleReminderTest}
+                    disabled={reminderLoading || !profile?.email}
+                    className="inline-flex h-7 items-center gap-1 rounded-chip px-2 text-meta font-medium text-ink ring-1 ring-line transition hover:ring-ink/30 disabled:opacity-50"
+                  >
+                    <Send className="h-3 w-3" />
+                    <span>{reminderLoading ? '...' : t.subTest}</span>
+                  </button>
+                </div>
+              )}
+
+              {reminderResult && (
+                <div
+                  className={`mt-2 text-meta ${
+                    reminderResult.ok ? 'text-emerald-700' : 'text-amber-700'
+                  }`}
+                >
+                  {reminderResult.ok
+                    ? t.subSent(reminderResult.sent?.length || 0)
+                    : `${t.subErr}: ${reminderResult.error || reminderResult.failed?.[0]?.error || ''}`}
                 </div>
               )}
             </section>

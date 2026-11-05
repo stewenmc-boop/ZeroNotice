@@ -50,6 +50,7 @@ python app.py                                # / 가 dist/index.html 로 서빙�
 app.py                  FastAPI 라우팅(13 endpoint) + 정적 서빙
 agent.py                LLM 호출(OpenRouter/OpenAI/Groq/Custom), 자격 판정 규칙, .ics/메일/지원서 생성, 비용 추정
 notifier.py             SMTP 발송(.ics 첨부, 다이제스트) — 자격증명은 .env 에서만
+reminders.py            관심 공지 구독 저장 + 마감 24시간 전 알림 워커(5분 주기)
 scraper.py              게시판 상세 파싱, .hwp/.hwpx/.pdf/.xlsx/.docx 텍스트 추출, 데이터 로드
 scripts/refresh_notices.py  원문 재수집(본문·첨부·연락처) — source_title/verified_at 기록
 scripts/ocr_notices.py      포스터 OCR + 링크 HTTP 검증 (ocr_image.ps1 호출)
@@ -86,6 +87,9 @@ static/index.html       구 버전 단일 파일 UI (dist 없을 때 폴백)
 | GET | `/api/profile` | – | `{profile}` — `data/profile.json` 로컬 저장소(개인정보, gitignore) |
 | POST | `/api/profile` | `{profile}` | 병합 저장 후 `{profile, saved}` |
 | POST | `/api/notices` | 프로필 | `{synced_at, live_portal_connected, notices[], stats}` — 각 공지에 `has_email`·`has_application_link`·`fields`(캐시) 병합 |
+| GET | `/api/subscriptions` | – | 구독 중인 공지 목록 |
+| POST | `/api/subscriptions` | `{notice_id, subscribed}` | 관심 등록/해제 |
+| POST | `/api/subscriptions/run` | `{lang, force_ids?}` | 즉시 점검·발송(데모용) |
 | GET | `/api/notify/status` | – | SMTP 설정 여부(계정 마스킹) |
 | POST | `/api/notify/notice` | `{notice_id, email, lang}` | 공지 1건 `.ics` 메일 발송 |
 | POST | `/api/notify/digest` | `{email, lang, limit}` | 마감 임박 N건 일괄 발송 |
@@ -189,3 +193,7 @@ benefit_krw, title_{ko,zh,en}, summary_{ko,zh,en}, rules, has_hwp_extracted`
 
 8. **메일 발송은 사용자가 입력한 주소로만.** `notify_email` 은 로컬 `data/profile.json`(gitignore)에 저장하고, SMTP 자격증명은 `.env` 에서만 읽는다. 코드/저장소에 절대 하드코딩하지 말 것.
 9. **발송 실패는 숨기지 않는다.** `notifier.send_mail()` 은 `{ok:false, error}` 를 그대로 반환하고 UI가 사유(535 인증 실패 등)를 표시한다.
+
+10. **알림은 프로필 이메일로만.** `reminders.send_reminder()` 는 `profile["email"]` 을 사용한다. 별도 주소 입력란을 만들지 말 것(사용자가 이미 왼쪽 패널에 입력했다).
+11. **중복 발송 금지.** 발송 성공 시 `reminded_at` 을 기록하고, 이후 같은 공지는 다시 보내지 않는다. 실패는 `last_ok=false` 로 남기고 다음 주기에 재시도한다.
+12. **구독 파일은 개인정보.** `data/subscriptions.json` 은 gitignore 대상이며, 서버 시작 시 워커가 5분마다 자동 점검한다.

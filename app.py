@@ -22,6 +22,7 @@ from agent import (
     set_runtime_llm,
 )
 import notifier
+import reminders
 from scraper import (
     load_real_knu_notices,
     parse_knu_detail_url,
@@ -145,6 +146,16 @@ def _read_profile() -> Dict[str, Any]:
         return {}
 
 
+class SubscribeRequest(BaseModel):
+    notice_id: str = ""
+    subscribed: bool = True
+
+
+class ReminderRunRequest(BaseModel):
+    lang: str = "ko"
+    force_ids: List[str] = []
+
+
 class NotifyRequest(BaseModel):
     email: str = ""
     notice_id: str = ""
@@ -190,6 +201,27 @@ def api_set_llm(req: LlmConfigRequest) -> Dict[str, Any]:
 def api_set_groq(req: LlmConfigRequest) -> Dict[str, Any]:
     # legacy endpoint kept so old clients keep working
     return api_set_llm(req)
+
+
+@app.get("/api/subscriptions")
+def api_subscriptions() -> Dict[str, Any]:
+    return {"subscriptions": reminders.list_subscriptions()}
+
+
+@app.post("/api/subscriptions")
+def api_subscribe(req: SubscribeRequest) -> Dict[str, Any]:
+    if not req.notice_id:
+        raise HTTPException(status_code=400, detail="notice_id is required")
+    return reminders.subscribe(req.notice_id, req.subscribed)
+
+
+@app.post("/api/subscriptions/run")
+def api_subscriptions_run(req: ReminderRunRequest) -> Dict[str, Any]:
+    profile = _read_profile() or {}
+    result = reminders.run_check(
+        load_real_knu_notices(), profile, lang=req.lang, force_ids=req.force_ids or None
+    )
+    return {"profile_email": profile.get("email", ""), **result}
 
 
 @app.get("/api/notify/status")
@@ -326,6 +358,7 @@ def api_get_notices(req: ProfileRequest) -> Dict[str, Any]:
 
     cache = _load_fields()
     images = _load_images()
+    subscriptions = reminders.list_subscriptions()
     for item in evaluated["notices"]:
         item["has_email"] = bool((item.get("email") or "").strip())
         image_info = images.get(item.get("id")) or {}
@@ -354,6 +387,7 @@ def api_get_notices(req: ProfileRequest) -> Dict[str, Any]:
             item["fields"] = fields
 
         item["has_application_link"] = bool(fields.get("application_url"))
+        item["subscribed"] = item.get("id") in subscriptions
 
     return {
         "synced_at": sync_res["synced_at"],
@@ -462,6 +496,14 @@ if (FRONTEND_DIST_DIR / "assets").exists():
 
 if STATIC_DIR.exists():
     app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
+
+
+@app.on_event("startup")
+def _start_reminder_worker() -> None:
+    try:
+        reminders.start_background_worker(load_real_knu_notices, _read_profile)
+    except Exception:
+        pass
 
 
 @app.get("/", response_class=HTMLResponse)
