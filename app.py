@@ -21,6 +21,7 @@ from agent import (
     list_models,
     set_runtime_llm,
 )
+import notifier
 from scraper import (
     load_real_knu_notices,
     parse_knu_detail_url,
@@ -110,6 +111,18 @@ def _merge_image_info(notice: Dict[str, Any], images: Dict[str, Any]) -> Dict[st
     return notice
 
 
+def _remember_notify_email(email: str) -> None:
+    try:
+        profile = _read_profile()
+        profile["notify_email"] = email.strip()
+        profile["notify_saved_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        PROFILE_PATH.parent.mkdir(parents=True, exist_ok=True)
+        with open(PROFILE_PATH, "w", encoding="utf-8") as fh:
+            json.dump(profile, fh, ensure_ascii=False, indent=2)
+    except Exception:
+        pass
+
+
 def _save_fields(data: Dict[str, Any]) -> None:
     FIELDS_PATH.parent.mkdir(parents=True, exist_ok=True)
     with open(FIELDS_PATH, "w", encoding="utf-8") as fh:
@@ -130,6 +143,13 @@ def _read_profile() -> Dict[str, Any]:
         return data if isinstance(data, dict) else {}
     except Exception:
         return {}
+
+
+class NotifyRequest(BaseModel):
+    email: str = ""
+    notice_id: str = ""
+    lang: str = "ko"
+    limit: int = 5
 
 
 class ExtractRequest(BaseModel):
@@ -170,6 +190,77 @@ def api_set_llm(req: LlmConfigRequest) -> Dict[str, Any]:
 def api_set_groq(req: LlmConfigRequest) -> Dict[str, Any]:
     # legacy endpoint kept so old clients keep working
     return api_set_llm(req)
+
+
+@app.get("/api/notify/status")
+def api_notify_status() -> Dict[str, Any]:
+    return notifier.smtp_status()
+
+
+@app.post("/api/notify/notice")
+def api_notify_notice(req: NotifyRequest) -> Dict[str, Any]:
+    notice = next((n for n in load_real_knu_notices() if n.get("id") == req.notice_id), None)
+    if not notice:
+        raise HTTPException(status_code=404, detail="Notice not found")
+    ics = generate_ics_content(notice, lang=req.lang).encode("utf-8")
+    title = notice.get(f"title_{req.lang}") or notice.get("title_ko") or notice.get("title", "")
+    body = (
+        f"[ZeroNotice] 마감 알림\n\n"
+        f"공지: {title}\n"
+        f"마감: {notice.get('deadline', '')}\n"
+        f"담당: {notice.get('author', '')} {notice.get('phone', '')}\n"
+        f"원문: {notice.get('url', '')}\n\n"
+        f"첨부한 .ics 파일을 열면 캘린더에 자동 등록됩니다."
+    )
+    result = notifier.send_mail(
+        req.email,
+        f"[ZeroNotice] 마감 알림 · {title[:40]}",
+        body,
+        [(f"{notice.get('id', 'notice')}.ics", ics, "calendar")],
+    )
+    if req.email:
+        _remember_notify_email(req.email)
+    return result
+
+
+@app.post("/api/notify/digest")
+def api_notify_digest(req: NotifyRequest) -> Dict[str, Any]:
+    notices = load_real_knu_notices()
+    fields = _load_fields()
+
+    def deadline_key(n):
+        return n.get("deadline") or "9999-99-99"
+
+    upcoming = sorted(notices, key=deadline_key)[: max(1, min(req.limit, 10))]
+    if not upcoming:
+        return {"ok": False, "error": "발송할 공지가 없습니다."}
+
+    attachments = []
+    lines = ["[ZeroNotice] 마감 임박 공지 캘린더", ""]
+    for n in upcoming:
+        title = n.get(f"title_{req.lang}") or n.get("title_ko") or n.get("title", "")
+        lines.append(f"- {title[:60]}")
+        lines.append(f"  마감: {n.get('deadline', '')} / 담당: {n.get('author', '')}")
+        lines.append(f"  링크: {n.get('url', '')}")
+        fields_for = (fields.get(n["id"]) or {}).get("fields") or {}
+        if fields_for.get("application_url"):
+            lines.append(f"  신청: {fields_for['application_url']}")
+        lines.append("")
+        ics = generate_ics_content(n, lang=req.lang).encode("utf-8")
+        attachments.append((f"{n['id']}.ics", ics, "calendar"))
+
+    lines.append("첨부된 .ics 파일을 열면 캘린더에 자동 등록됩니다.")
+    result = notifier.send_mail(
+        req.email,
+        f"[ZeroNotice] 마감 알림 {len(upcoming)}건",
+        "\n".join(lines),
+        attachments,
+    )
+    if req.email:
+        _remember_notify_email(req.email)
+    if result.get("ok"):
+        result["notices"] = len(upcoming)
+    return result
 
 
 @app.get("/api/notices/{notice_id}/fields")

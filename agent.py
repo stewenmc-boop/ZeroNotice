@@ -781,6 +781,7 @@ def generate_application_draft_agent(
     body_ko = (notice.get("body", "") + "\n" + notice.get("attachment_extracted_text", ""))[:1800]
     ident = _identity(profile)
     ph = PLACEHOLDER["ko"]
+    notice_email = (notice.get("email") or "").strip()
 
     sys_prompt = (
         "당신은 강원대학교 장학금·공모전·학사 프로그램 지원서 작성을 돕는 AI 에이전트입니다. "
@@ -822,7 +823,7 @@ def generate_application_draft_agent(
         "draft": draft,
         "attachments": notice.get("attachments", []),
         "engine": engine,
-        "has_email": bool(email),
+        "has_email": bool(notice_email),
         "missing_fields": ident["missing"],
         "identity_used": {
             "name": ident["name_raw"],

@@ -49,6 +49,7 @@ python app.py                                # / 가 dist/index.html 로 서빙�
 ```
 app.py                  FastAPI 라우팅(13 endpoint) + 정적 서빙
 agent.py                LLM 호출(OpenRouter/OpenAI/Groq/Custom), 자격 판정 규칙, .ics/메일/지원서 생성, 비용 추정
+notifier.py             SMTP 발송(.ics 첨부, 다이제스트) — 자격증명은 .env 에서만
 scraper.py              게시판 상세 파싱, .hwp/.hwpx/.pdf/.xlsx/.docx 텍스트 추출, 데이터 로드
 scripts/refresh_notices.py  원문 재수집(본문·첨부·연락처) — source_title/verified_at 기록
 scripts/ocr_notices.py      포스터 OCR + 링크 HTTP 검증 (ocr_image.ps1 호출)
@@ -85,6 +86,9 @@ static/index.html       구 버전 단일 파일 UI (dist 없을 때 폴백)
 | GET | `/api/profile` | – | `{profile}` — `data/profile.json` 로컬 저장소(개인정보, gitignore) |
 | POST | `/api/profile` | `{profile}` | 병합 저장 후 `{profile, saved}` |
 | POST | `/api/notices` | 프로필 | `{synced_at, live_portal_connected, notices[], stats}` — 각 공지에 `has_email`·`has_application_link`·`fields`(캐시) 병합 |
+| GET | `/api/notify/status` | – | SMTP 설정 여부(계정 마스킹) |
+| POST | `/api/notify/notice` | `{notice_id, email, lang}` | 공지 1건 `.ics` 메일 발송 |
+| POST | `/api/notify/digest` | `{email, lang, limit}` | 마감 임박 N건 일괄 발송 |
 | GET | `/api/notices/{id}/fields?force=` | – | AI가 뽑은 신청 정보(링크·접수방법·서류·문의처·confidence) |
 | POST | `/api/notices/extract` | `{ids, force}` | 전체/선택 공지 일괄 추출 후 `data/notice_fields.json` 저장 |
 | GET | `/api/agent/ics/{notice_id}?lang=` | – | `text/calendar` 파일 |
@@ -182,3 +186,6 @@ benefit_krw, title_{ko,zh,en}, summary_{ko,zh,en}, rules, has_hwp_extracted`
 
 6. **이미지 정보는 OCR + 검증 후에만.** `ocr_notices.py` 는 OCR 텍스트에서 뽑은 링크를 `check_link()` 로 실제 요청해 200이 뜬 것만 저장한다. 검증에 실패한 링크는 `rejected_links` 에 남기고 UI에 노출하지 않는다.
 7. **목록 필터/검색은 추출 정보까지 포함한다.** `has_application_link` 플래그와 `fields.*`/`image_links` 를 검색 haystack 에 넣어야 "링크만 보기"가 실제로 동작한다.
+
+8. **메일 발송은 사용자가 입력한 주소로만.** `notify_email` 은 로컬 `data/profile.json`(gitignore)에 저장하고, SMTP 자격증명은 `.env` 에서만 읽는다. 코드/저장소에 절대 하드코딩하지 말 것.
+9. **발송 실패는 숨기지 않는다.** `notifier.send_mail()` 은 `{ok:false, error}` 를 그대로 반환하고 UI가 사유(535 인증 실패 등)를 표시한다.

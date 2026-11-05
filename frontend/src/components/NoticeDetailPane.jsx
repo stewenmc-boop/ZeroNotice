@@ -84,6 +84,9 @@ export default function NoticeDetailPane({
   const [appCopied, setAppCopied] = useState(false);
 
   const [hwpKeyword, setHwpKeyword] = useState('');
+  const [notifyEmail, setNotifyEmail] = useState(profile?.notify_email || '');
+  const [notifyLoading, setNotifyLoading] = useState(false);
+  const [notifyResult, setNotifyResult] = useState(null);
   const [fields, setFields] = useState(null);
   const [fieldsLoading, setFieldsLoading] = useState(false);
 
@@ -156,6 +159,24 @@ export default function NoticeDetailPane({
       console.error('Failed to generate application draft:', err);
     } finally {
       setAppLoading(false);
+    }
+  };
+
+  const handleNotify = async () => {
+    setNotifyLoading(true);
+    setNotifyResult(null);
+    try {
+      const res = await fetch('/api/notify/digest', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: notifyEmail, lang, limit: 5 }),
+      });
+      const data = await res.json();
+      setNotifyResult(data);
+    } catch (err) {
+      setNotifyResult({ ok: false, error: String(err) });
+    } finally {
+      setNotifyLoading(false);
     }
   };
 
@@ -539,6 +560,42 @@ export default function NoticeDetailPane({
                   );
                 })}
               </div>
+            </section>
+
+            <section className="rounded-card p-5 ring-1 ring-line">
+              <div className="mb-1 flex items-center gap-1.5 text-meta font-semibold uppercase tracking-[0.08em] text-muted">
+                <Mail className="h-3.5 w-3.5" />
+                <span>{t.notifyTitle}</span>
+              </div>
+              <p className="mb-3 text-meta leading-5 text-muted">{t.notifyDesc}</p>
+              <div className="flex gap-2">
+                <input
+                  type="email"
+                  value={notifyEmail}
+                  onChange={(e) => setNotifyEmail(e.target.value)}
+                  placeholder="name@example.com"
+                  className="field flex-1"
+                />
+                <button
+                  onClick={handleNotify}
+                  disabled={notifyLoading || !notifyEmail}
+                  className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-control bg-ink px-4 text-label font-medium text-white transition hover:bg-ink/90 disabled:opacity-50"
+                >
+                  <Send className="h-3.5 w-3.5" />
+                  <span>{notifyLoading ? '...' : t.notifyBtn}</span>
+                </button>
+              </div>
+              {notifyResult && (
+                <div
+                  className={`mt-2 text-meta ${
+                    notifyResult.ok ? 'text-emerald-700' : 'text-amber-700'
+                  }`}
+                >
+                  {notifyResult.ok
+                    ? t.notifyOk(notifyResult.notices || 0)
+                    : `${t.notifyErr}: ${notifyResult.error || ''}`}
+                </div>
+              )}
             </section>
 
             {extractedHwp && (
