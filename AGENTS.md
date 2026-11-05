@@ -52,6 +52,7 @@ agent.py                LLM 호출(OpenRouter/OpenAI/Groq/Custom), 자격 판정
 scraper.py              게시판 상세 파싱, .hwp/.hwpx 텍스트 추출, 데이터 로드
 data/real_knu_notices.json    실제 공지 22건 (수동/스크립트 수집 스냅샷)
 data/fallback_notices.json   오프라인 데모용 대체 데이터
+data/profile.json           사용자 학적 정보 로컬 저장소(gitignore, /api/profile 로 읽고 씀)
 data/user_logs.json          실측 템플릿(빈 슬롯) — 코드 미참조, docs/measurement-protocol.md 참고
 frontend/src/           React 18 + Vite 5 + Tailwind + lucide-react
   App.jsx               3-pane 워크스페이스, /api/notices 호출, localStorage 상태
@@ -77,6 +78,8 @@ static/index.html       구 버전 단일 파일 UI (dist 없을 때 폴백)
 | POST | `/api/config/llm` | `{api_key, model, provider, base_url}` | 런타임 키/제공자 주입(메모리만) |
 | POST | `/api/config/groq` | 위와 동일 | 레거시 별칭 |
 | GET | `/api/llm/models?provider=&free_only=` | – | 제공자 모델 목록(10분 캐시, OpenRouter는 `:free`만) |
+| GET | `/api/profile` | – | `{profile}` — `data/profile.json` 로컬 저장소(개인정보, gitignore) |
+| POST | `/api/profile` | `{profile}` | 병합 저장 후 `{profile, saved}` |
 | POST | `/api/notices` | 프로필 | `{synced_at, live_portal_connected, notices[], stats}` |
 | GET | `/api/agent/ics/{notice_id}?lang=` | – | `text/calendar` 파일 |
 | POST | `/api/agent/email` | `{notice_id, profile, custom_question, lang}` | `{department,email,phone,subject,body,engine}` |
@@ -106,6 +109,7 @@ benefit_krw, title_{ko,zh,en}, summary_{ko,zh,en}, rules, has_hwp_extracted`
 3. **키는 절대 커밋 금지.** `.env`는 gitignore 처리됨. `RUNTIME_CONFIG`는 메모리만, 재시작 시 소실.
 4. **LLM 실패 시 폴백 필수.** `call_llm()`이 `ok:False`면 템플릿 문구로 대체하고 `engine` 필드에 실제 엔진을 표기한다(데모 중 거짓 표기 금지).
 5. **비용 수치의 출처를 밝힐 것.** `saved_minutes = clamp(chars/350 + (hwp?3.5:1.0), min 2.0)` — 공지당 **추정치**다. 발표에서는 "추정 공식"임을 명시하고, 실측(사용자 타이머)과 섞지 말 것.
+6. **개인정보는 사용자가 입력한 값만 쓴다.** `_identity()` 가 유일한 소스이며, 비어 있으면 `(미입력)` 플레이스홀더를 쓰고 `missing_fields` 로 알린다. 이름·학번·소속을 절대 지어내지 말 것(프롬프트에도 명시됨).
 
 ---
 

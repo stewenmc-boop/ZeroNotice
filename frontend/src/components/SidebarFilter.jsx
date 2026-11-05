@@ -43,7 +43,7 @@ export default function SidebarFilter({
 
   return (
     <aside className="hidden w-[248px] shrink-0 select-none flex-col border-r border-line bg-canvas min-[1120px]:flex xl:w-[264px]">
-      <div className="flex-1 space-y-5 overflow-y-auto p-3.5">
+      <div className="flex-1 space-y-4 overflow-y-auto p-3">
         {/* Boards */}
         <nav>
           <SectionLabel>{t.boardsHeader}</SectionLabel>
@@ -55,7 +55,7 @@ export default function SidebarFilter({
                 <button
                   key={item.key}
                   onClick={() => setCategory(item.key)}
-                  className={`flex h-9 w-full items-center justify-between rounded-[9px] px-2.5 text-body transition ${
+                  className={`flex h-8 w-full items-center justify-between rounded-[9px] px-2.5 text-body transition ${
                     active
                       ? 'bg-white font-semibold text-ink shadow-card ring-1 ring-line'
                       : 'font-medium text-muted hover:bg-accent-soft hover:text-ink'
@@ -113,7 +113,32 @@ export default function SidebarFilter({
         {/* Academic profile */}
         <section>
           <SectionLabel>{t.profileHeader}</SectionLabel>
-          <div className="space-y-2.5 rounded-card border border-line bg-white p-3">
+          <div className="space-y-2 rounded-card border border-line bg-white p-3">
+            <div className="grid grid-cols-2 gap-2">
+              <div className="min-w-0">
+                <label className="mb-1 block text-meta text-faint">{t.lblName}</label>
+                <input
+                  type="text"
+                  value={profile.name || ''}
+                  onChange={(e) => updateField('name', e.target.value)}
+                  placeholder={t.lblName}
+                  autoComplete="off"
+                  className="field"
+                />
+              </div>
+              <div className="min-w-0">
+                <label className="mb-1 block text-meta text-faint">{t.lblStudentId}</label>
+                <input
+                  type="text"
+                  value={profile.student_id || ''}
+                  onChange={(e) => updateField('student_id', e.target.value)}
+                  placeholder="2024xxxxx"
+                  autoComplete="off"
+                  className="field"
+                />
+              </div>
+            </div>
+
             <div>
               <label className="mb-1 block text-meta text-faint">{t.lblCampus}</label>
               <select
@@ -182,8 +207,9 @@ export default function SidebarFilter({
                 <label className="mb-1 block text-meta text-faint">{t.lblDept}</label>
                 <input
                   type="text"
-                  value={profile.department}
+                  value={profile.department || ''}
                   onChange={(e) => updateField('department', e.target.value)}
+                  placeholder={t.lblDept}
                   className="field"
                 />
               </div>
@@ -207,11 +233,11 @@ export default function SidebarFilter({
       </div>
 
       {/* Footer */}
-      <div className="border-t border-line p-3">
+      <div className="border-t border-line p-2.5">
         <button
           onClick={onRefresh}
           disabled={loading}
-          className="inline-flex h-9 w-full items-center justify-center gap-2 rounded-control bg-white text-label font-medium text-ink ring-1 ring-line transition hover:ring-ink/25 disabled:opacity-50"
+          className="inline-flex h-8 w-full items-center justify-center gap-2 rounded-control bg-white text-label font-medium text-ink ring-1 ring-line transition hover:ring-ink/25 disabled:opacity-50"
         >
           <RefreshCw className={`h-3.5 w-3.5 ${loading ? 'animate-spin' : ''}`} />
           <span>{t.btnRefresh}</span>

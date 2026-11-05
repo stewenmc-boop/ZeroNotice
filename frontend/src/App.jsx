@@ -9,12 +9,12 @@ import { UrlParseModal, LlmConfigModal } from './components/Modals';
 const DEFAULT_PROFILE = {
   campus: '춘천',
   status: 'undergrad_kr',
-  department: '첨단AI공학부',
+  department: '',
   grade: 3,
   gpa: 3.8,
   income_bracket: 3,
-  name: '김강원',
-  student_id: '202411234',
+  name: '',
+  student_id: '',
 };
 
 export default function App() {
@@ -81,6 +81,45 @@ export default function App() {
 
   useEffect(() => {
     localStorage.setItem('zn_profile', JSON.stringify(profile));
+  }, [profile]);
+
+  // Load the locally stored profile once (data/profile.json via /api/profile).
+  // Only fills fields the browser has never seen, so local edits always win.
+  useEffect(() => {
+    let cancelled = false;
+    fetch('/api/profile')
+      .then((res) => res.json())
+      .then((data) => {
+        const stored = data?.profile;
+        if (cancelled || !stored || typeof stored !== 'object') return;
+        setProfile((prev) => {
+          const next = { ...prev };
+          Object.entries(stored).forEach(([key, value]) => {
+            if (key === 'updated_at') return;
+            const current = prev[key];
+            if (current === '' || current === undefined || current === null) {
+              next[key] = value;
+            }
+          });
+          return next;
+        });
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // Mirror the profile into the local JSON store (debounced, best effort).
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      fetch('/api/profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ profile }),
+      }).catch(() => {});
+    }, 700);
+    return () => clearTimeout(timer);
   }, [profile]);
 
   useEffect(() => {

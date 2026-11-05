@@ -483,6 +483,11 @@ export default function NoticeDetailPane({
 
               {emailResult && (
                 <div className="space-y-2.5 border-t border-line pt-3">
+                  {emailResult.missing_fields?.length > 0 && (
+                    <div className="rounded-control bg-amber-50 px-3 py-2 text-meta leading-5 text-amber-800 ring-1 ring-amber-100">
+                      {t.warnMissingProfile}
+                    </div>
+                  )}
                   <div className="truncate text-label font-medium text-zinc-700">
                     {emailResult.subject}
                   </div>
@@ -538,6 +543,11 @@ export default function NoticeDetailPane({
 
               {appResult && (
                 <div className="space-y-2.5 border-t border-line pt-3">
+                  {appResult.missing_fields?.length > 0 && (
+                    <div className="rounded-control bg-amber-50 px-3 py-2 text-meta leading-5 text-amber-800 ring-1 ring-amber-100">
+                      {t.warnMissingProfile}
+                    </div>
+                  )}
                   {appResult.engine && (
                     <div className="font-mono text-[10px] text-faint">Engine: {appResult.engine}</div>
                   )}

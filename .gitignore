@@ -10,3 +10,4 @@ deck.txt
 node_modules/
 frontend/node_modules/
 *.npm-cache/
+data/profile.json

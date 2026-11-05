@@ -1,3 +1,4 @@
+import json
 import os
 from datetime import datetime
 from pathlib import Path
@@ -28,6 +29,7 @@ from scraper import (
 BASE_DIR = Path(__file__).parent
 STATIC_DIR = BASE_DIR / "static"
 FRONTEND_DIST_DIR = BASE_DIR / "frontend" / "dist"
+PROFILE_PATH = BASE_DIR / "data" / "profile.json"
 
 app = FastAPI(title="ZeroNotice (제로노티스) — 강원대학교 공지·HWP 판독 AI 비서")
 
@@ -65,6 +67,22 @@ class ParseUrlRequest(BaseModel):
     lang: str = "ko"
 
 
+class ProfileStoreRequest(BaseModel):
+    profile: Dict[str, Any]
+
+
+def _read_profile() -> Dict[str, Any]:
+    """Tiny local store: data/profile.json (gitignored, never leaves the machine)."""
+    if not PROFILE_PATH.exists():
+        return {}
+    try:
+        with open(PROFILE_PATH, "r", encoding="utf-8") as fh:
+            data = json.load(fh)
+        return data if isinstance(data, dict) else {}
+    except Exception:
+        return {}
+
+
 class LlmConfigRequest(BaseModel):
     api_key: Optional[str] = ""
     model: Optional[str] = ""
@@ -98,6 +116,21 @@ def api_set_llm(req: LlmConfigRequest) -> Dict[str, Any]:
 def api_set_groq(req: LlmConfigRequest) -> Dict[str, Any]:
     # legacy endpoint kept so old clients keep working
     return api_set_llm(req)
+
+
+@app.get("/api/profile")
+def api_get_profile() -> Dict[str, Any]:
+    return {"profile": _read_profile()}
+
+
+@app.post("/api/profile")
+def api_save_profile(req: ProfileStoreRequest) -> Dict[str, Any]:
+    merged = {**_read_profile(), **(req.profile or {})}
+    merged["updated_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    PROFILE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with open(PROFILE_PATH, "w", encoding="utf-8") as fh:
+        json.dump(merged, fh, ensure_ascii=False, indent=2)
+    return {"profile": merged, "saved": True}
 
 
 @app.get("/api/llm/models")

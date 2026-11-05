@@ -516,6 +516,64 @@ def generate_ics_content(notice: Dict[str, Any], lang: str = "ko") -> str:
     return "\r\n".join(lines)
 
 
+PLACEHOLDER = {
+    "ko": "(미입력)",
+    "zh": "(未填写)",
+    "en": "(not provided)",
+}
+
+NO_INVENTION = (
+    " 제공되지 않은 정보(이름, 학번, 연락처, 수상경력, 소속 등)는 절대 추측하거나 만들어내지 마세요. "
+    "값이 없으면 그 자리에 '(미입력)'이라고만 표기하세요."
+)
+
+
+def _identity(profile: Dict[str, Any], lang: str = "ko") -> Dict[str, Any]:
+    """Use only what the user actually filled in — never invent personal data."""
+    ph = PLACEHOLDER.get(lang, PLACEHOLDER["ko"])
+    name = str(profile.get("name") or "").strip()
+    sid = str(profile.get("student_id") or "").strip()
+    dept = str(profile.get("department") or "").strip()
+    campus = str(profile.get("campus") or "").strip()
+    grade = profile.get("grade")
+    gpa = profile.get("gpa")
+
+    missing = []
+    if not name:
+        missing.append("name")
+    if not sid:
+        missing.append("student_id")
+    if not dept:
+        missing.append("department")
+
+    who_parts = []
+    if campus:
+        who_parts.append(f"{campus}캠퍼스")
+    if dept:
+        who_parts.append(dept)
+    if grade:
+        who_parts.append(f"{grade}학년")
+    who_parts.append(name or ph)
+
+    detail_parts = [f"학번: {sid}" if sid else f"학번: {ph}"]
+    if gpa not in (None, ""):
+        detail_parts.append(f"평점: {gpa}/4.5")
+
+    return {
+        "who": " ".join(who_parts),
+        "detail": ", ".join(detail_parts),
+        "name": name or ph,
+        "name_raw": name,
+        "sid": sid or ph,
+        "sid_raw": sid,
+        "dept_raw": dept,
+        "campus": campus,
+        "grade": grade,
+        "gpa": gpa,
+        "missing": missing,
+    }
+
+
 def generate_polite_email_agent(
     notice: Dict[str, Any], profile: Dict[str, Any], custom_question: str = ""
 ) -> Dict[str, Any]:
@@ -523,11 +581,8 @@ def generate_polite_email_agent(
     email = notice.get("email") or "knu@kangwon.ac.kr"
     phone = notice.get("phone", "033-250-6114")
     title_ko = notice.get("title_ko") or notice.get("title", "")
-    user_dept = profile.get("department", "첨단AI공학부")
-    user_grade = profile.get("grade", 3)
-    user_gpa = profile.get("gpa", 3.8)
-    user_name = profile.get("name", "김강원")
-    user_id = profile.get("student_id", "202411234")
+    ident = _identity(profile)
+    ph = PLACEHOLDER["ko"]
 
     q_text = (
         custom_question.strip()
@@ -538,18 +593,23 @@ def generate_polite_email_agent(
     sys_prompt = (
         "당신은 강원대학교 학생을 위한 행정 문의 이메일 작성 비서입니다. "
         "실제 공고문 내용과 담당 부서 정보를 바탕으로 한국 대학 행정실에 보낼 정중하고 명확한 경어 이메일 본문을 작성하세요."
+        + NO_INVENTION
     )
     user_prompt = (
         f"공고명: {title_ko}\n"
         f"담당부서: {dept} ({phone}, {email})\n"
         f"공고 요약: {notice.get('summary_ko', '')}\n"
-        f"학생 정보: 강원대학교 {profile.get('campus', '춘천')}캠퍼스 {user_dept} {user_grade}학년 {user_name} (학번: {user_id}, 평점: {user_gpa})\n"
+        f"학생 정보(사용자가 직접 입력한 값만): {ident['who']} ({ident['detail']})\n"
         f"문의 내용: {q_text}\n\n"
-        "곧바로 복사해 발송할 수 있는 정중한 이메일 본문만 출력해 주세요."
+        "곧바로 복사해 발송할 수 있는 정중한 이메일 본문만 출력해 주세요. "
+        "서명에는 위 학생 정보만 사용하고, 없는 정보는 '(미입력)'으로 두세요."
     )
 
     llm_res = call_llm(sys_prompt, user_prompt, temperature=0.25, max_tokens=600)
-    subject = f"[문의] {title_ko[:40]} 관련 문의드립니다 ({user_dept} {user_id} {user_name})"
+    subject = (
+        f"[문의] {title_ko[:40]} 관련 문의드립니다 "
+        f"({ident['dept_raw'] or ph} {ident['sid']} {ident['name']})"
+    )
 
     if llm_res["ok"] and len(llm_res["text"]) > 60:
         body = llm_res["text"]
@@ -558,15 +618,15 @@ def generate_polite_email_agent(
         att_list = ", ".join(a["name"] for a in notice.get("attachments", [])[:2]) or "관련 서류"
         body = (
             f"안녕하십니까, {dept} 담당자님.\n"
-            f"강원대학교 {profile.get('campus', '춘천')}캠퍼스 {user_dept} {user_grade}학년에 재학 중인 {user_name}(학번: {user_id})입니다.\n\n"
+            f"강원대학교 {ident['who']}입니다. (학번: {ident['sid']} / 소속: {ident['dept_raw'] or ph})\n\n"
             f"학교 홈페이지 공지사항에 게시된 『{title_ko}』 공고를 확인하고 신청을 준비하던 중 문의사항이 있어 메일 드립니다.\n\n"
-            f"1. 공고문에 안내된 자격 요건(현재 평점 {user_gpa}/4.5) 및 제출 기한({notice.get('deadline', '')})을 확인하였습니다.\n"
+            f"1. 공고문에 안내된 자격 요건 및 제출 기한({notice.get('deadline', '')})을 확인하였습니다.\n"
             f"2. {q_text}\n"
             f"3. 첨부해주신 서식({att_list})을 작성하여 기한 내에 제출하고자 하는데, 추가 유의사항이 있는지 확인 부탁드립니다.\n\n"
             f"바쁘신 와중에도 읽어주셔서 감사드리며, 답변 기다리겠습니다.\n\n"
             f"감사합니다.\n"
-            f"{user_name} 올림\n"
-            f"(학번: {user_id} / 소속: {user_dept})"
+            f"{ident['name']} 올림\n"
+            f"(학번: {ident['sid']} / 소속: {ident['dept_raw'] or ph})"
         )
         engine = "Built-in Template Engine"
 
@@ -577,6 +637,8 @@ def generate_polite_email_agent(
         "subject": subject,
         "body": body,
         "engine": engine,
+        "missing_fields": ident["missing"],
+        "identity_used": {"name": ident["name_raw"], "student_id": ident["sid_raw"]},
     }
 
 
@@ -585,21 +647,21 @@ def generate_application_draft_agent(
 ) -> Dict[str, Any]:
     title_ko = notice.get("title_ko") or notice.get("title", "")
     body_ko = (notice.get("body", "") + "\n" + notice.get("attachment_extracted_text", ""))[:1800]
-    user_dept = profile.get("department", "첨단AI공학부")
-    user_grade = profile.get("grade", 3)
-    user_gpa = profile.get("gpa", 3.8)
-    user_name = profile.get("name", "김강원")
-    user_id = profile.get("student_id", "202411234")
+    ident = _identity(profile)
+    ph = PLACEHOLDER["ko"]
 
     sys_prompt = (
         "당신은 강원대학교 장학금·공모전·학사 프로그램 지원서 작성을 돕는 AI 에이전트입니다. "
         "실제 공고문 내용에 맞춰 곧바로 제출 서식(.hwp)에 붙여넣을 수 있는 구체적이고 설득력 있는 한국어 지원서/계획서 초안(약 500~600자)을 작성하세요."
+        + NO_INVENTION
+        + " 학력·경력·수상 실적을 새로 지어내지 말고, 입력된 신상 정보와 공고문 내용만 근거로 쓰세요."
     )
     user_prompt = (
         f"공고명: {title_ko}\n"
         f"공고 본문 요약 및 추출 원문:\n{body_ko}\n\n"
-        f"지원자: 강원대학교 {profile.get('campus', '춘천')}캠퍼스 {user_dept} {user_grade}학년 {user_name} (GPA {user_gpa}/4.5)\n\n"
-        "위 공고의 목적과 평가 기준에 정확히 부합하는: 1) 신청인 기본사항, 2) 지원동기 및 문제의식, 3) 구체적 실행/학업 계획 초안을 작성해 주세요."
+        f"지원자(사용자가 직접 입력한 값만): {ident['who']} ({ident['detail']})\n\n"
+        "위 공고의 목적과 평가 기준에 정확히 부합하는: 1) 신청인 기본사항, 2) 지원동기 및 문제의식, 3) 구체적 실행/학업 계획 초안을 작성해 주세요. "
+        "없는 정보는 '(미입력)'으로 남기고 추측하지 마세요."
     )
 
     llm_res = call_llm(sys_prompt, user_prompt, temperature=0.3, max_tokens=800)
@@ -609,16 +671,16 @@ def generate_application_draft_agent(
     else:
         draft = (
             f"[신청서/계획서 초안 — {title_ko}]\n"
-            f"• 소속: 강원대학교 {profile.get('campus', '춘천')}캠퍼스 {user_dept} {user_grade}학년\n"
-            f"• 성명 / 학번: {user_name} ({user_id}) / 평점: {user_gpa} / 4.5\n"
+            f"• 소속: 강원대학교 {ident['who']}\n"
+            f"• 성명 / 학번: {ident['name']} ({ident['sid']})\n"
             f"──────────────────────────────────────────────\n\n"
             f"1. 지원동기 및 배경\n"
-            f"강원대학교 {user_dept}에서 전공 역량을 쌓으며 실제 캠퍼스와 지역사회의 문제를 AI 및 소프트웨어 기술로 해결하는 데 깊은 관심을 가져왔습니다. "
-            f"이번 『{title_ko}』의 취지인 '{notice.get('summary_ko', '')}'에 깊이 공감하여 지원하게 되었습니다.\n\n"
+            f"이번 『{title_ko}』의 취지인 '{notice.get('summary_ko', '')}'에 공감하여 지원하게 되었습니다. "
+            f"(구체적인 동기·경험은 지원자가 직접 보완해 주세요.)\n\n"
             f"2. 핵심 아이디어 및 활동/학업 계획\n"
-            f"- 목표: 학내외 구성원들이 겪는 정보 탐색 및 문서 처리의 숨은 비용(시간·에너지)을 줄이는 AI 자동화 워크플로우 구축\n"
-            f"- 실행 방안: 재학 중 습득한 전공 지식과 해커톤 프로젝트 경험을 바탕으로 실사용 가능한 프로토타입을 고도화하고, 결과물을 학내 구성원들과 공유하겠습니다.\n"
-            f"- 기대 효과: 선발 이후 성실히 학업 및 프로젝트를 완수하여 강원대학교의 우수 인재로서 실질적인 성과를 도출하겠습니다."
+            f"- 목표: 공고의 평가 기준에 맞춰 학업·활동 계획을 구체화하겠습니다.\n"
+            f"- 실행 방안: (지원자의 실제 경험을 바탕으로 작성 필요)\n"
+            f"- 기대 효과: (작성 필요)\n"
         )
         engine = "Built-in Template Engine"
 
@@ -628,4 +690,6 @@ def generate_application_draft_agent(
         "draft": draft,
         "attachments": notice.get("attachments", []),
         "engine": engine,
+        "missing_fields": ident["missing"],
+        "identity_used": {"name": ident["name_raw"], "student_id": ident["sid_raw"]},
     }
