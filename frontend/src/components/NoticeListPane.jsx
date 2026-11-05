@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
-import {
-  Search,
-  X,
-  Bookmark,
-  FileText,
-  Clock,
-  CheckCircle2,
-  AlertCircle,
-  MinusCircle,
-} from 'lucide-react';
+import { Search, X, Bookmark, FileText, Clock } from 'lucide-react';
+
+const STATUS = {
+  eligible: { dot: 'bg-emerald-500', text: 'text-emerald-700', key: 'badgeEligible' },
+  conditional: { dot: 'bg-amber-500', text: 'text-amber-700', key: 'badgeCond' },
+  ineligible: { dot: 'bg-zinc-300', text: 'text-faint', key: 'badgeIneligible' },
+};
 
 export default function NoticeListPane({
   t,
@@ -30,57 +27,32 @@ export default function NoticeListPane({
     return true;
   });
 
-  const renderStatusBadge = (notice) => {
-    if (notice.match_status === 'eligible') {
-      return (
-        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200/80">
-          <CheckCircle2 className="w-3 h-3 text-emerald-600" />
-          <span>{t.badgeEligible}</span>
-        </span>
-      );
-    }
-    if (notice.match_status === 'conditional') {
-      return (
-        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-medium bg-amber-50 text-amber-700 border border-amber-200/80">
-          <AlertCircle className="w-3 h-3 text-amber-600" />
-          <span>{t.badgeCond}</span>
-        </span>
-      );
-    }
-    return (
-      <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-medium bg-zinc-100 text-zinc-500">
-        <MinusCircle className="w-3 h-3 text-zinc-400" />
-        <span>{t.badgeIneligible}</span>
-      </span>
-    );
-  };
-
   return (
-    <section className="w-full md:w-[410px] xl:w-[450px] border-r border-zinc-200 bg-white flex flex-col shrink-0">
-      {/* Search & Sub-filter Header */}
-      <div className="p-3 border-b border-zinc-200 space-y-2.5">
+    <section className="flex w-[340px] shrink-0 flex-col border-r border-line bg-canvas xl:w-[420px]">
+      {/* Search + filters */}
+      <div className="space-y-3 border-b border-line bg-white px-4 pb-3 pt-4">
         <div className="relative">
-          <Search className="w-3.5 h-3.5 text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+          <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-faint" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={t.searchPlaceholder}
-            className="w-full pl-8 pr-8 py-1.5 rounded-lg bg-zinc-100/80 border border-transparent focus:bg-white focus:border-zinc-900 text-xs text-zinc-900 placeholder:text-zinc-400 focus:outline-none transition"
+            className="h-9 w-full rounded-control bg-canvas pl-9 pr-8 text-label text-ink ring-1 ring-line transition placeholder:text-faint focus:bg-white focus:outline-none focus:ring-ink/30"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery('')}
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-700"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-faint transition hover:text-ink"
+              aria-label="clear"
             >
-              <X className="w-3.5 h-3.5" />
+              <X className="h-3.5 w-3.5" />
             </button>
           )}
         </div>
 
-        {/* Sub-filter Pills */}
         <div className="flex items-center justify-between">
-          <div className="inline-flex items-center gap-1">
+          <div className="inline-flex items-center gap-0.5">
             {[
               { key: 'ALL', label: t.filterAll },
               { key: 'ELIGIBLE', label: t.filterEligible },
@@ -89,28 +61,24 @@ export default function NoticeListPane({
               <button
                 key={tab.key}
                 onClick={() => setSubFilter(tab.key)}
-                className={`px-2 py-1 rounded-md text-[11px] font-medium transition ${
+                className={`h-7 rounded-chip px-2 text-meta font-medium transition ${
                   subFilter === tab.key
-                    ? 'bg-zinc-900 text-white'
-                    : 'text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900'
+                    ? 'bg-ink text-white'
+                    : 'text-muted hover:bg-accent-soft hover:text-ink'
                 }`}
               >
                 {tab.label}
               </button>
             ))}
           </div>
-          <span className="text-[11px] text-zinc-400 tabular-nums">
-            {filteredNotices.length}
-          </span>
+          <span className="text-meta tabular-nums text-faint">{filteredNotices.length}</span>
         </div>
       </div>
 
-      {/* Notice Feed List */}
-      <div className="flex-1 overflow-y-auto divide-y divide-zinc-100">
+      {/* Feed */}
+      <div className="flex-1 overflow-y-auto">
         {filteredNotices.length === 0 ? (
-          <div className="p-12 text-center text-xs text-zinc-400">
-            {t.emptyList}
-          </div>
+          <div className="p-12 text-center text-label text-faint">{t.emptyList}</div>
         ) : (
           filteredNotices.map((n) => {
             const title = n[`title_${lang}`] || n.title_ko || n.title;
@@ -120,39 +88,44 @@ export default function NoticeListPane({
             const isSaved = savedIds.includes(n.id);
             const prog = progressMap[n.id] || 'none';
             const hasHwpText = Boolean(n.attachment_extracted_text);
+            const status = STATUS[n.match_status] || STATUS.ineligible;
 
             return (
-              <div
+              <article
                 key={n.id}
                 onClick={() => onSelect(n.id)}
-                className={`p-3.5 cursor-pointer transition relative group ${
-                  isSelected
-                    ? 'bg-zinc-900/[0.04]'
-                    : 'hover:bg-zinc-50'
-                } ${n.match_status === 'ineligible' ? 'opacity-60' : ''}`}
+                className={`group relative cursor-pointer border-b border-line px-4 py-3.5 transition ${
+                  isSelected ? 'bg-white' : 'hover:bg-white/70'
+                } ${n.match_status === 'ineligible' ? 'opacity-70' : ''}`}
               >
-                {/* Left Active Indicator Bar */}
                 {isSelected && (
-                  <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-zinc-950" />
+                  <span className="absolute inset-y-0 left-0 w-[2px] bg-ink" />
                 )}
 
-                {/* Top Meta Row */}
-                <div className="flex items-center justify-between gap-2 mb-1.5">
-                  <div className="flex items-center gap-1.5 flex-wrap">
-                    {renderStatusBadge(n)}
-                    <span className="px-1.5 py-0.5 rounded text-[11px] font-medium bg-zinc-100 text-zinc-700">
-                      {n.category}
-                    </span>
+                {/* meta row */}
+                <div className="mb-1.5 flex items-center justify-between gap-2">
+                  <div className="flex min-w-0 items-center gap-1.5 text-meta">
+                    <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${status.dot}`} />
+                    <span className={`font-medium ${status.text}`}>{t[status.key]}</span>
+                    <span className="text-line">|</span>
+                    <span className="truncate text-faint">{n.category}</span>
                     {hasHwpText && (
-                      <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium bg-zinc-900 text-white">
-                        <FileText className="w-2.5 h-2.5" />
-                        <span>{t.badgeHwp}</span>
+                      <span
+                        title={t.badgeHwp}
+                        className="inline-flex shrink-0 items-center gap-0.5 rounded-[5px] bg-accent-soft px-1 py-0.5 text-[10px] font-medium text-muted ring-1 ring-line"
+                      >
+                        <FileText className="h-2.5 w-2.5" />
+                        HWP
                       </span>
                     )}
                   </div>
 
-                  <div className="flex items-center gap-1.5 shrink-0">
-                    <span className="text-[11px] font-semibold text-zinc-700 tabular-nums">
+                  <div className="flex shrink-0 items-center gap-1">
+                    <span
+                      className={`text-meta font-semibold tabular-nums ${
+                        n.d_day === '마감' ? 'text-faint' : 'text-ink'
+                      }`}
+                    >
                       {n.d_day}
                     </span>
                     <button
@@ -161,56 +134,56 @@ export default function NoticeListPane({
                         e.stopPropagation();
                         onToggleSave(n.id);
                       }}
-                      className={`p-1 rounded hover:bg-zinc-200/70 transition ${
-                        isSaved
-                          ? 'text-zinc-950'
-                          : 'text-zinc-300 opacity-0 group-hover:opacity-100'
+                      className={`grid h-6 w-6 place-items-center rounded-md transition hover:bg-accent-soft ${
+                        isSaved ? 'text-ink' : 'text-faint opacity-0 group-hover:opacity-100'
                       }`}
                       title="Bookmark"
                     >
                       <Bookmark
-                        className="w-3.5 h-3.5"
+                        className="h-3.5 w-3.5"
                         fill={isSaved ? 'currentColor' : 'none'}
                       />
                     </button>
                   </div>
                 </div>
 
-                {/* Title */}
-                <h3 className="text-[13px] font-semibold text-zinc-950 leading-snug line-clamp-2 mb-1">
+                {/* title */}
+                <h3
+                  className={`mb-1 line-clamp-2 text-[13.5px] leading-[1.45] tracking-[-0.01em] ${
+                    isSelected ? 'font-semibold text-ink' : 'font-medium text-ink/90'
+                  }`}
+                >
                   {title}
                 </h3>
 
-                {/* Summary */}
-                <p className="text-xs text-zinc-500 line-clamp-2 leading-relaxed mb-2">
-                  {summary}
-                </p>
+                {/* summary */}
+                {summary && (
+                  <p className="mb-2 line-clamp-1 text-label leading-5 text-muted">{summary}</p>
+                )}
 
-                {/* Bottom Row */}
-                <div className="flex items-center justify-between text-[11px] text-zinc-400">
-                  <span className="truncate font-medium text-zinc-600 max-w-[210px]">
-                    {benefit}
-                  </span>
-                  <div className="flex items-center gap-2 shrink-0">
+                {/* footer */}
+                <div className="flex items-center gap-2 text-meta">
+                  <span className="truncate font-medium text-muted">{benefit}</span>
+                  <span className="ml-auto flex shrink-0 items-center gap-2 text-faint">
                     {prog !== 'none' && (
                       <span
-                        className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${
+                        className={`rounded-[5px] px-1.5 py-0.5 text-[10px] font-medium ${
                           prog === 'done'
-                            ? 'bg-emerald-100 text-emerald-800'
-                            : 'bg-amber-100 text-amber-800'
+                            ? 'bg-emerald-50 text-emerald-700'
+                            : 'bg-amber-50 text-amber-700'
                         }`}
                       >
                         {prog === 'done' ? t.progDone : t.progPrep}
                       </span>
                     )}
-                    <span>{n.author}</span>
+                    <span className="max-w-[92px] truncate">{n.author}</span>
                     <span className="inline-flex items-center gap-0.5 tabular-nums">
-                      <Clock className="w-3 h-3" />
+                      <Clock className="h-2.5 w-2.5" />
                       {n.saved_minutes}m
                     </span>
-                  </div>
+                  </span>
                 </div>
-              </div>
+              </article>
             );
           })
         )}
@@ -218,4 +191,3 @@ export default function NoticeListPane({
     </section>
   );
 }
-

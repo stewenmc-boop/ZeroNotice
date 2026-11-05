@@ -18,7 +18,13 @@ const DEFAULT_PROFILE = {
 };
 
 export default function App() {
-  const [lang, setLang] = useState(() => localStorage.getItem('zn_lang') || 'ko');
+  const [lang, setLang] = useState(() => {
+    const fromUrl = new URLSearchParams(window.location.search).get('lang');
+    const supported = ['ko', 'zh', 'en'];
+    if (fromUrl && supported.includes(fromUrl)) return fromUrl;
+    const saved = localStorage.getItem('zn_lang');
+    return supported.includes(saved) ? saved : 'ko';
+  });
   const [category, setCategory] = useState('ALL');
   const [onlyEligible, setOnlyEligible] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');

@@ -3,8 +3,60 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
   body {
-    letter-spacing: -0.012em;
+    @apply bg-white text-ink antialiased;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: #d4d4d8;
+  }
+
+  *:focus-visible {
+    outline: 2px solid rgba(24, 24, 27, 0.35);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+}
+
+@layer components {
+  /* one hairline instead of stacked borders */
+  .hairline {
+    @apply border-line;
+  }
+
+  .seg {
+    @apply inline-flex items-center rounded-control bg-accent-soft p-0.5 ring-1 ring-line/80;
+  }
+
+  .seg-item {
+    @apply h-7 rounded-[8px] px-2.5 text-meta font-medium text-muted transition;
+  }
+
+  .seg-item-active {
+    @apply bg-white text-ink shadow-card;
+  }
+
+  .field {
+    @apply h-9 w-full rounded-control border border-line bg-white px-2.5 text-label font-medium text-ink transition;
+    @apply focus:border-ink/40 focus:outline-none;
+  }
+
+  .icon-btn {
+    @apply inline-grid h-8 w-8 place-items-center rounded-control text-muted ring-1 ring-line transition;
+    @apply hover:text-ink hover:ring-ink/25;
   }
 }
 
@@ -12,9 +64,10 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* quiet scrollbars */
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
@@ -24,25 +77,28 @@
   border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #a1a1aa;
+  background: #c4c4cc;
 }
 
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
-  height: 4px;
+  height: 3px;
   background: #e4e4e7;
   border-radius: 999px;
 }
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 14px;
-  height: 14px;
+  width: 13px;
+  height: 13px;
   border-radius: 50%;
-  background: #09090b;
+  background: #18181b;
   cursor: pointer;
   border: 2px solid #ffffff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
+pre {
+  font-variant-ligatures: none;
+}
