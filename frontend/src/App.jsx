@@ -4,7 +4,7 @@ import TopNavbar from './components/TopNavbar';
 import SidebarFilter from './components/SidebarFilter';
 import NoticeListPane from './components/NoticeListPane';
 import NoticeDetailPane from './components/NoticeDetailPane';
-import { UrlParseModal, GroqConfigModal } from './components/Modals';
+import { UrlParseModal, LlmConfigModal } from './components/Modals';
 
 const DEFAULT_PROFILE = {
   campus: '춘천',
@@ -58,12 +58,19 @@ export default function App() {
 
   const [notices, setNotices] = useState([]);
   const [stats, setStats] = useState(null);
-  const [groqStatus, setGroqStatus] = useState({ configured: false, model: 'llama-3.3-70b-versatile' });
+  const [llmStatus, setLlmStatus] = useState({
+    configured: false,
+    provider: 'openrouter',
+    label: 'OpenRouter',
+    model: '',
+  });
   const [selectedId, setSelectedId] = useState('knu-real-02');
   const [loading, setLoading] = useState(false);
 
   const [urlModalOpen, setUrlModalOpen] = useState(false);
-  const [groqModalOpen, setGroqModalOpen] = useState(false);
+  const [groqModalOpen, setGroqModalOpen] = useState(
+    () => new URLSearchParams(window.location.search).get('modal') === 'llm'
+  );
 
   const t = I18N[lang] || I18N.ko;
 
@@ -96,7 +103,7 @@ export default function App() {
         const data = await res.json();
         setNotices(data.notices || []);
         setStats(data.stats || null);
-        if (data.groq) setGroqStatus(data.groq);
+        setLlmStatus(data.llm || data.groq);
       } catch (err) {
         console.error('Failed to fetch notices:', err);
       } finally {
@@ -189,7 +196,7 @@ export default function App() {
         lang={lang}
         setLang={setLang}
         stats={stats}
-        groqStatus={groqStatus}
+        llmStatus={llmStatus}
         onOpenUrlModal={() => setUrlModalOpen(true)}
         onOpenGroqModal={() => setGroqModalOpen(true)}
       />
@@ -248,13 +255,13 @@ export default function App() {
         onClose={() => setUrlModalOpen(false)}
       />
 
-      {/* Groq LPU Config Modal */}
-      <GroqConfigModal
+      {/* AI model connection modal */}
+      <LlmConfigModal
         t={t}
-        groqStatus={groqStatus}
+        llmStatus={llmStatus}
         open={groqModalOpen}
         onClose={() => setGroqModalOpen(false)}
-        onSaved={(newGroq) => setGroqStatus(newGroq)}
+        onSaved={(next) => setLlmStatus(next)}
       />
     </div>
   );

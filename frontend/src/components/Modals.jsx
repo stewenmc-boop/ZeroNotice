@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Link2, Cpu, FileText, Download, Sparkles } from 'lucide-react';
 
 export function UrlParseModal({ t, lang, profile, open, onClose }) {
@@ -143,100 +143,228 @@ export function UrlParseModal({ t, lang, profile, open, onClose }) {
   );
 }
 
-export function GroqConfigModal({ t, groqStatus, open, onClose, onSaved }) {
-  const [apiKey, setApiKey] = useState('');
-  const [model, setModel] = useState(
-    groqStatus?.model || 'llama-3.3-70b-versatile'
+export function LlmConfigModal({ t, llmStatus, open, onClose, onSaved }) {
+  const providers = llmStatus?.providers?.length
+    ? llmStatus.providers
+    : [
+        { id: 'openrouter', label: 'OpenRouter', base_url: 'https://openrouter.ai/api/v1', default_model: 'deepseek/deepseek-chat-v3.1:free' },
+        { id: 'openai', label: 'OpenAI', base_url: 'https://api.openai.com/v1', default_model: 'gpt-4o-mini' },
+        { id: 'groq', label: 'Groq', base_url: 'https://api.groq.com/openai/v1', default_model: 'llama-3.3-70b-versatile' },
+        { id: 'custom', label: 'Custom', base_url: '', default_model: '' },
+      ];
+
+  const [provider, setProvider] = useState(llmStatus?.provider || 'openrouter');
+  const [baseUrl, setBaseUrl] = useState(
+    llmStatus?.base_url || 'https://openrouter.ai/api/v1'
   );
+  const [model, setModel] = useState(llmStatus?.model || '');
+  const [apiKey, setApiKey] = useState('');
+  const [models, setModels] = useState([]);
+  const [loadingModels, setLoadingModels] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState('');
+
+  // When opened without a pinned model, pull the provider's live model list.
+  useEffect(() => {
+    if (!open || model) return undefined;
+    let cancelled = false;
+    setLoadingModels(true);
+    fetch(`/api/llm/models?provider=${encodeURIComponent(provider)}&free_only=true`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (cancelled || !data.ok || !data.models?.length) return;
+        setModels(data.models);
+      })
+      .catch(() => {})
+      .finally(() => {
+        if (!cancelled) setLoadingModels(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, provider]);
 
   if (!open) return null;
 
+  const applyProvider = (pid) => {
+    setProvider(pid);
+    const meta = providers.find((p) => p.id === pid);
+    if (meta) {
+      setBaseUrl(meta.base_url || '');
+      setModel(meta.default_model || '');
+    }
+    setModels([]);
+    setError('');
+  };
+
+  const loadModels = async () => {
+    setLoadingModels(true);
+    setError('');
+    try {
+      const res = await fetch(
+        `/api/llm/models?provider=${encodeURIComponent(provider)}&free_only=true`
+      );
+      const data = await res.json();
+      if (data.ok && data.models?.length) {
+        setModels(data.models);
+        if (!data.models.includes(model)) setModel(data.models[0]);
+      } else {
+        setError(data.error || 'no models');
+      }
+    } catch (err) {
+      setError(String(err));
+    } finally {
+      setLoadingModels(false);
+    }
+  };
+
   const handleSave = async () => {
     setSaving(true);
+    setError('');
     try {
-      const res = await fetch('/api/config/groq', {
+      const res = await fetch('/api/config/llm', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ api_key: apiKey, model }),
+        body: JSON.stringify({
+          api_key: apiKey,
+          model,
+          provider,
+          base_url: baseUrl,
+        }),
       });
       const data = await res.json();
-      onSaved(data.groq);
+      onSaved(data.llm || data.groq);
       onClose();
     } catch (err) {
-      console.error('Failed to save Groq config:', err);
+      setError(String(err));
     } finally {
       setSaving(false);
     }
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-ink/40 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-white rounded-card border border-line shadow-pop w-full max-w-md overflow-hidden">
-        <div className="px-5 py-4 border-b border-line flex items-center justify-between">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/40 p-4 backdrop-blur-sm">
+      <div className="w-full max-w-lg overflow-hidden rounded-card border border-line bg-white shadow-pop">
+        <div className="flex items-center justify-between border-b border-line px-5 py-4">
           <div className="flex items-center gap-2">
-            <Cpu className="w-4 h-4 text-ink" />
-            <h2 className="text-title font-bold text-ink">
-              {t.groqModalTitle}
-            </h2>
+            <Cpu className="h-4 w-4 text-ink" />
+            <h2 className="text-title font-semibold text-ink">{t.llmTitle}</h2>
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-control text-faint hover:text-ink hover:bg-zinc-100"
+            className="rounded-control p-1 text-faint hover:bg-zinc-100 hover:text-ink"
           >
-            <X className="w-4 h-4" />
+            <X className="h-4 w-4" />
           </button>
         </div>
 
-        <div className="p-5 space-y-4">
-          <p className="text-label text-muted leading-relaxed">
-            {t.groqModalDesc}
-          </p>
+        <div className="space-y-4 p-5">
+          <p className="text-label leading-relaxed text-muted">{t.llmDesc}</p>
 
-          <div className="space-y-3 text-label">
+          <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block font-medium text-zinc-700 mb-1">
-                GROQ_API_KEY
+              <label className="mb-1 block text-meta font-medium text-zinc-600">
+                {t.llmProvider}
+              </label>
+              <select
+                value={provider}
+                onChange={(e) => applyProvider(e.target.value)}
+                className="field"
+              >
+                {providers.map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {p.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="mb-1 block text-meta font-medium text-zinc-600">
+                {t.llmApiKey}
               </label>
               <input
                 type="password"
                 value={apiKey}
                 onChange={(e) => setApiKey(e.target.value)}
-                placeholder="gsk_..."
-                className="w-full rounded-control border border-line px-3 py-2 font-mono text-label focus:outline-none focus:border-ink/40"
+                placeholder="sk-or-v1-..."
+                className="field font-mono"
               />
-            </div>
-
-            <div>
-              <label className="block font-medium text-zinc-700 mb-1">
-                Groq Model
-              </label>
-              <select
-                value={model}
-                onChange={(e) => setModel(e.target.value)}
-                className="w-full rounded-control border border-line px-3 py-2 text-label font-medium focus:outline-none focus:border-ink/40"
-              >
-                <option value="llama-3.3-70b-versatile">
-                  llama-3.3-70b-versatile (Recommended)
-                </option>
-                <option value="llama-3.1-8b-instant">
-                  llama-3.1-8b-instant (Ultra Fast)
-                </option>
-              </select>
             </div>
           </div>
 
-          <div className="flex items-center justify-end gap-2 pt-2">
+          <div>
+            <label className="mb-1 block text-meta font-medium text-zinc-600">
+              {t.llmBaseUrl}
+            </label>
+            <input
+              type="text"
+              value={baseUrl}
+              onChange={(e) => setBaseUrl(e.target.value)}
+              placeholder="https://openrouter.ai/api/v1"
+              className="field font-mono"
+            />
+          </div>
+
+          <div>
+            <div className="mb-1 flex items-center justify-between">
+              <label className="text-meta font-medium text-zinc-600">{t.llmModel}</label>
+              <button
+                type="button"
+                onClick={loadModels}
+                disabled={loadingModels}
+                className="text-meta font-medium text-ink underline-offset-2 hover:underline disabled:opacity-50"
+              >
+                {loadingModels ? '...' : t.btnLoadModels}
+              </button>
+            </div>
+            <input
+              type="text"
+              value={model}
+              onChange={(e) => setModel(e.target.value)}
+              list="zn-model-list"
+              placeholder="deepseek/deepseek-chat-v3.1:free"
+              className="field font-mono"
+            />
+            <datalist id="zn-model-list">
+              {models.map((m) => (
+                <option key={m} value={m} />
+              ))}
+            </datalist>
+            {models.length > 0 && (
+              <div className="mt-2 flex max-h-24 flex-wrap gap-1 overflow-y-auto">
+                {models.slice(0, 12).map((m) => (
+                  <button
+                    key={m}
+                    type="button"
+                    onClick={() => setModel(m)}
+                    className={`rounded-chip px-1.5 py-0.5 text-[10px] transition ${
+                      m === model
+                        ? 'bg-ink text-white'
+                        : 'bg-accent-soft text-muted hover:text-ink'
+                    }`}
+                  >
+                    {m.replace(':free', '')}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <p className="text-meta leading-5 text-faint">{t.llmHint}</p>
+          {error && <p className="text-meta text-amber-700">{error}</p>}
+
+          <div className="flex items-center justify-end gap-2 pt-1">
             <button
               onClick={onClose}
-              className="px-3 py-1.5 rounded-control border border-line text-label font-medium text-zinc-600 hover:text-ink"
+              className="rounded-control border border-line px-3 py-1.5 text-label font-medium text-zinc-600 hover:text-ink"
             >
               {t.btnCancel}
             </button>
             <button
               onClick={handleSave}
               disabled={saving}
-              className="px-4 py-1.5 rounded-control bg-ink hover:bg-ink/90 text-white text-label font-medium"
+              className="rounded-control bg-ink px-4 py-1.5 text-label font-medium text-white hover:bg-ink/90 disabled:opacity-50"
             >
               {saving ? '...' : t.btnSave}
             </button>
@@ -247,3 +375,5 @@ export function GroqConfigModal({ t, groqStatus, open, onClose, onSaved }) {
   );
 }
 
+// backward compatibility for older imports
+export const GroqConfigModal = LlmConfigModal;

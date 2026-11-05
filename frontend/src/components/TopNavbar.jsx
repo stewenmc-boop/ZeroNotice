@@ -12,7 +12,7 @@ export default function TopNavbar({
   lang,
   setLang,
   stats,
-  groqStatus,
+  llmStatus,
   onOpenUrlModal,
   onOpenGroqModal,
 }) {
@@ -69,15 +69,15 @@ export default function TopNavbar({
 
         <button
           onClick={onOpenGroqModal}
-          title={t.btnGroq}
+          title={llmStatus?.configured ? `${llmStatus?.model}` : t.btnGroq}
           aria-label={t.btnGroq}
           className="inline-flex h-8 items-center gap-1.5 rounded-control px-2.5 text-label font-medium text-muted ring-1 ring-line transition hover:text-ink hover:ring-ink/25"
         >
           <Cpu className="h-3.5 w-3.5" />
-          <span>Groq</span>
+          <span>{llmStatus?.label || "AI"}</span>
           <span
             className="h-1.5 w-1.5 rounded-full"
-            style={{ background: groqStatus?.configured ? '#10b981' : '#d4d4d8' }}
+            style={{ background: llmStatus?.configured ? '#10b981' : '#d4d4d8' }}
           />
         </button>
 

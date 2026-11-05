@@ -4,7 +4,7 @@
 **2026 KNU AI HACKATHON "Zero to One"** 출품작. 주제: 캠퍼스의 "숨은 비용(시간·에너지·금전·불안)"을 AI로 0에 가깝게.
 
 > 이 파일은 에이전트/협업자를 위한 프로젝트 메모리다. 저장소 상태가 바뀌면 갱신할 것.
-> 마지막 갱신: 2026-11-05 20:20 (HEAD `39a9b85`)
+> 마지막 갱신: 2026-11-05 21:30
 
 ---
 
@@ -48,11 +48,11 @@ python app.py                                # / 가 dist/index.html 로 서빙�
 
 ```
 app.py                  FastAPI 라우팅(7 endpoint) + 정적 서빙
-agent.py                Groq 호출, 자격 판정 규칙, .ics/메일/지원서 생성, 비용 추정
+agent.py                LLM 호출(OpenRouter/OpenAI/Groq/Custom), 자격 판정 규칙, .ics/메일/지원서 생성, 비용 추정
 scraper.py              게시판 상세 파싱, .hwp/.hwpx 텍스트 추출, 데이터 로드
 data/real_knu_notices.json    실제 공지 22건 (수동/스크립트 수집 스냅샷)
 data/fallback_notices.json   오프라인 데모용 대체 데이터
-data/user_logs.json          사용 기록 8건 — 코드에서 참조되지 않음(발표 자료용)
+data/user_logs.json          실측 템플릿(빈 슬롯) — 코드 미참조, docs/measurement-protocol.md 참고
 frontend/src/           React 18 + Vite 5 + Tailwind + lucide-react
   App.jsx               3-pane 워크스페이스, /api/notices 호출, localStorage 상태
   components/           TopNavbar / SidebarFilter / NoticeListPane / NoticeDetailPane / Modals
@@ -73,8 +73,10 @@ static/index.html       구 버전 단일 파일 UI (dist 없을 때 폴백)
 
 | Method | Path | Body | 응답 핵심 |
 |---|---|---|---|
-| GET | `/api/status` | – | `{status, groq:{configured,model}, time}` |
-| POST | `/api/config/groq` | `{api_key, model}` | 런타임 키 주입(메모리만, 저장 안 함) |
+| GET | `/api/status` | – | `{status, llm:{configured,provider,label,base_url,model,providers[]}, time}` (`groq` 는 호환용 별칭) |
+| POST | `/api/config/llm` | `{api_key, model, provider, base_url}` | 런타임 키/제공자 주입(메모리만) |
+| POST | `/api/config/groq` | 위와 동일 | 레거시 별칭 |
+| GET | `/api/llm/models?provider=&free_only=` | – | 제공자 모델 목록(10분 캐시, OpenRouter는 `:free`만) |
 | POST | `/api/notices` | 프로필 | `{synced_at, live_portal_connected, notices[], stats}` |
 | GET | `/api/agent/ics/{notice_id}?lang=` | – | `text/calendar` 파일 |
 | POST | `/api/agent/email` | `{notice_id, profile, custom_question, lang}` | `{department,email,phone,subject,body,engine}` |
@@ -102,7 +104,7 @@ benefit_krw, title_{ko,zh,en}, summary_{ko,zh,en}, rules, has_hwp_extracted`
 1. **자격 판정은 LLM이 아니라 코드로.** `agent.evaluate_real_notice()`의 규칙 비교가 유일한 판정 근거. LLM은 요약/작문만.
 2. **3개 언어 필드 동시 유지**: `verdict_{ko,zh,en}`, `title_*`, `summary_*`. 새 공지 추가 시 3개 언어 모두 채울 것.
 3. **키는 절대 커밋 금지.** `.env`는 gitignore 처리됨. `RUNTIME_CONFIG`는 메모리만, 재시작 시 소실.
-4. **LLM 실패 시 폴백 필수.** `call_groq_llm()`이 `ok:False`면 템플릿 문구로 대체하고 `engine` 필드에 실제 엔진을 표기한다(데모 중 거짓 표기 금지).
+4. **LLM 실패 시 폴백 필수.** `call_llm()`이 `ok:False`면 템플릿 문구로 대체하고 `engine` 필드에 실제 엔진을 표기한다(데모 중 거짓 표기 금지).
 5. **비용 수치의 출처를 밝힐 것.** `saved_minutes = clamp(chars/350 + (hwp?3.5:1.0), min 2.0)` — 공지당 **추정치**다. 발표에서는 "추정 공식"임을 명시하고, 실측(사용자 타이머)과 섞지 말 것.
 
 ---
@@ -111,8 +113,8 @@ benefit_krw, title_{ko,zh,en}, summary_{ko,zh,en}, rules, has_hwp_extracted`
 
 | P | 문제 | 근거/영향 |
 |---|---|---|
-| P0 | `GROQ_API_KEY` 비어 있음 → 메일/지원서/요약이 전부 템플릿 폴백 | `.env` 확인. "AI가 실제로 생성" 데모가 무너짐 |
-| P0 | `data/user_logs.json` 8건이 전부 동일 타임스탬프·동일 수치(120.8분/₩4,180,000)·`Guest User` | 실제 사용 기록으로 오인되면 표절/조작 리스크. 실측으로 교체하거나 "가상 시나리오"로 명시 |
+| P0 | `LLM_API_KEY` 비어 있음(기본 OpenRouter) → 메일/지원서/요약이 전부 템플릿 폴백 | `.env` 또는 UI의 AI 버튼으로 키 주입. "AI가 실제로 생성" 데모가 무너짐 |
+| P0 | 실사용 측정값이 아직 없음(`user_logs.json` 은 템플릿) | `docs/measurement-protocol.md` 로 3명 before/after 측정 후 채울 것 |
 | P0 | README의 "실시간 연동"은 과장 — `sync_live_knu_notices()`는 게시판 접속 여부만 확인하고 **정적 JSON을 반환** | 교수 심사위원이 "새 공지가 올라오면?" 질문 시 방어 필요 |
 | P1 | 배포 URL 없음(localhost만) | 제출 권장 항목, 데모 리스크 |
 | P1 | `frontend/dist`가 소스와 어긋날 수 있음 | 코드 수정 후 `npm run build` 필수 |

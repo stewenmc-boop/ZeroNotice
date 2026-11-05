@@ -8,50 +8,196 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-RUNTIME_CONFIG = {
-    "groq_api_key": os.getenv("GROQ_API_KEY", "").strip(),
-    "groq_model": os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile").strip(),
+# ---------------------------------------------------------------------------
+# LLM layer: any OpenAI-compatible endpoint (OpenRouter / OpenAI / Groq / custom)
+# ---------------------------------------------------------------------------
+PROVIDERS: Dict[str, Dict[str, str]] = {
+    "openrouter": {
+        "label": "OpenRouter",
+        "base_url": "https://openrouter.ai/api/v1",
+        "default_model": "",
+        "keys_url": "https://openrouter.ai/keys",
+    },
+    "openai": {
+        "label": "OpenAI",
+        "base_url": "https://api.openai.com/v1",
+        "default_model": "gpt-4o-mini",
+        "keys_url": "https://platform.openai.com/api-keys",
+    },
+    "groq": {
+        "label": "Groq",
+        "base_url": "https://api.groq.com/openai/v1",
+        "default_model": "llama-3.3-70b-versatile",
+        "keys_url": "https://console.groq.com/keys",
+    },
+    "custom": {
+        "label": "Custom",
+        "base_url": "",
+        "default_model": "",
+        "keys_url": "",
+    },
 }
 
 
-def set_runtime_groq_key(api_key: str, model: Optional[str] = None) -> Dict[str, Any]:
-    RUNTIME_CONFIG["groq_api_key"] = api_key.strip()
-    if model:
-        RUNTIME_CONFIG["groq_model"] = model.strip()
-    return {
-        "configured": bool(RUNTIME_CONFIG["groq_api_key"]),
-        "model": RUNTIME_CONFIG["groq_model"],
-    }
+def _env_key() -> str:
+    for name in ("LLM_API_KEY", "OPENROUTER_API_KEY", "OPENAI_API_KEY", "GROQ_API_KEY"):
+        value = os.getenv(name, "").strip()
+        if value:
+            return value
+    return ""
 
 
-def get_groq_status() -> Dict[str, Any]:
-    key = RUNTIME_CONFIG["groq_api_key"] or os.getenv("GROQ_API_KEY", "").strip()
+def _initial_provider() -> str:
+    explicit = os.getenv("LLM_PROVIDER", "").strip().lower()
+    if explicit in PROVIDERS:
+        return explicit
+    if os.getenv("OPENROUTER_API_KEY", "").strip():
+        return "openrouter"
+    if os.getenv("OPENAI_API_KEY", "").strip():
+        return "openai"
+    return "groq"
+
+
+RUNTIME_CONFIG: Dict[str, str] = {
+    "provider": _initial_provider(),
+    "base_url": os.getenv("LLM_BASE_URL", "").strip(),
+    "api_key": _env_key(),
+    "model": os.getenv("LLM_MODEL", "").strip(),
+}
+
+if not RUNTIME_CONFIG["base_url"]:
+    RUNTIME_CONFIG["base_url"] = PROVIDERS[RUNTIME_CONFIG["provider"]]["base_url"]
+if not RUNTIME_CONFIG["model"]:
+    RUNTIME_CONFIG["model"] = PROVIDERS[RUNTIME_CONFIG["provider"]]["default_model"]
+
+_MODELS_CACHE: Dict[str, Any] = {"ts": 0.0, "provider": "", "models": []}
+
+
+def get_llm_status() -> Dict[str, Any]:
+    key = RUNTIME_CONFIG["api_key"] or _env_key()
+    provider = RUNTIME_CONFIG["provider"]
+    meta = PROVIDERS.get(provider, {})
     return {
         "configured": bool(key),
-        "model": RUNTIME_CONFIG["groq_model"],
+        "provider": provider,
+        "label": meta.get("label", provider),
+        "base_url": RUNTIME_CONFIG["base_url"],
+        "model": RUNTIME_CONFIG["model"],
+        "providers": [
+            {
+                "id": pid,
+                "label": p["label"],
+                "base_url": p["base_url"],
+                "default_model": p["default_model"],
+            }
+            for pid, p in PROVIDERS.items()
+        ],
     }
 
 
-def call_groq_llm(
+def set_runtime_llm(
+    api_key: Optional[str] = None,
+    model: Optional[str] = None,
+    provider: Optional[str] = None,
+    base_url: Optional[str] = None,
+) -> Dict[str, Any]:
+    if provider and provider in PROVIDERS:
+        RUNTIME_CONFIG["provider"] = provider
+        RUNTIME_CONFIG["base_url"] = (base_url or PROVIDERS[provider]["base_url"] or "").strip()
+        RUNTIME_CONFIG["model"] = (model or PROVIDERS[provider]["default_model"] or "").strip()
+    else:
+        if base_url:
+            RUNTIME_CONFIG["base_url"] = base_url.strip()
+        if model:
+            RUNTIME_CONFIG["model"] = model.strip()
+    if api_key is not None and api_key.strip():
+        RUNTIME_CONFIG["api_key"] = api_key.strip()
+    return get_llm_status()
+
+
+def _headers() -> Dict[str, str]:
+    key = RUNTIME_CONFIG["api_key"] or _env_key()
+    headers = {
+        "Authorization": f"Bearer {key}",
+        "Content-Type": "application/json",
+    }
+    if RUNTIME_CONFIG["provider"] == "openrouter":
+        headers["HTTP-Referer"] = "https://github.com/stewenmc-boop/ZeroNotice"
+        headers["X-Title"] = "ZeroNotice · KNU AI Hackathon"
+    return headers
+
+
+def _engine_label(model: str, latency_ms: int) -> str:
+    label = PROVIDERS.get(RUNTIME_CONFIG["provider"], {}).get("label", RUNTIME_CONFIG["provider"])
+    return f"{label} · {model} · {latency_ms}ms"
+
+
+def _auto_model() -> str:
+    """When no model is pinned, use the first live free model of the provider."""
+    try:
+        found = list_models(provider=RUNTIME_CONFIG["provider"], free_only=True)
+        if found.get("ok") and found.get("models"):
+            return found["models"][0]
+    except Exception:
+        pass
+    return "gpt-4o-mini"
+
+
+def _candidate_models(primary: str) -> List[str]:
+    provider_meta = PROVIDERS.get(RUNTIME_CONFIG["provider"], {})
+    raw = [
+        primary,
+        provider_meta.get("default_model", ""),
+        "meta-llama/llama-3.3-70b-instruct:free",
+        "gpt-4o-mini",
+        "llama-3.1-8b-instant",
+    ]
+    seen: List[str] = []
+    for item in raw:
+        if item and item not in seen:
+            seen.append(item)
+    return seen
+
+
+def call_llm(
     system_prompt: str,
     user_prompt: str,
     temperature: float = 0.25,
     max_tokens: int = 900,
 ) -> Dict[str, Any]:
-    api_key = RUNTIME_CONFIG["groq_api_key"] or os.getenv("GROQ_API_KEY", "").strip()
+    """Call the configured OpenAI-compatible endpoint; never raises."""
+    api_key = RUNTIME_CONFIG["api_key"] or _env_key()
     if not api_key:
-        return {"ok": False, "text": "", "latency_ms": 0, "model": "built-in"}
+        return {
+            "ok": False,
+            "text": "",
+            "latency_ms": 0,
+            "model": "built-in",
+            "provider": "none",
+            "error": "no api key",
+            "engine": "Built-in Template Engine",
+        }
 
-    start = time.time()
-    headers = {
-        "Authorization": f"Bearer {api_key}",
-        "Content-Type": "application/json",
-    }
-    for model_name in [RUNTIME_CONFIG["groq_model"], "llama-3.1-8b-instant"]:
+    base = (RUNTIME_CONFIG["base_url"] or "").rstrip("/")
+    if not base:
+        return {
+            "ok": False,
+            "text": "",
+            "latency_ms": 0,
+            "model": RUNTIME_CONFIG["model"],
+            "provider": RUNTIME_CONFIG["provider"],
+            "error": "no base url",
+            "engine": "Built-in Template Engine",
+        }
+
+    last_error = ""
+    primary_model = RUNTIME_CONFIG["model"] or _auto_model()
+    for model_name in _candidate_models(primary_model):
+        started = time.time()
         try:
             resp = requests.post(
-                "https://api.groq.com/openai/v1/chat/completions",
-                headers=headers,
+                f"{base}/chat/completions",
+                headers=_headers(),
                 json={
                     "model": model_name,
                     "messages": [
@@ -61,20 +207,86 @@ def call_groq_llm(
                     "temperature": temperature,
                     "max_tokens": max_tokens,
                 },
-                timeout=8.0,
+                timeout=40.0,
             )
             if resp.status_code == 200:
-                content = resp.json()["choices"][0]["message"]["content"].strip()
-                return {
-                    "ok": True,
-                    "text": content,
-                    "latency_ms": int((time.time() - start) * 1000),
-                    "model": model_name,
-                }
-        except Exception:
-            continue
+                payload = resp.json()
+                content = (payload["choices"][0]["message"].get("content") or "").strip()
+                if content:
+                    latency = int((time.time() - started) * 1000)
+                    return {
+                        "ok": True,
+                        "text": content,
+                        "latency_ms": latency,
+                        "model": model_name,
+                        "provider": RUNTIME_CONFIG["provider"],
+                        "engine": _engine_label(model_name, latency),
+                    }
+                last_error = "empty completion"
+            else:
+                last_error = f"HTTP {resp.status_code}: {resp.text[:180]}"
+        except Exception as exc:  # noqa: BLE001 - demo must never crash
+            last_error = f"{type(exc).__name__}: {str(exc)[:160]}"
 
-    return {"ok": False, "text": "", "latency_ms": 0, "model": "built-in"}
+    return {
+        "ok": False,
+        "text": "",
+        "latency_ms": 0,
+        "model": primary_model,
+        "provider": RUNTIME_CONFIG["provider"],
+        "error": last_error,
+        "engine": "Built-in Template Engine",
+    }
+
+
+def list_models(provider: Optional[str] = None, free_only: bool = True) -> Dict[str, Any]:
+    """Fetch the provider's /models list (cached for 10 minutes)."""
+    prov = provider if provider in PROVIDERS else RUNTIME_CONFIG["provider"]
+    base = (PROVIDERS.get(prov, {}).get("base_url") or "").rstrip("/")
+    if not base:
+        return {"ok": False, "models": [], "error": "no base url for provider"}
+
+    now = time.time()
+    if (
+        _MODELS_CACHE["models"]
+        and _MODELS_CACHE["provider"] == prov
+        and now - _MODELS_CACHE["ts"] < 600
+    ):
+        return {"ok": True, "models": _MODELS_CACHE["models"], "cached": True}
+
+    key = RUNTIME_CONFIG["api_key"] or _env_key()
+    headers = {"Content-Type": "application/json"}
+    if key:
+        headers["Authorization"] = f"Bearer {key}"
+    try:
+        resp = requests.get(f"{base}/models", headers=headers, timeout=15.0)
+        if resp.status_code != 200:
+            return {"ok": False, "models": [], "error": f"HTTP {resp.status_code}"}
+        payload = resp.json()
+        raw_items = payload.get("data") or payload.get("models") or []
+        ids = []
+        for item in raw_items:
+            if isinstance(item, dict) and item.get("id"):
+                ids.append(str(item["id"]))
+            elif isinstance(item, str):
+                ids.append(item)
+        if prov == "openrouter" and free_only:
+            free = [i for i in ids if i.endswith(":free")]
+            ids = free or ids
+        ids = sorted(set(ids))
+        _MODELS_CACHE.update({"ts": now, "provider": prov, "models": ids})
+        return {"ok": True, "models": ids, "count": len(ids)}
+    except Exception as exc:  # noqa: BLE001
+        return {"ok": False, "models": [], "error": str(exc)[:160]}
+
+
+# --- backward-compatible aliases (older app.py imports) ---------------------
+def set_runtime_groq_key(api_key: str, model: Optional[str] = None) -> Dict[str, Any]:
+    return set_runtime_llm(api_key=api_key, model=model)
+
+
+def get_groq_status() -> Dict[str, Any]:
+    return get_llm_status()
 
 
 def evaluate_real_notice(
@@ -288,12 +500,12 @@ def generate_polite_email_agent(
         "곧바로 복사해 발송할 수 있는 정중한 이메일 본문만 출력해 주세요."
     )
 
-    groq_res = call_groq_llm(sys_prompt, user_prompt, temperature=0.25, max_tokens=600)
+    llm_res = call_llm(sys_prompt, user_prompt, temperature=0.25, max_tokens=600)
     subject = f"[문의] {title_ko[:40]} 관련 문의드립니다 ({user_dept} {user_id} {user_name})"
 
-    if groq_res["ok"] and len(groq_res["text"]) > 60:
-        body = groq_res["text"]
-        engine = f"Groq LPU ({groq_res['model']} · {groq_res['latency_ms']}ms)"
+    if llm_res["ok"] and len(llm_res["text"]) > 60:
+        body = llm_res["text"]
+        engine = llm_res["engine"]
     else:
         att_list = ", ".join(a["name"] for a in notice.get("attachments", [])[:2]) or "관련 서류"
         body = (
@@ -342,10 +554,10 @@ def generate_application_draft_agent(
         "위 공고의 목적과 평가 기준에 정확히 부합하는: 1) 신청인 기본사항, 2) 지원동기 및 문제의식, 3) 구체적 실행/학업 계획 초안을 작성해 주세요."
     )
 
-    groq_res = call_groq_llm(sys_prompt, user_prompt, temperature=0.3, max_tokens=800)
-    if groq_res["ok"] and len(groq_res["text"]) > 100:
-        draft = groq_res["text"]
-        engine = f"Groq LPU ({groq_res['model']} · {groq_res['latency_ms']}ms)"
+    llm_res = call_llm(sys_prompt, user_prompt, temperature=0.3, max_tokens=800)
+    if llm_res["ok"] and len(llm_res["text"]) > 100:
+        draft = llm_res["text"]
+        engine = llm_res["engine"]
     else:
         draft = (
             f"[신청서/계획서 초안 — {title_ko}]\n"

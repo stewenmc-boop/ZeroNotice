@@ -10,13 +10,14 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from agent import (
-    call_groq_llm,
+    call_llm,
     filter_and_evaluate_notices,
     generate_application_draft_agent,
     generate_ics_content,
     generate_polite_email_agent,
-    get_groq_status,
-    set_runtime_groq_key,
+    get_llm_status,
+    list_models,
+    set_runtime_llm,
 )
 from scraper import (
     load_real_knu_notices,
@@ -64,24 +65,44 @@ class ParseUrlRequest(BaseModel):
     lang: str = "ko"
 
 
-class GroqConfigRequest(BaseModel):
-    api_key: str
-    model: Optional[str] = "llama-3.3-70b-versatile"
+class LlmConfigRequest(BaseModel):
+    api_key: Optional[str] = ""
+    model: Optional[str] = ""
+    provider: Optional[str] = ""
+    base_url: Optional[str] = ""
 
 
 @app.get("/api/status")
 def api_status() -> Dict[str, Any]:
+    llm = get_llm_status()
     return {
         "status": "ok",
-        "groq": get_groq_status(),
+        "llm": llm,
+        "groq": llm,  # backward compatibility for older UI builds
         "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
     }
 
 
+@app.post("/api/config/llm")
+def api_set_llm(req: LlmConfigRequest) -> Dict[str, Any]:
+    status = set_runtime_llm(
+        api_key=req.api_key or None,
+        model=req.model or None,
+        provider=req.provider or None,
+        base_url=req.base_url or None,
+    )
+    return {"status": "updated", "llm": status, "groq": status}
+
+
 @app.post("/api/config/groq")
-def api_set_groq(req: GroqConfigRequest) -> Dict[str, Any]:
-    set_runtime_groq_key(req.api_key, req.model)
-    return {"status": "updated", "groq": get_groq_status()}
+def api_set_groq(req: LlmConfigRequest) -> Dict[str, Any]:
+    # legacy endpoint kept so old clients keep working
+    return api_set_llm(req)
+
+
+@app.get("/api/llm/models")
+def api_llm_models(provider: str = Query(""), free_only: bool = Query(True)) -> Dict[str, Any]:
+    return list_models(provider=provider or None, free_only=free_only)
 
 
 @app.post("/api/notices")
@@ -92,7 +113,8 @@ def api_get_notices(req: ProfileRequest) -> Dict[str, Any]:
     return {
         "synced_at": sync_res["synced_at"],
         "live_portal_connected": sync_res["live_portal_connected"],
-        "groq": get_groq_status(),
+        "llm": get_llm_status(),
+        "groq": get_llm_status(),
         **evaluated,
     }
 
@@ -163,10 +185,10 @@ def api_parse_live_url(req: ParseUrlRequest) -> Dict[str, Any]:
         f"[내 조건] {p.campus}캠퍼스 / {p.status} / {p.department} {p.grade}학년 / GPA {p.gpa} / 소득 {p.income_bracket}구간\n\n"
         f"[공고 내용]\n{content_to_analyze[:3000]}"
     )
-    groq_res = call_groq_llm(sys_prompt, user_prompt, temperature=0.2, max_tokens=700)
-    if groq_res["ok"] and len(groq_res["text"]) > 40:
-        summary = groq_res["text"]
-        engine = f"Groq LPU ({groq_res['model']} · {groq_res['latency_ms']}ms)"
+    llm_res = call_llm(sys_prompt, user_prompt, temperature=0.2, max_tokens=700)
+    if llm_res["ok"] and len(llm_res["text"]) > 40:
+        summary = llm_res["text"]
+        engine = llm_res["engine"]
     else:
         summary = (
             f"✓ 분석 완료 (원문 {len(content_to_analyze)}자 판독)\n"

@@ -61,7 +61,33 @@ npm run build               # 수정 후 반드시 재빌드 → frontend/dist �
 ### 4.3 데모용 옵션
 
 - `?lang=ko` / `?lang=zh` / `?lang=en` — 언어를 URL로 고정 (시연·스크린샷용)
-- 상단 `Groq` 버튼 — 실행 중 API 키 주입 (메모리에만 보관, 저장 안 함)
+- `?modal=llm` — AI 모델 연결 창을 바로 열기
+- 우측 상단 AI 버튼 — 실행 중 API 키 주입 (메모리에만 보관, 저장 안 함)
+
+### 4.4 AI 모델 연결 (OpenRouter · OpenAI 호환)
+
+| 제공자 | Base URL | 비고 |
+|---|---|---|
+| **OpenRouter** | `https://openrouter.ai/api/v1` | `:free` 모델은 무료. 키: <https://openrouter.ai/keys> |
+| **OpenAI** | `https://api.openai.com/v1` | 유료. 키: <https://platform.openai.com/api-keys> |
+| **Groq** | `https://api.groq.com/openai/v1` | 무료 쿼터. 키: <https://console.groq.com/keys> |
+| **Custom** | 직접 입력 | 사내/로컬 OpenAI 호환 엔드포인트(vLLM, Ollama, LM Studio 등) |
+
+세 가지 설정 방법 중 아무거나:
+
+1. **`.env`** — `LLM_PROVIDER` / `LLM_API_KEY` / `LLM_BASE_URL` / `LLM_MODEL` (서버 재시작 필요)
+2. **웹 UI** — 우측 상단 AI 버튼 → 제공자 선택 → 키 입력 → `모델 목록 불러오기` → 모델 선택 → 저장 (재시작 불필요)
+3. **기존 변수** — `GROQ_API_KEY` / `GROQ_MODEL` 도 그대로 인식합니다.
+
+`LLM_MODEL` 을 비워 두면 제공자의 무료 모델 목록에서 첫 번째를 자동 선택합니다.
+
+**문제 해결**
+
+| 증상 | 원인 / 조치 |
+|---|---|
+| `engine` 이 `Built-in Template Engine` | 키 미설정, 401, 429. `/api/status` 의 `llm.configured` 확인 후 키 재입력 |
+| 모델 목록이 비어 있음 | 제공자 `/models` 응답 실패. 모델 ID를 직접 입력 |
+| 응답이 20초 이상 | 무료 모델 혼잡. 더 작은 모델로 변경 |
 
 ---
 
