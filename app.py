@@ -23,6 +23,7 @@ from agent import (
 )
 import notifier
 import reminders
+import storage
 from scraper import (
     load_real_knu_notices,
     parse_knu_detail_url,
@@ -33,6 +34,7 @@ BASE_DIR = Path(__file__).parent
 STATIC_DIR = BASE_DIR / "static"
 FRONTEND_DIST_DIR = BASE_DIR / "frontend" / "dist"
 PROFILE_PATH = BASE_DIR / "data" / "profile.json"
+SETTINGS_PATH = BASE_DIR / "data" / "settings.json"
 FIELDS_PATH = BASE_DIR / "data" / "notice_fields.json"
 IMAGES_PATH = BASE_DIR / "data" / "notice_images.json"
 
@@ -83,6 +85,53 @@ def _load_fields() -> Dict[str, Any]:
         return data if isinstance(data, dict) else {}
     except Exception:
         return {}
+
+
+def _read_settings() -> Dict[str, Any]:
+    if not SETTINGS_PATH.exists():
+        return {}
+    try:
+        with open(SETTINGS_PATH, "r", encoding="utf-8") as fh:
+            data = json.load(fh)
+        return data if isinstance(data, dict) else {}
+    except Exception:
+        return {}
+
+
+def _write_settings(data: Dict[str, Any]) -> None:
+    SETTINGS_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with open(SETTINGS_PATH, "w", encoding="utf-8") as fh:
+        json.dump(data, fh, ensure_ascii=False, indent=2)
+
+
+@app.get("/api/supabase/status")
+def api_supabase_status() -> Dict[str, Any]:
+    return storage.status()
+
+
+@app.get("/api/settings")
+def api_get_settings() -> Dict[str, Any]:
+    settings = _read_settings()
+    if not settings and storage.enabled():
+        settings = storage.load_settings() or {}
+    safe = {k: ("***" if k == "api_key" and v else v) for k, v in settings.items()}
+    return {"settings": safe, "has_key": bool(settings.get("api_key"))}
+
+
+@app.post("/api/settings")
+def api_save_settings(req: Dict[str, Any]) -> Dict[str, Any]:
+    settings = {**_read_settings(), **(req or {})}
+    _write_settings(settings)
+    if storage.enabled():
+        storage.push_settings(settings)
+    if settings.get("api_key") or settings.get("model"):
+        set_runtime_llm(
+            api_key=settings.get("api_key"),
+            model=settings.get("model"),
+            provider=settings.get("provider"),
+            base_url=settings.get("base_url"),
+        )
+    return {"saved": True, "has_key": bool(settings.get("api_key"))}
 
 
 def _load_images() -> Dict[str, Any]:
@@ -194,6 +243,16 @@ def api_set_llm(req: LlmConfigRequest) -> Dict[str, Any]:
         provider=req.provider or None,
         base_url=req.base_url or None,
     )
+    settings = _read_settings()
+    if req.api_key:
+        settings["api_key"] = req.api_key
+    for key in ("model", "provider", "base_url"):
+        value = getattr(req, key, "") or ""
+        if value:
+            settings[key] = value
+    _write_settings(settings)
+    if storage.enabled():
+        storage.push_settings(settings)
     return {"status": "updated", "llm": status, "groq": status}
 
 
@@ -212,7 +271,16 @@ def api_subscriptions() -> Dict[str, Any]:
 def api_subscribe(req: SubscribeRequest) -> Dict[str, Any]:
     if not req.notice_id:
         raise HTTPException(status_code=400, detail="notice_id is required")
-    return reminders.subscribe(req.notice_id, req.subscribed)
+    result = reminders.subscribe(req.notice_id, req.subscribed)
+    if storage.enabled():
+        try:
+            if req.subscribed:
+                storage.push_subscriptions({req.notice_id: {}})
+            else:
+                storage.delete_subscription(req.notice_id)
+        except Exception:
+            pass
+    return result
 
 
 @app.post("/api/subscriptions/run")
@@ -342,6 +410,8 @@ def api_save_profile(req: ProfileStoreRequest) -> Dict[str, Any]:
     PROFILE_PATH.parent.mkdir(parents=True, exist_ok=True)
     with open(PROFILE_PATH, "w", encoding="utf-8") as fh:
         json.dump(merged, fh, ensure_ascii=False, indent=2)
+    if storage.enabled():
+        merged["_supabase"] = storage.push_profile(merged)
     return {"profile": merged, "saved": True}
 
 
@@ -500,6 +570,19 @@ if STATIC_DIR.exists():
 
 @app.on_event("startup")
 def _start_reminder_worker() -> None:
+    try:
+        if storage.enabled():
+            storage.ensure_session()
+            saved = _read_settings() or storage.load_settings() or {}
+            if saved.get("api_key") or saved.get("model"):
+                set_runtime_llm(
+                    api_key=saved.get("api_key"),
+                    model=saved.get("model"),
+                    provider=saved.get("provider"),
+                    base_url=saved.get("base_url"),
+                )
+    except Exception:
+        pass
     try:
         reminders.start_background_worker(load_real_knu_notices, _read_profile)
     except Exception:

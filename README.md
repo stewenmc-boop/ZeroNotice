@@ -147,6 +147,28 @@ SMTP_FROM_NAME=ZeroNotice
 
 ---
 
+## 6.5 Supabase (공유 데이터 + 사용자별 데이터)
+
+데스크톱(.exe/.dmg)으로 배포하면 **공지는 모두가 공유**하고, **프로필·구독·AI 키는 각자**여야 합니다. 그래서 두 층으로 나눴습니다.
+
+| 층 | 테이블 | 접근 |
+|---|---|---|
+| 공유 | `notices`, `notice_fields`, `notice_images`, `attachments` | 누구나 읽기(anon), 쓰기는 service_role만 |
+| 사용자별 | `profiles`, `subscriptions`, `user_settings` | RLS `auth.uid() = user_id` — 자기 행만 |
+
+- 설치본은 **anon key만** 포함하고, 첫 실행 때 Supabase **익명 로그인**으로 `user_id`를 받아 `data/identity.json` 에 저장합니다. 남의 행은 RLS가 막습니다.
+- `service_role` 키는 **절대 배포본에 넣지 않습니다.** 공지 동기화/파일 업로드는 `scripts/sync_supabase.py` 로 소유자 PC에서만 실행합니다.
+- 30일 보관: `purge_expired_notices(30)` 함수 + 야간 cron(선택). 오래된 공지가 지워지면 첨부/추출 캐시도 cascade로 함께 정리됩니다.
+
+```bash
+# 1) Supabase SQL editor 에 supabase/schema.sql 실행
+# 2) Authentication → Providers → Anonymous sign-ins 활성화
+# 3) .env 에 SUPABASE_URL / SUPABASE_ANON_KEY / SUPABASE_SERVICE_KEY 입력
+python scripts/sync_supabase.py --purge     # 공지·첨부 업로드 + 30일 정리
+```
+
+첨부 파일은 Storage 버킷 `attachments/<notice_id>/<filename>` 에 올라가고, 공개 URL로 렌더링됩니다.
+
 ## 7. 프로젝트 구조
 
 ```

@@ -763,7 +763,7 @@ def generate_polite_email_agent(
         "subject": subject,
         "body": body,
         "engine": engine,
-        "has_email": bool(email),
+        "has_email": bool(notice_email),
         "missing_fields": ident["missing"],
         "identity_used": {
             "name": ident["name_raw"],
