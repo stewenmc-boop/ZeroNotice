@@ -1,0 +1,1112 @@
+[
+  {
+    "id": "knu-real-01",
+    "category": "장학",
+    "campus": "ALL",
+    "title": "[국가근로] 동계방학 집중근로 희망근로지 학생 신청 안내",
+    "author": "강릉학생지원과",
+    "posted_date": "2026-10-30",
+    "phone": "033-250-6114",
+    "email": "",
+    "url": "https://kangwon.ac.kr/ko/bbs/721/detail.do?pstSn=2537&pageIndex=1&pageItm=10&searchOrderSort=0&searchGbn=0",
+    "body": "2026년 동계방학 집중근로 프로그램 희망근로지 신청과 관련하여 안내드립니다.\n(재단 홈페이지 공지사항 10.30.(금) 9시 게시 및 대상자 알림톡 발송)\n[동계방학 집중근로 학생 희망근로지 신청]\nㅇ 신청기간: 2026. 10. 30.(금) 9시 ~ 11. 12.(목) 18시\nㅇ 신청방법: 첨부파일 매뉴얼 참고\n- 신청한 희망근로지 순위대로 학생-기관 우선 추천 실시 예정\n- 최소 3개 이상 근로지 선택 필수(3개 미만 선택시 신청완료되지 않음)\nㅇ 우선추천대상자 안내: 2026. 11. 23.(월)\n- 대학 최종 선발 기간: 2026. 11. 23.(월) ~ 12. 11.(금)\nㅇ 근로장학생 선발 결과 공개: 2026. 12. 14.(월)\n※ 우선 추천 대상자 선정시 아래와 같은 데이터를 매칭에 사용하고 있습니다.\n따라서 학생 매칭의 정확성을 위해 확인 후 최신 정보로 업로드 부탁드립니다.\n- 학과정보 대분류(관리자포털 - 학과정보관리)\n- 직전학기 성적\n- 학년 정보\n- 근로 경험(출근부 데이터)\n*  문의: 한국장학센터 콜센터 1599-2290\n붙임 1. 2026년 동계방학 집중근로 희망근로지 신청 매뉴얼(홈페이지)\n2. 2026년 동계방학 집중근로 희망근로지 신청 매뉴얼(앱)\n3. 2026년 동계방학 집중근로 근로장학생 사전 선정기준(안)\n4. 2026년 동계방학 집중근로 참여 대학",
+    "char_count": 677,
+    "attachments": [
+      {
+        "name": "붙임1-1. 2026년 동계방학 집중근로 희망근로지 신청 매뉴얼(홈페이지).pdf",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261030053810365.pdf&path=/bbs/34&fn=붙임1-1. 2026년 동계방학 집중근로 희망근로지 신청 매뉴얼(홈페이지).pdf"
+      },
+      {
+        "name": "붙임1-2. 2026년 동계방학 집중근로 희망근로지 신청 매뉴얼(모바일).pdf",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261030053812863.pdf&path=/bbs/34&fn=붙임1-2. 2026년 동계방학 집중근로 희망근로지 신청 매뉴얼(모바일).pdf"
+      },
+      {
+        "name": "붙임2. 2026년 동계방학 집중근로 근로장학생 사전 선정기준(안).pdf",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261030053814716.pdf&path=/bbs/34&fn=붙임2. 2026년 동계방학 집중근로 근로장학생 사전 선정기준(안).pdf"
+      },
+      {
+        "name": "붙임3. 2026년 동계방학 집중근로 참여 대학.xlsx",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261030053814825.xlsx&path=/bbs/34&fn=붙임3. 2026년 동계방학 집중근로 참여 대학.xlsx"
+      }
+    ],
+    "attachment_extracted_text": "",
+    "deadline": "2026-11-12 18:00",
+    "benefit_label_ko": "동계방학 집중근로 (시급제 장학)",
+    "benefit_label_zh": "寒假集中勤工助学（国家勤工奖学金）",
+    "benefit_label_en": "Winter Intensive National Work-Study",
+    "benefit_krw": 1500000,
+    "title_ko": "[국가근로] 동계방학 집중근로 희망근로지 학생 신청 안내",
+    "title_zh": "[国家勤工] 2026年寒假集中勤工助学意向岗位学生申请通知",
+    "title_en": "[National Work-Study] 2026 Winter Vacation Work-Study Workplace Application",
+    "summary_ko": "한국장학재단 동계방학 집중근로 프로그램 희망근로지(최소 3개 이상) 신청 안내. 직전학기 성적 및 소득분위 기준 적용.",
+    "summary_zh": "韩国奖学财团寒假集中勤工助学项目，需在11月12日18点前在线选择至少3个意向勤工单位（仅限韩国籍本科生）。",
+    "summary_en": "Apply for at least 3 preferred work-study institutions via KOSAF by Nov 12, 18:00 (Domestic students only).",
+    "rules": {
+      "campuses": [
+        "춘천",
+        "삼척",
+        "강릉",
+        "원주"
+      ],
+      "status_allowed": [
+        "undergrad_kr"
+      ],
+      "min_gpa": 1.88,
+      "max_income": 8,
+      "note_ko": "대한민국 국적 학부 재학생 (소득 8구간 이하, 최소 3개 근로지 선택 필수)",
+      "note_zh": "限韩国籍本科在读生（所得分位8区间以下，必选至少3个岗位）",
+      "note_en": "Korean nationals only (Income tier <= 8, select at least 3 workplaces)"
+    },
+    "has_hwp_extracted": false
+  },
+  {
+    "id": "knu-real-02",
+    "category": "장학",
+    "campus": "ALL",
+    "title": "★생활비장학금200만원★ KNU창업장학금(창암장학재단) 장학생 모집(~11/13)",
+    "author": "KNU창업혁신원",
+    "posted_date": "2026-10-27",
+    "phone": "033-250-8967",
+    "email": "khh8997@kangwon.ac.kr",
+    "url": "https://kangwon.ac.kr/ko/bbs/721/detail.do?pstSn=2534&pageIndex=1&pageItm=10&searchOrderSort=0&searchGbn=0",
+    "body": "강원대학교 KNU창업혁신원은 재단법인 창암장학재단의 지원으로\n강원대학교 재학생에게 창업장학금(창암장학재단)을 지원하고자 합니다.\n지원자격에 해당하고 창업에 관심있는 열정 가득한\n장학생을 모집하오니 강원대학교 학생 여러분의 많은 관심과 신청 바랍니다.\n(국가장학금과 중복 신청 지급 가능/ 장학생 선정 이후 요구활동 없음 / 장학금 현금 지급\n창업하지 않아도됨, 아이디어만 제출/ 학점 및 소득분위 요건만 맞으면 누구나 신청가능)\n1. 지원목적\n- 우수한 자질과 바른 인성을 갖춘 학생들에게 장학금을 지원하여 우리 사회의 미래를 이끌어갈 훌륭한 인재 육성\n2. 지원자격\n1-1. 강원대학교 재학생(학부, 대학원생 누구나!!)\n*아이디어만 있다면 OK\n1-2. 전체 학기 성적 평점 평균이 3.5점(4.5만점 기준) 이상인 학생\n1-3. 소득분위 0구간~4구간(한국장학재단 소득분위 기준표 참고)\n3. 지원규모\n: 20명 내외(1인당 200만원 내외)\n4. 선발절차\n: 서류접수(~11/13) -> 서류심사(11월 셋째주) -> 합격자 발표(11/19 예정) -> 장학금 지원(12월 중)\n5. 제출서류 및 방법\n- 제출서류: 장학생 신청서 및 창업아이디어 및 창업활동내역 등 관련 서류 [자세한 사항 공고문 참조]\n- 제출방법: 이메일 제출\nkhh8997@kangwon.ac.kr\n6. 참고사항\n- 자세한 사항은 첨부된 공고문 및 서식 참고\n- 장학생 선정 이후 요구하는 활동, 제출자료 일체 없음(장학금 지급에 필요한 계좌서류 제외)\n- 필수 서류를 빠짐없이 제출하며 미제출로 인한 불이익은 신청자에게 있음\n- 제출기간(시간) 엄수\n- 관련문의: KNU창업혁신원 담당자 (033-250-8967)\n첨부 파일\n1. KNU 창업장학금(창암장학재단) 장학생 모집 공고문\n2. (서식) 2026년 창암장학생(창업활동장학생) 신청서 1부\n3. (서식) 창업아이디어 기획 및 창업활동내역서 1부.",
+    "char_count": 943,
+    "attachments": [
+      {
+        "name": "★붙임1. 2026년 KNU창업장학금(창암장학재단) 장학생 모집 공고_KNU창업혁신원.hwp",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261027043906511.hwp&path=/bbs/34&fn=★붙임1. 2026년 KNU창업장학금(창암장학재단) 장학생 모집 공고_KNU창업혁신원.hwp"
+      },
+      {
+        "name": "★붙임2. [서식1] 2026년 KNU창업장학금(창암장학재단) 신청서_KNU창업혁신원.hwp",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261027043908610.hwp&path=/bbs/34&fn=★붙임2. [서식1] 2026년 KNU창업장학금(창암장학재단) 신청서_KNU창업혁신원.hwp"
+      },
+      {
+        "name": "★붙임3. [서식2] 2026년 KNU창업장학금(창암장학재단) 창업기획안 및 활동내역서_KNU창업혁신원.hwp",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261027043910465.hwp&path=/bbs/34&fn=★붙임3. [서식2] 2026년 KNU창업장학금(창암장학재단) 창업기획안 및 활동내역서_KNU창업혁신원.hwp"
+      }
+    ],
+    "attachment_extracted_text": "[★붙임1. 2026년 KNU창업장학금(창암장학재단) 장학생 모집 공고_KNU창업혁신원.hwp 첨부파일 원문 추출]\nKNU창업장학금(창암장학재단) 장학생 모집 공고\n강원대학교 KNU창업혁신원은 재단법인 창암장학재단의 지원으로 강원대학교 재학생에게 창업장학금을 지원하고자 합니다. 지원 자격에 해당하고 창업활동과 창업에 관심있는 열정 가능한 학생을 모집하오니 강원대학교 학생 여러분의 많은 관심과 신청 바랍니다.  (재단법인 창암장학재단: 2002년 10월 설립(이사장 민희정), 소외되고 어려운 환경에 처한 학생들에게 장학금 지원)\n○ 우수한 자질과 바른 인성을 갖춘 학생들에게 장학금을 지원하여 우리 사회의 미래를 이끌어갈 훌륭한 인재 육성\r\n  ○ 소외되고 어려운 환경에 처한 학생들에게 평등한 교육기회를 제공하여 국가와 사회에 공헌할 수 있는 우수한 인재 육성\r\n\r\n  2. 지원 자격(아래 항목 모두 해당하는 자에 한함)\r\n   1-1. 강원대학교 재학생(대학생, 대학원생)\n휴학생 제외\r\n   1-2. 전체 학기 성적 평점 평균이 3.5점(4.5만점 기준) 이상인 학생\r\n   1-3. 소득분위 0구간 ~ 4구간(한국장학재단 소득분위 기준표 참고)\r\n ※ 2024년, 2025년 KNU창업장학금(창암장학재단 지원) 수혜 학생 제외\r\n\r\n  3. 장학생 혜택: 선정된 장학생에게 창업활동지원금 지원(1인당 200만원 내외)\r\n ※ 국가장학금, 교내장학금 등 모든 장학금과 중복 지급 가능(생활비 명목으로 지급되는 장학금)\r\n\r\n  4. 선발인원: 20명 ※선발인원 및 금액은 재단 사정에 따라 변경될 수 있음\r\n\r\n  5. 선발 및 지원 절차: 서류접수(강원대)\n선정 학생)\r\n   1) 서류 접수: 2026.11.26.(월) ~ 2026.11.13.(금) 23:59 까지 ※ 시간 엄수\r\n   2) 서면심사: 제출서류 및 창업아이디어 및 창업활동내역 서면심사 ※ 발표평가 미실시\r\n   3) 합격자 발표: 2026.1\n선정 학생)\r\n   1) 서류 접수: 2026.11.26.(월) ~ 2026.11.13.(금) 23:59 까지 ※ 시간 엄수\r\n   2) 서면심사: 제출서류 및 창업아이디어 및 창업활동내역 서면심사 ※ 발표평가 미실시\r\n   3) 합격자 발표: 2026.1\n\n[★붙임2. [서식1] 2026년 KNU창업장학금(창암장학재단) 신청서_KNU창업혁신원.hwp 첨부파일 원문 추출]\n[서식1]\r\n창암장학생 신청서(KNU창업장학생)\n본인은 재단법인 창암장학재단 장학생으로 지원합니다.  년     월     일                                                신청인                   (인)                                  재단법인 창암장학재단 귀중\n단점, 가치관, 학교생활 등을 자유롭게 기술해 주십시오.) (창암장학생에 선정되어야 하는 이유에 대해 자세히 기술해 주십시오.)\n※ 제시된 항목을 중심으로 자유롭게 작성하세요. 지면 부족 시 추가로 작성하고, 자필 작성도 됩니다.\n(향후 진로, 꿈, 계획, 기타 하고 싶은 말이 있으면 자유롭게 기술해 주십시오.)\n※ 제시된 항목을 중심으로 자유롭게 작성하세요. 지면 부족 시 추가로 작성하고, 자필 작성도 됩니다.\r\n\r\n동의서\r\n\r\n본인은 재단법인 창암장학재단이 지원하는 장학금 지급 및 학자금 지원사업의 신청자로서, 신청 및 선정과정에서 다음 사항에 성실히 준수하며 위반할 시 장학금 지원이 중단될 수 있음을 이해하였고, 개인정보 수집 및 활용에 동의합니다.\r\n\r\n1. 장학금 지급사업 참여의 의무\r\n본인은 창암장학재",
+    "deadline": "2026-11-13 18:00",
+    "benefit_label_ko": "생활비 장학금 200만원 (중복수혜 가능)",
+    "benefit_label_zh": "生活费奖学金 200万韩元（可叠加）",
+    "benefit_label_en": "2,000,000 KRW Living Stipend (Stackable)",
+    "benefit_krw": 2000000,
+    "title_ko": "★생활비장학금200만원★ KNU창업장학금(창암장학재단) 장학생 모집(~11/13)",
+    "title_zh": "★生活费奖学金200万韩元★ KNU创业奖学金（苍岩奖学财团）招募（~11/13）",
+    "title_en": "★2,000,000 KRW Grant★ KNU Entrepreneurship Scholarship Recruitment (~11/13)",
+    "summary_ko": "실제 창업을 하지 않아도 창업 아이디어만 제출하면 신청 가능. 국가장학금·교내장학금과 중복 수혜 가능한 현금성 장학금 200만원 (20명 선발). 단, 평점 3.5 이상 & 소득분위 0~4구간 필수.",
+    "summary_zh": "无需实际创业，仅提交创业点子即可申请！可与国家/校内奖学金叠加发放200万韩元现金（选拔20人）。硬性门槛：总GPA ≥ 3.5 且所得分位 0~4区间（休学生不可）。",
+    "summary_en": "2,000,000 KRW cash scholarship (stackable with tuition scholarships, 20 recipients). Only an idea proposal is required, but requires GPA >= 3.5 and Income Tier 0–4.",
+    "rules": {
+      "campuses": [
+        "춘천",
+        "삼척",
+        "강릉",
+        "원주"
+      ],
+      "status_allowed": [
+        "undergrad_kr"
+      ],
+      "min_gpa": 3.5,
+      "max_income": 4,
+      "note_ko": "평점 3.5 이상 & 소득분위 0~4구간 필수 (휴학생 제외, 이메일 khh8997@kangwon.ac.kr 제출)",
+      "note_zh": "需满足 GPA ≥ 3.5 且所得分位 0~4区间（休学生不可，邮件提交至 khh8997@kangwon.ac.kr）",
+      "note_en": "Requires GPA >= 3.5 & Income Tier 0–4 (Active students only, email khh8997@kangwon.ac.kr)"
+    },
+    "has_hwp_extracted": true
+  },
+  {
+    "id": "knu-real-03",
+    "category": "장학",
+    "campus": "춘천",
+    "title": "[춘천캠퍼스] 국가장학금 2차 신청자의 대략적인 지급일정 안내",
+    "author": "춘천학생지원과",
+    "posted_date": "2026-10-02",
+    "phone": "033-250-6035",
+    "email": "",
+    "url": "https://kangwon.ac.kr/ko/bbs/721/detail.do?pstSn=2511&pageIndex=1&pageItm=10&searchOrderSort=0&searchGbn=0",
+    "body": "이번학기\n국가장학금 2차 신청(8.12.~9.9.)\n을 한 학생들 대상으로 안내드립니다.\n국가장학금 2차 신청 마감이 학기중이고, 고지서감면 작업은 방학중에 완료되기 때문에 국가장학금 2차 신청자의 경우\n등록금 납부\n한 학생을 대상으로 장학금을 지급하고 있습니다. (고지서 선 감면 불가)\n또한, 한국장학재단에서 국가장학금 2차 신청자 중 승인자의 장학금을 대학에 교부하는 시기는 10월 말~12월 초까지입니다\n재단에서 대학으로 교부된 금액 확인 후 이에 대해 예산편성과 지출 과정을 거쳐야 하는데, 이 과정이 2~3주 가량 소요됩니다.\n재무과 추경예산편성 등으로 지급시기가 더 늦춰질 가능성 또한 존재합니다.\n이에 따라 국장 2차신청자의 가장 빠른 학생지급일정은\n11월 중순(11월 둘째주~셋째주)\n정도로 예상하고 있습니다.\n한국장학재단 심사 진행 정도에 따라 학생 개인별로 지급일정이 다릅니다.\n국가장학금 2차신청을 하신 학생들께서는 여유를 가지고 기다려주시면 감사하겠습니다.",
+    "char_count": 492,
+    "attachments": [],
+    "attachment_extracted_text": "",
+    "deadline": "2026-11-20 18:00",
+    "benefit_label_ko": "국가장학금 2차 지급일정",
+    "benefit_label_zh": "国家奖学金第2批发放日程",
+    "benefit_label_en": "National Scholarship Round 2 Payout Schedule",
+    "benefit_krw": 0,
+    "title_ko": "[춘천캠퍼스] 국가장학금 2차 신청자의 대략적인 지급일정 안내",
+    "title_zh": "[春川校区] 国家奖学金第2次申请者预计发放时间通知",
+    "title_en": "[Chuncheon] Estimated Payout Schedule for 2nd Round National Scholarship Applicants",
+    "summary_ko": "춘천캠퍼스 국가장학금 2차 신청(8.12~9.9) 승인자의 개인 계좌 지급은 11월 중순(둘째~셋째 주) 예정.",
+    "summary_zh": "春川校区第2批国家奖学金申请通过者的个人账户退费预计将于11月中旬（第2~3周）发放。",
+    "summary_en": "Payouts for approved Round 2 National Scholarship applicants at Chuncheon Campus are scheduled for mid-November.",
+    "rules": {
+      "campuses": [
+        "춘천"
+      ],
+      "status_allowed": [
+        "undergrad_kr"
+      ],
+      "min_gpa": 0.0,
+      "max_income": 9,
+      "note_ko": "춘천캠퍼스 국가장학금 2차 신청 완료자 대상 안내",
+      "note_zh": "面向春川校区已完成国家奖学金第2批申请的学生",
+      "note_en": "For Chuncheon Campus Round 2 National Scholarship applicants"
+    },
+    "has_hwp_extracted": false
+  },
+  {
+    "id": "knu-real-05",
+    "category": "장학",
+    "campus": "춘천",
+    "title": "[춘천] 2026-2학기 KNU-SOS 장학금 신청 안내",
+    "author": "춘천학생지원과",
+    "posted_date": "2026-08-28",
+    "phone": "033-250-6034",
+    "email": "knuscholar@kangwon.ac.kr",
+    "url": "https://kangwon.ac.kr/ko/bbs/721/detail.do?pstSn=2479&pageIndex=1&pageItm=10&searchOrderSort=0&searchGbn=0",
+    "body": "2026-2학기 KNU-SOS 장학생 선발 계획을 다음과 같이 안내합니다.\n★ 장학 신청 전 반드시 (붙임1) 안내문을 확인하시길 바랍니다.★\n1. 신청기간: 2026. 9. 1.(화) ~ 12. 18.(금)까지(상시접수)\n2. 신청대상: 다음 아래에 해당하는 자 중 장학사정관이 추천한 자\n(장학사정관: 단과대학 부학장, 학과(부)장, 학과(전공)주임교수, 학생부처장, 학생지원과장)\n① 재학 중 보호자의 실직 또는 파산, 사업체 부도로 인한 사유로 가계가 곤란한 자\n② 재학 중 보호자의 신용회복/개인회생/면책의 진행 또는 그 결정으로 인한 사유로 가계가 곤란한 자\n③ 재학 중 본인 및 가족(부, 모, 형제자매)의 6개월 이상의 장기투병(중증질환, 희귀난치병 질환)으로 인하여 경제사정이 곤란한 자 ※ [붙임2] 참고\n④ 재학 중 자연재해로 인하여 경제사정이 곤란한 자\n⑤ 보호자(부, 모)가 장애인으로 가계가 곤란한 자\n* 경증일 경우 해당학기 소득분위가 6구간 이하인 자(한국장학재단 산정)\n⑥ 재학 중 부모의 사망으로 인하여 가계가 곤란한 자\n⑦ 학생 본인이 근로자로서 부양가족이 3인(본인포함)이상이며 부양기간이 6개월 이상 지속되어 가계경제가 곤란한 자\n** 학생 본인이 보호자(부 또는 모)로 자식을 부양하는 경우 제외\n⑧ 기타 불가피한 사유로 경제적 곤란에 처한 충분한 근거가 입증이 되는 자\n3. 선발대상\n- 장학생 선발 공고일 기준 재학 중인 학부생\n- 직전학기 6학점 이상 이수자 중 직전학기 평점평균 1.5(70점)이상인 자\n4. 제출서류 ※ 자세한 내용은 [붙임 1] p. 3~4 , p. 8\n- 장학 유형별 최초 1회 신청자 필요서류 ①장학사정관 추천서, ②가족관계증명서, ③소득증빙자료, ④세목별 과세증명서, ⑤유형별 증빙서류\n- 동일유형 2회차 신청자 필요서류 ①가족관계증명서, ②소득증빙자료, ③세목별 과세증명서 ※ 그 밖의 서류는 1회차 증빙서류로 갈음함\n※ 서류 제출 시 '귀속연도' 확인\n5. 장학금액: 생활비보조(1인당 100만원)\n6. 신청절차: (학생) 장학사정관 면담 신청 → (장학사정관) 학생 면담 후 추천서 작성 →(학생) K-Cloud 장학신청 및 서류 온라인 제출(파일업로드)\n※ 장학신청 시 '학생 본인계좌' 입력 확인(k-cloud>학부생서비스>교과>학적>신상정보변경>은행정보)\n** 최초 장학 신청 학생은 증빙서류를 구비하여 장학사정관 면담 후 추천서를 받아 K-Cloud 장학신청 및 서류 온라인 제출(파일업로드)하면 됩니다**\n** 동일 유형 2회 신청자의 경우, 가족관계증명서, 소득증빙자료, 세목별 과세증명서만 제출 / 장학사정관 추천서 및 유형별 증빙서류 제출 제외**",
+    "char_count": 1309,
+    "attachments": [
+      {
+        "name": "2026-2학기 KNU-SOS 장학금(붙임1~3).zip",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20260828024504189.zip&path=/bbs/34&fn=2026-2학기 KNU-SOS 장학금(붙임1~3).zip"
+      }
+    ],
+    "attachment_extracted_text": "",
+    "deadline": "2026-12-18 18:00",
+    "benefit_label_ko": "긴급 생활비 장학금 100만원",
+    "benefit_label_zh": "紧急生活补助奖学金 100万韩元",
+    "benefit_label_en": "1,000,000 KRW Emergency Living Grant",
+    "benefit_krw": 1000000,
+    "title_ko": "[춘천] 2026-2학기 KNU-SOS 장학금 신청 안내",
+    "title_zh": "[春川] 2026-2学期 KNU-SOS 紧急经济困难奖学金申请通知（100万韩元）",
+    "title_en": "[Chuncheon] 2026-2 KNU-SOS Emergency Financial Aid Scholarship (1,000,000 KRW)",
+    "summary_ko": "보호자 실직·폐업·장기투병·자연재해 등 갑작스러운 경제적 곤란을 겪는 춘천캠퍼스 학부 재학생(직전학기 6학점 및 평점 1.5 이상)에게 생활비 100만원 지원. 학과장/부학장 추천서 필요.",
+    "summary_zh": "面向因家庭突发经济困难（失业、重病、灾害等）的春川校区本科在读生（上学期修满6学分且GPA ≥ 1.5），发放100万韩元生活补助，需系主任面谈推荐后在K-Cloud上传。",
+    "summary_en": "1,000,000 KRW living support for Chuncheon undergraduates facing sudden financial hardship (GPA >= 1.5). Requires department head recommendation via K-Cloud.",
+    "rules": {
+      "campuses": [
+        "춘천"
+      ],
+      "status_allowed": [
+        "undergrad_kr",
+        "intl"
+      ],
+      "min_gpa": 1.5,
+      "max_income": 6,
+      "note_ko": "춘천캠퍼스 학부 재학생 중 가계곤란 사유 발생자 (평점 1.5 이상, 학과장 추천 필수)",
+      "note_zh": "限春川校区突发经济困难本科生（GPA ≥ 1.5，需系主任推荐信）",
+      "note_en": "Chuncheon undergrads facing sudden financial hardship (GPA >= 1.5)"
+    },
+    "has_hwp_extracted": false
+  },
+  {
+    "id": "knu-real-07",
+    "category": "학사",
+    "campus": "춘천삼척",
+    "title": "2026학년도 겨울계절수업 인하대학교 학점교류 수학 안내(춘천/삼척)",
+    "author": "춘천교육지원과/삼척교육지원과",
+    "posted_date": "2026-10-29",
+    "phone": "033-250-6016",
+    "email": "",
+    "url": "https://kangwon.ac.kr/ko/bbs/720/detail.do?pstSn=2616&pageIndex=1&pageItm=10&searchOrderSort=0&searchGbn=0",
+    "body": "대학 간 학술교류 협정에 따라 2026학년도 겨울 계절수업\n인하대학교 학점 교류\n수학 안내문을 붙임과 같이 안내하오니\n해당 학과에서는 수학을 희망하는 학생을 추천하여 주시기 바랍니다.\n가. 신청자격 :\n징계받은 사실이 없는 재학생\n※ 학사학위취득유예자, 휴학생은 교류 수학 불가\n※ 인하대학교\n의 경우 계절수업\n성적 송부일이 2027.1.18.(월) 이후 예정\n으로\n2027\n년 2\n월 졸업예정자는 신청 불가\n나. 제출기한\n- 춘천캠퍼스: (춘천교육지원과 도착기준) : 2026. 11. 17.(화) 18:00까지(기일엄수)\n▶\n학생\n➜\n소속학과 제출기준\n: 2026. 11. 16.(월\n) 18:00\n까지\n(\n기일엄수\n)\n- 삼척캠퍼스: (삼척교육지원과 도착기준) : 2026. 11. 17.(화) 18:00까지(기일엄수)\n▶ 학생 ➜ 소속학과 제출기준 : 2026. 11. 16.(월\n) 18:00\n까지\n(\n기일엄수\n)\n다. 제출서류 : 수학신청자 명단 및 다른 대학 수학 지원서 각 1부\n라. 제출방법\n-\n춘천캠퍼스 :\n학생\n➜\n학과\n➜\n춘천교육지원과로 제출\n-\n삼척\n캠퍼스 :\n학생\n➜\n학과\n➜ 삼척\n교육지원과로 제출\n붙임 1. 2026학년도 겨울 계절수업 인하대학교 교류수학 운영 안내 1부.\n2. 2026학년도 겨울 계절수업 인하대학교 학점교류 신청자 명단(양식) 1부.\n3. 다른 대학 수학 지원서(본교) 1부. 끝.",
+    "char_count": 688,
+    "attachments": [
+      {
+        "name": "attach_1. 인하대학교 2026학년도 동계 계절학기 학점교류 안내문.hwp",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261029091355606.hwp&path=/bbs/37&fn=attach_1. 인하대학교 2026학년도 동계 계절학기 학점교류 안내문.hwp"
+      },
+      {
+        "name": "attach_2. 인하대학교 학점교류 추천 대상자 명단 양식.xlsx",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261029091355662.xlsx&path=/bbs/37&fn=attach_2. 인하대학교 학점교류 추천 대상자 명단 양식.xlsx"
+      },
+      {
+        "name": "다른 대학 수학 지원서(본교).hwp",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261029091355716.hwp&path=/bbs/37&fn=다른 대학 수학 지원서(본교).hwp"
+      }
+    ],
+    "attachment_extracted_text": "[attach_1. 인하대학교 2026학년도 동계 계절학기 학점교류 안내문.hwp 첨부파일 원문 추출]\n[인하대학교] 2026학년도 동계 계절학기 학점교류 안내문\n개요\r\n  가. 신청 대상: 인하대학교와 학점교류 협약을 체결한 대학의 학부 재학생으로 소속 \r\n                대학의 추천을 받아 본교 계절학기 수강을 희망하는 자\r\n  나. 추천 마감: 2026. 11. 18.(수)까지 (공문 도착 기준일)  ※ 추천 양식 첨부\r\n  다. 주요 일정\r\n    - 강의시간표 공시: 2026. 11. 16.(월) 예정\r\n    - 학번 부여: 2026. 11. 19.(목) 15:00 이후 (학생에게 개별 안내 예정)\r\n\r\n2. 2026학년도 동계 계절학기 주요 일정\n주 4일(금요일 수업없음), 4주 15일 수업\n등록 후 수강포기, 폐강 건에 대한 환불처리 (대상자 별도 안내 예정)\n3. 수강신청 방법\r\n  가. 인터넷 수강신청 (https://sugang.inha.ac.kr)\r\n  나. 모바일 수강신청 (http://m.inha.ac.kr)\r\n  ※ 모바일 수강신청은 사용자 환경에 따라 불안정할 수 있으므로 반드시 보조  \r\n     수단으로만",
+    "deadline": "2026-11-16 18:00",
+    "benefit_label_ko": "타대학 학점교류 (인하대)",
+    "benefit_label_zh": "跨校学分交流（仁荷大学冬季学期）",
+    "benefit_label_en": "Credit Exchange (Inha Univ Winter Session)",
+    "benefit_krw": 0,
+    "title_ko": "2026학년도 겨울계절수업 인하대학교 학점교류 수학 안내(춘천/삼척)",
+    "title_zh": "2026学年度冬季小学期 仁荷大学学分交流修读通知（春川/三陟）",
+    "title_en": "2026 Winter Session Inha University Credit Exchange Notice (Chuncheon/Samcheok)",
+    "summary_ko": "춘천·삼척캠퍼스 재학생 대상 인하대 겨울계절수업 학점교류 신청. 소속 학과 사무실 제출 마감은 11월 16일(월) 18:00 (휴학생 및 2027년 2월 졸업예정자는 신청 불가).",
+    "summary_zh": "面向春川、三陟校区在读本科生开放仁荷大学冬季小学期学分交流。向所属院系提交申请表的截止时间为11月16日18:00（休学生及2027年2月应届毕业生不可申请）。",
+    "summary_en": "Winter credit exchange at Inha University for Chuncheon/Samcheok active undergraduates. Submit to your department by Nov 16, 18:00 (Graduating seniors & students on leave excluded).",
+    "rules": {
+      "campuses": [
+        "춘천",
+        "삼척"
+      ],
+      "status_allowed": [
+        "undergrad_kr",
+        "intl"
+      ],
+      "min_gpa": 0.0,
+      "max_income": 10,
+      "note_ko": "춘천·삼척 재학생 (휴학생 및 2027년 2월 졸업예정자 지원 불가, 11/16 학과 제출)",
+      "note_zh": "限春川·三陟在读生（休学生及2027年2月毕业预定者不可申请，11/16前交至院系）",
+      "note_en": "Chuncheon/Samcheok active students only (No leave of absence or Feb 2027 graduates)"
+    },
+    "has_hwp_extracted": true
+  },
+  {
+    "id": "knu-real-08",
+    "category": "학사",
+    "campus": "삼척",
+    "title": "(삼척캠퍼스) 2027학년도 1학기 부복수전공 신청 안내",
+    "author": "삼척교육지원과",
+    "posted_date": "2026-10-27",
+    "phone": "033-570-6434",
+    "email": "",
+    "url": "https://kangwon.ac.kr/ko/bbs/720/detail.do?pstSn=2613&pageIndex=1&pageItm=10&searchOrderSort=0&searchGbn=0",
+    "body": "(삼척캠퍼스) 2027학년도 1학기 부복수전공 신청 안내\n2027학년도 1학기 부·복수전공 신청 일정 및 선발 기준을 아래와 같이 안내합니다.\n가. 지원자격: 신청 마감일 현재 2개(편입생은 1개) 이상의 정규학기를 이수하였거나, 이수 예정인 재학생 및 휴학생\n※ 제외대상 ① 신청 마감일이 속한 학기에 수료 또는 졸업 예정인 학생 ② 학사학위취득유예 학생\n나. 신청기간:\n2026. 11. 9.(월) 10:00 ~ 11. 19.(목) 18:00\n다. 신청제한: 매학기 부전공 또는 복수전공으로 최대 2개까지 신청 가능\n※ 재학 중 이수할 수 있는 부복수전공의 개수는 제한 없음\n라. 신청방법: K-Cloud > 학부생서비스 > 교과 > 학적 > 부·복수전공 신청 및 확인\n※ 현재 이수중인 부․복수전공 확인: K-Cloud > 학부생서비스 > 교과 > 학적 > 학생정보조회 화면의 입학/졸업 탭\n붙임 1. 2027학년도 1학기 부·복수전공 신청 안내문 1부.\n2. 2027학년도 1학기 부·복수전공 이수예정자 선발 기준(춘천, 삼척) 각 1부.\n3. K-Cloud 부·복수전공 신청 방법 1부.\n끝.",
+    "char_count": 560,
+    "attachments": [
+      {
+        "name": "(붙임1) 2027학년도 1학기 부·복수전공 신청 안내.pdf",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261027110231973.pdf&path=/bbs/37&fn=(붙임1) 2027학년도 1학기 부·복수전공 신청 안내.pdf"
+      },
+      {
+        "name": "(붙임2) 2027학년도 1학기 부·복수전공 이수예정자 선발인원 및 사정기준(삼척).xlsx",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261027110235981.xlsx&path=/bbs/37&fn=(붙임2) 2027학년도 1학기 부·복수전공 이수예정자 선발인원 및 사정기준(삼척).xlsx"
+      },
+      {
+        "name": "(붙임2) 2027학년도 1학기 부·복수전공 이수예정자 선발인원 및 사정기준(춘천).xlsx",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261027110239378.xlsx&path=/bbs/37&fn=(붙임2) 2027학년도 1학기 부·복수전공 이수예정자 선발인원 및 사정기준(춘천).xlsx"
+      },
+      {
+        "name": "(붙임3) K-Cloud 부복수전공 신청 방법.pdf",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261027110243083.pdf&path=/bbs/37&fn=(붙임3) K-Cloud 부복수전공 신청 방법.pdf"
+      }
+    ],
+    "attachment_extracted_text": "",
+    "deadline": "2026-11-19 18:00",
+    "benefit_label_ko": "부·복수전공 신청 (삼척)",
+    "benefit_label_zh": "辅修/双学位申请（三陟校区）",
+    "benefit_label_en": "Minor & Double Major Application (Samcheok)",
+    "benefit_krw": 0,
+    "title_ko": "(삼척캠퍼스) 2027학년도 1학기 부복수전공 신청 안내",
+    "title_zh": "（三陟校区）2027学年度第1学期 辅修及双学位申请通知",
+    "title_en": "(Samcheok Campus) 2027-1 Minor & Double Major Application Notice",
+    "summary_ko": "삼척캠퍼스 2개 정규학기 이상 이수(예정) 재학생·휴학생 대상 부·복수전공 K-Cloud 온라인 신청 (11/9 ~ 11/19 18:00).",
+    "summary_zh": "仅限三陟校区修满2个正规学期以上的在读生及休学生，于11月9日至11月19日18:00通过 K-Cloud 申请辅修或双学位。",
+    "summary_en": "For Samcheok Campus students who completed 2+ regular semesters. Apply via K-Cloud between Nov 9 and Nov 19, 18:00.",
+    "rules": {
+      "campuses": [
+        "삼척"
+      ],
+      "status_allowed": [
+        "undergrad_kr",
+        "intl",
+        "leave_grad"
+      ],
+      "min_gpa": 0.0,
+      "max_income": 10,
+      "note_ko": "삼척캠퍼스 전용 공지 (춘천·강릉·원주캠퍼스 해당 없음)",
+      "note_zh": "三陟校区专属通知（春川·江陵·原州校区无需查看）",
+      "note_en": "Samcheok Campus only"
+    },
+    "has_hwp_extracted": false
+  },
+  {
+    "id": "knu-real-09",
+    "category": "학사",
+    "campus": "춘천",
+    "title": "[수정] 2026학년도 겨울 계절수업 수업시간표 및 수강신청 안내(춘천캠퍼스)",
+    "author": "춘천교육지원과",
+    "posted_date": "2026-10-26",
+    "phone": "033-250-6016",
+    "email": "knuacad@kangwon.ac.kr",
+    "url": "https://kangwon.ac.kr/ko/bbs/720/detail.do?pstSn=2611&pageIndex=1&pageItm=10&searchOrderSort=0&searchGbn=0",
+    "body": "2026학년도 겨울 계절수업 수업시간표 및 수강신청 일정을 안내하오니\n공지된 사항을 빠짐없이 숙지하여 주시기 바랍니다.\n1. 계절수업 기간 :\n2026. 12. 24.(목) ~ 2027. 1. 15.(금) 15일간\n※ 매주 월~금요일(주5회, 3주) 시간편성(토요일 및 공휴일은 제외)\n2. 계절수업 수강신청 주요 일정\n(1) 수강신청\n일시 : 2026. 11. 3.(화) 10:00 ~ 11. 5.(목) 18:00\n대상 : 가. 당해 학기 재학 중인 자\n나. 휴학생도 수강신청 가능\n다. 타대학 학점교류 허가생\n(2) 수강신청 변경(신청도 가능)\n일시 : 2026. 11. 10.(화) 10:00 ~ 11. 11.(수) 18:00\n※ 신청방법, 제한학점 등 수강신청과 동일\n(3) 고지서 출력 및 납부기간\n일시 : 2026. 11. 17.(화) 09:00 ~ 11. 19.(목) 17:00\n※ 은행방문 납부자는 은행마감시간(16:00)까지 가능\n※ 미납시 수강신청 내역 자동 삭제\n▶ K-Cloud>학부생서비스>교과>수업>계절학기 수강료 납부고지서\n(4) 수강료 미납에 따른 잔여석 수강신청\n일시 : 2026. 11. 24.(화) 10:00 ~ 11 25.(수) 18:00\n※ 수강신청 후 수강료 미납자에 따른 수강정원 잔여석 교과목에 한해 신청 가능\n(5) 잔여석수강신청자 고지서 출력 및 납부기간\n일시 : 2026. 11. 30.(월) 09:00 ~ 12. 1.(화) 17:00\n※ 은행방문 납부자는 은행마감시간(16:00)까지 가능\n대상 : 잔여석 수강신청자\n(6) 폐강과목 대상자 수강신청\n일시 : 2026. 12. 7.(월) 10:00 ~ 12. 8.(화) 18:00\n대상 : 수강신청과목이 폐강된 경우\n(7) 최종 시간표 공고\n일시 : 2026. 12. 11.(금) , 강의실 편성 확인\n(8) 개강 전 수강취소\n일시 : 2026. 12. 14.(월) 09:00 ~ 12. 17.(목) 18:00\n※ 수강료 전액 반환\n(9) 개강 후 수강취소\n수업일수 1/3 경과 전 / 수강료 2/3 환불\n수업일수 1/3 경과 후- 수업일수 1/2 경과 전 / 수강료1/2 환불\n수업일수 1/2 경과 후 / 수강취소 불가 / 수강료 반환 없음\n(10) 계절수업 수업평가\n일시 : 2027. 1. 13.(수) ~ 1. 19.(화)\n※ 수업평가 미실시자는 확정 전 성적조회 불가함\n(11) 계절수업 성적확정\n일시 : 2027. 1. 20.(수)\n※ 계절수업 수강신청 대상자 예외사항\n1) 학사학위취득유예자는 수강 불가\n2) 휴학생도 수강신청 가능하나 당해 학기 졸업사정 대상에서 제외\n3. 수강신청 방법(온라인 수강신청)\n(1) PC를 이용할 경우(http://sugang.kangwon.ac.kr)\n: 학교 홈페이지 접속 > 통합인트로 > KNU-SERVICE > 수강신청(춘천ㆍ삼척)\n(2) 스마트폰 이용할 경우(http://sugang.kangwon.ac.kr)\n: 강원대학교 앱(App) > 전체메뉴 > 수업 > 수강신청\n★ 자세한 사항은 붙임의 2026학년도 겨울 계절수업 운영계획을 참고하여 주시기 바랍니다\n★ 수강신청시 유의사항\n- 수강신청 첫 화면 계좌번호(반드시 본인통장) 및 연락처 입력 필수(수강료 반환에 필수)\n- 2026학년도 2학기 수강 중인 교과목의 경우 재이수가 불가함\n- 계절수업 기간에 현장실습, 집중수업 등의 일정이 중복될 경우 수강신청 불가\n- 산학협력단, 소프트웨어중심대학사업단, IPP사업단 등에서 개설하는 교과목은\n사업참여 학과 및 학점인정 학과가 지정되어있어 그 외 학생은 수강이 허용되지 않음\n★[중요] 수업시간표 강의실은 변경될 수 있으므로 최종 시간표 공고에서 반드시 강의실을 확인\n※ 수강료 환불 내역 안내문 정정\n※ (48200001-1) 선형대수  담당교원 및 시간표 변경\n담당교원: 이현식 / 6-8교시 / 공1호관 309호",
+    "char_count": 1889,
+    "attachments": [
+      {
+        "name": "(붙임1) 2026학년도 강원대학교 겨울 계절학기 수업시간표_홈페이지 공고용.xlsx",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261029045451320.xlsx&path=/bbs/37&fn=(붙임1) 2026학년도 강원대학교 겨울 계절학기 수업시간표_홈페이지 공고용.xlsx"
+      },
+      {
+        "name": "(붙임2) 2026학년도 강원대학교 겨울 계절수업 운영계획_홈페이지 공고용.pdf",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261029045546649.pdf&path=/bbs/37&fn=(붙임2) 2026학년도 강원대학교 겨울 계절수업 운영계획_홈페이지 공고용.pdf"
+      }
+    ],
+    "attachment_extracted_text": "",
+    "deadline": "2026-11-11 18:00",
+    "benefit_label_ko": "겨울 계절수업 수강신청 (춘천)",
+    "benefit_label_zh": "冬季小学期选课及改选（春川校区）",
+    "benefit_label_en": "Winter Session Course Registration (Chuncheon)",
+    "benefit_krw": 0,
+    "title_ko": "[수정] 2026학년도 겨울 계절수업 수업시간표 및 수강신청 안내(춘천캠퍼스)",
+    "title_zh": "[修正] 2026学年度冬季小学期课程时间表及选课通知（春川校区）",
+    "title_en": "[Updated] 2026 Winter Session Timetable & Course Registration (Chuncheon Campus)",
+    "summary_ko": "춘천캠퍼스 겨울 계절수업(12.24~1.15) 안내. 수강신청 변경 및 추가신청 기간은 11월 10일(화) 10:00 ~ 11월 11일(수) 18:00, 수강료 납부는 11월 17일 ~ 11월 19일 17:00까지 (미납 시 자동 취소).",
+    "summary_zh": "春川校区冬季小学期（12.24~1.15）通知：选课改选及补选时间为11月10日10:00至11月11日18:00；学费缴纳时间为11月17日至11月19日17:00（逾期未缴费将自动删除选课记录）。",
+    "summary_en": "Chuncheon Winter Session (Dec 24–Jan 15): Course add/drop & registration runs Nov 10–11 (18:00); tuition payment is Nov 17–19 (unpaid courses auto-canceled).",
+    "rules": {
+      "campuses": [
+        "춘천"
+      ],
+      "status_allowed": [
+        "undergrad_kr",
+        "intl",
+        "leave_grad"
+      ],
+      "min_gpa": 0.0,
+      "max_income": 10,
+      "note_ko": "춘천캠퍼스 재학생·휴학생 누구나 신청 가능 (수강신청 변경: 11/10~11/11, 납부: 11/17~11/19)",
+      "note_zh": "春川校区在读生、留学生、休学生均可报名（改选补选：11/10~11/11，缴费：11/17~11/19）",
+      "note_en": "Open to all Chuncheon enrolled & on-leave students (Add/Drop: Nov 10–11)"
+    },
+    "has_hwp_extracted": false
+  },
+  {
+    "id": "knu-real-10",
+    "category": "학사",
+    "campus": "춘천삼척",
+    "title": "2026학년도 겨울 계절수업 서울시립대학교 학점교류 수학 안내(춘천/삼척)",
+    "author": "춘천교육지원과/삼척교육지원과",
+    "posted_date": "2026-10-22",
+    "phone": "033-250-6016",
+    "email": "",
+    "url": "https://kangwon.ac.kr/ko/bbs/720/detail.do?pstSn=2610&pageIndex=1&pageItm=10&searchOrderSort=0&searchGbn=0",
+    "body": "대학 간 학술교류 협정에 따라 2026학년도 겨울 계절수업\n서울시립대학교 학점 교류\n수학 안내문을 붙임과 같이 안내하오니\n해당 학과에서는 수학을 희망하는 학생을 추천하여 주시기 바랍니다.\n가. 신청자격 :\n징계받은 사실이 없는 재학생\n※ 학사학위취득유예자, 휴학생은 교류 수학 불가\n※ 서울시립대학교\n의 경우 계절수업\n성적 송부일이 2027.1.29.(금) 이후 예정\n으로\n2027\n년 2\n월 졸업예정자는 신청 불가\n나. 제출기한\n- 춘천캠퍼스: (춘천교육지원과 도착기준) : 2026. 11. 10.(화) 18:00까지(기일엄수)\n▶\n학생\n➜\n소속학과 제출기준\n: 2026. 11. 9.(월\n) 18:00\n까지\n(\n기일엄수\n)\n- 삼척캠퍼스: (삼척교육지원과 도착기준) : 2026. 11. 10.(화) 18:00까지(기일엄수)\n▶ 학생 ➜ 소속학과 제출기준 : 2026. 11. 9.(월\n) 18:00\n까지\n(\n기일엄수\n)\n다. 제출서류 : 수학신청자 명단 및 다른 대학 수학 지원서 각 1부\n라. 제출방법\n-\n춘천캠퍼스 :\n학생\n➜\n학과\n➜\n춘천교육지원과로 제출\n-\n삼척\n캠퍼스 :\n학생\n➜\n학과\n➜ 삼척\n교육지원과로 제출\n붙임 1. 2026학년도 겨울 계절수업 서울시립대학교 교류수학 운영 안내 1부.\n2. 2026학년도 겨울 계절수업 서울시립대학교 학점교류 신청자 명단(양식) 1부.\n3. 다른 대학 수학 지원서(본교) 1부. 끝.",
+    "char_count": 694,
+    "attachments": [
+      {
+        "name": "(붙임1) 2026학년도 겨울계절수업 학점교류 안내문.pdf",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261022055518978.pdf&path=/bbs/37&fn=(붙임1) 2026학년도 겨울계절수업 학점교류 안내문.pdf"
+      },
+      {
+        "name": "(붙임2) 2026학년도 겨울계절수업 학점교류 추천자 명단(양식).xlsx",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261022055520875.xlsx&path=/bbs/37&fn=(붙임2) 2026학년도 겨울계절수업 학점교류 추천자 명단(양식).xlsx"
+      },
+      {
+        "name": "(붙임3) 다른대학수학지원서(본교서식).hwp",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261022055522575.hwp&path=/bbs/37&fn=(붙임3) 다른대학수학지원서(본교서식).hwp"
+      }
+    ],
+    "attachment_extracted_text": "",
+    "deadline": "2026-11-09 18:00",
+    "benefit_label_ko": "타대학 학점교류 (서울시립대)",
+    "benefit_label_zh": "跨校学分交流（首尔市立大学）",
+    "benefit_label_en": "Credit Exchange (Univ of Seoul Winter Session)",
+    "benefit_krw": 0,
+    "title_ko": "2026학년도 겨울 계절수업 서울시립대학교 학점교류 수학 안내(춘천/삼척)",
+    "title_zh": "2026学年度冬季小学期 首尔市立大学学分交流修读通知（春川/三陟）",
+    "title_en": "2026 Winter Session University of Seoul Credit Exchange Notice (Chuncheon/Samcheok)",
+    "summary_ko": "춘천·삼척캠퍼스 재학생 대상 서울시립대 겨울계절수업 학점교류. 소속 학과 제출 마감은 11월 9일(월) 18:00까지 (휴학생 및 2027년 2월 졸업예정자 불가).",
+    "summary_zh": "面向春川、三陟校区在读生开放首尔市立大学冬季小学期学分交流，向所属院系提交申请截止至11月9日18:00（休学生及2027年2月毕业预定者不可）。",
+    "summary_en": "Winter credit exchange at University of Seoul for Chuncheon/Samcheok active undergraduates. Department deadline: Nov 9, 18:00.",
+    "rules": {
+      "campuses": [
+        "춘천",
+        "삼척"
+      ],
+      "status_allowed": [
+        "undergrad_kr",
+        "intl"
+      ],
+      "min_gpa": 0.0,
+      "max_income": 10,
+      "note_ko": "춘천·삼척 재학생 (11/9 18:00 소속 학과 제출 마감, 휴학생 불가)",
+      "note_zh": "限春川·三陟在读生（11月9日18:00前交至院系，休学生不可）",
+      "note_en": "Chuncheon/Samcheok active students only (Due Nov 9, 18:00)"
+    },
+    "has_hwp_extracted": false
+  },
+  {
+    "id": "knu-real-11",
+    "category": "학사",
+    "campus": "강릉원주",
+    "title": "[강릉 및 원주캠퍼스] 2027학년도 전과 모집 공고",
+    "author": "강릉교육지원과",
+    "posted_date": "2026-10-21",
+    "phone": "033-640-2028",
+    "email": "",
+    "url": "https://kangwon.ac.kr/ko/bbs/720/detail.do?pstSn=2604&pageIndex=1&pageItm=10&searchOrderSort=0&searchGbn=0",
+    "body": "2027학년도 강릉 및 원주캠퍼스 전과 모집 공고\n2027학년도 전과 전형 계획을 다음과 같이 안내합니다.\n1. 모집인원 및 전형방법: [붙임1] '전과모집공고'와 [붙임2] 엑셀파일 '2027학년도 전과 모집인원 및 전형방법' 에서 확인\n2. 신청기간: 2026. 11. 23.(월) 09:00  ~ 11. 30.(월) 18:00 (기간연장없음)\n*기타 자세한 사항은 붙임파일 참고\n붙임   1. 2027학년도 전과 모집 공고 1부.\n2. 강릉 및 원주캠퍼스 전과 모집인원 및 전형방법 1부.\n3. 캠퍼스간 전과 신청서(서식) 1부.\n4. 강원대학교 전과운영지침 1부.",
+    "char_count": 319,
+    "attachments": [
+      {
+        "name": "[붙임1] 2027학년도 강릉 및 원주캠퍼스 전과 전형 공고문.hwp",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261028024848377.hwp&path=/bbs/37&fn=[붙임1] 2027학년도 강릉 및 원주캠퍼스 전과 전형 공고문.hwp"
+      },
+      {
+        "name": "[붙임2] (강릉 및 원주캠퍼스) 2027학년도 전과 모집인원 및 전형방법@.xlsx",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261028024856316.xlsx&path=/bbs/37&fn=[붙임2] (강릉 및 원주캠퍼스) 2027학년도 전과 모집인원 및 전형방법@.xlsx"
+      },
+      {
+        "name": "[붙임3] 캠퍼스간 전과 신청서(서식).hwpx",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261028024900400.hwpx&path=/bbs/37&fn=[붙임3] 캠퍼스간 전과 신청서(서식).hwpx"
+      },
+      {
+        "name": "[붙임4] 강원대학교 전과운영지침.hwp",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261028024903752.hwp&path=/bbs/37&fn=[붙임4] 강원대학교 전과운영지침.hwp"
+      }
+    ],
+    "attachment_extracted_text": "[[붙임1] 2027학년도 강릉 및 원주캠퍼스 전과 전형 공고문.hwp 첨부파일 원문 추출]\n2026. 10. \r\n\r\n   \r\n 강릉교학처 강릉교육지원과\n※ 캠퍼스 간 전과 관련 (캠퍼스 간 전과는 원 소속 학과(전공)의 전출 허가를 받아야 함) [강릉\n삼척] 캠퍼스간 전과 지원자는 붙임 3 (강릉캠퍼스)\n시트 참조 후 전과 희망 캠퍼스 공고문 및 전입 전형 확인 [원주\n삼척] 캠퍼스간 전과 지원자는 붙임 3 (원주캠퍼스)\n시트 참조 후 전과 희망 캠퍼스 공고문 및 전입 전형 확인",
+    "deadline": "2026-11-30 18:00",
+    "benefit_label_ko": "2027학년도 전과 모집",
+    "benefit_label_zh": "2027学年度转专业申请公告",
+    "benefit_label_en": "2027 Change of Major Application",
+    "benefit_krw": 0,
+    "title_ko": "[강릉 및 원주캠퍼스] 2027학년도 전과 모집 공고",
+    "title_zh": "[春川/江陵/原州] 2027学年度转专业（含跨校区转专业）选拔公告",
+    "title_en": "[All Campuses] 2027 Academic Year Transfer of Major Application Notice",
+    "summary_ko": "2027학년도 캠퍼스 내 및 캠퍼스 간 전과 신청 공고. 신청기간: 11월 23일(월) 09:00 ~ 11월 30일(월) 18:00 (기간 연장 없음). 첨부 HWP/XLSX에서 학과별 모집인원 및 전형방법 확인.",
+    "summary_zh": "2027学年度校内及跨校区转专业申请公告。申请时间：11月23日09:00至11月30日18:00（不予延期）。已在下方直接为您提取 HWP 公告正文及附件下载。",
+    "summary_en": "2027 Change of Major application (intra- and inter-campus). Application window: Nov 23, 09:00 – Nov 30, 18:00.",
+    "rules": {
+      "campuses": [
+        "춘천",
+        "삼척",
+        "강릉",
+        "원주"
+      ],
+      "status_allowed": [
+        "undergrad_kr",
+        "intl",
+        "leave_grad"
+      ],
+      "min_gpa": 0.0,
+      "max_income": 10,
+      "note_ko": "전과 희망 학부생 (신청기간: 11/23 ~ 11/30 18:00)",
+      "note_zh": "面向有意转专业的本科生（申请期：11/23 ~ 11/30 18:00）",
+      "note_en": "Undergraduates applying for change of major (Nov 23–30)"
+    },
+    "has_hwp_extracted": true
+  },
+  {
+    "id": "knu-real-13",
+    "category": "일반",
+    "campus": "ALL",
+    "title": "[유니세프] 2026 더아동페스타: Unseen is Urgent 사전등록(~11/19)",
+    "author": "일반담당부서",
+    "posted_date": "2026-11-05",
+    "phone": "033-250-6114",
+    "email": "",
+    "url": "https://kangwon.ac.kr/ko/bbs/504/detail.do?pstSn=11621&pageIndex=1&pageItm=10&searchOrderSort=0&searchGbn=0",
+    "body": "더아동페스타는 유니세프 한국위원회가 매년 주요 아동 이슈를 선정해 정부·기업·학계·시민사회·아동·청소년 등 다양한 주체와 함께 이야기하고 해법을 모색하는 대표 아동권리 포럼입니다.\n2026년에는\n‘디지털 환경 속 아동 마음건강’\n을 주제로, 빠르게 변화하는 디지털 환경이 아이들의 마음건강에 미치는 영향을 살펴보고, 아이들이 안전하고 건강하게 성장할 수 있는 환경과 해법을 함께 논의합니다.\n디지털 시대, 아이들의 ‘보이지 않는 마음건강’을 들여다보고 안전한 디지털 환경을 함께 고민하는 자리,\n『2026 더아동페스타』\n에 여러분을 초대합니다.\n1. 이런 이야기가 궁금하신가요?\n01\n디지털 환경이 아이들의 마음건강에 미치는 영향이 궁금하다면\n국내외 전문가들과 함께 디지털 환경 속에서 아이들이 경험하는 마음건강의 변화와 우리가 주목해야 할 지점을 살펴봅니다.\n02\n아이들이 안전하게 성장할 수 있는 디지털 환경을 고민하고 있다면\n정부·기업·학계·교육·시민사회 등 다양한 분야의 목소리를 통해 아동의 마음건강과 권리를 지킬 수 있는 환경과 해법을 함께 모색합니다.\n03\n아동의 목소리와 새로운 시선으로 디지털 환경을 바라보고 싶다면\n아동 참여 세션과 특별 전시, 체험형 부스를 통해 우리가 미처 보지 못했던 아이들의 경험과 마음을 만나봅니다.\n2. 행사 안내\n행사명\n: 2026 더아동페스타 (The Children Festa 2026)\n주    제\n: 디지털 환경 속, 아동 마음건강 - Unseen is Urgent\n일    시\nDAY1 2026-11-19(목) 13:30~18:00\nDAY2 2026-11-20(금) 13:30~18:00\n장    소\n: 유니세프 한국위원회 3층 블루홀 (서울시 마포구 서강로 60) 및 온라인 생중계\n대    상\n: 디지털 환경과 아동·청소년의 마음건강에 관심 있는 누구나\n참가비\n: 무료\n참가 신청 링크\n:\nhttps://unicef.thechildrenfesta.com/\n※ 신청 상황에 따라 조기 마감될 수 있으며, 참석 확인은 별도 문자로 안내드립니다.\n3. 주요 프로그램\n국내외 아동·마음건강·디지털 분야 전문가 기조강연\n정부·기업·의료·교육·국제기구가 함께하는 전문가 토론\n아동 참여를 통해 듣는 디지털 환경 속 아이들의 목소리\nEric Pickersgill 특별 사진전 및 체험형 부스",
+    "char_count": 1140,
+    "attachments": [],
+    "attachment_extracted_text": "",
+    "deadline": "2026-11-19 18:00",
+    "benefit_label_ko": "무료 포럼 (온·오프라인)",
+    "benefit_label_zh": "免费论坛（线上直播+线下）",
+    "benefit_label_en": "Free Forum (Online & Offline)",
+    "benefit_krw": 0,
+    "title_ko": "[유니세프] 2026 더아동페스타: Unseen is Urgent 사전등록(~11/19)",
+    "title_zh": "[联合国儿童基金会] 2026 儿童权利论坛：数字环境与心理健康 免费预注册（~11/19）",
+    "title_en": "[UNICEF] The Children Festa 2026: Digital Environment & Mental Health (~11/19)",
+    "summary_ko": "유니세프 한국위원회 주최 포럼 (11/19~11/20, 온라인 생중계 병행). 재학생·교직원·시민 누구나 무료 사전등록 가능.",
+    "summary_zh": "联合国儿童基金会主办论坛（11/19~11/20，支持线上直播），在校生、留学生、教职工及市民均可免费报名。",
+    "summary_en": "UNICEF Korea Forum (Nov 19–20, online streaming available). Free registration open to everyone.",
+    "rules": {
+      "campuses": [
+        "춘천",
+        "삼척",
+        "강릉",
+        "원주"
+      ],
+      "status_allowed": [
+        "undergrad_kr",
+        "intl",
+        "leave_grad",
+        "staff_citizen"
+      ],
+      "min_gpa": 0.0,
+      "max_income": 10,
+      "note_ko": "누구나 무료 신청 가능 (온라인 생중계 시청 가능)",
+      "note_zh": "全员可免费报名（支持线上观看直播）",
+      "note_en": "Open to everyone for free"
+    },
+    "has_hwp_extracted": false
+  },
+  {
+    "id": "knu-real-14",
+    "category": "일반",
+    "campus": "ALL",
+    "title": "강원대학교 캠퍼스 혁신파크 산학연혁신허브 입주기업 모집 공고(3차)",
+    "author": "일반담당부서",
+    "posted_date": "2026-11-05",
+    "phone": "033-258-4137",
+    "email": "",
+    "url": "https://kangwon.ac.kr/ko/bbs/504/detail.do?pstSn=11619&pageIndex=1&pageItm=10&searchOrderSort=0&searchGbn=0",
+    "body": "강원대학교는 한국토지주택공사(LH)와 함께 대학 내 우수한 산학협력 인프라를 바탕으로\n유망기업을 발굴 및 육성하고자 「강원대학교 캠퍼스 혁신파크 도시첨단산업단지 산학연혁신허브」를 조성하여\n신규 입주기업을 모집하고 있습니다.\n지역 혁신과 미래 성장을 이끄는 첨단산업의 중심, 캠퍼스 혁신파크 산학연혁신허브에서\n강원대학교와 함께\n성장할 창업(BI)기업 · 성장(POST BI)기업의 많은 관심 부탁드립니다.\n<공급대상>\n- (공급호수)  총 33호\n- (공급면적)  붙임 참조(엑셀파일)\n<모집절차>\n<서류제출>\n- (입점신청기간) 2026.11.23.(월) ~ 11.27.(금) 영업일 10:00~12:00, 13:00~16:00\n- (제출방법)  방문 또는 등기우편 제출\n- (제출처 및 제출서류)  붙임의 모집공고문 p.3~4 참조\n<문의처>\n- (공고 관련)  한국토지주택공사 강원지역본부 주거복지사업1팀 ☎ 033-258-4137, 4158\n- (연구특구 관련)  강원대학교 산학협력단 ☎ 033-250-8938\n- (공간개방 등 현장 관련) 산학연혁신허브 관리사무소 ☎ 033-818-0098\n자세한 사항은 붙임 파일 및 LH청약플러스 모집 공고를 확인하여 주시기 바랍니다.\n* LH 청약 플러스 :\nhttps://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancInfo.do?panId=2015122300020986&ccrCnntSysDsCd=03&uppAisTpCd=22&aisTpCd=38&mi=1069\n붙임  1. 모집공고문 1부.\n붙임  2. 임대신청서 및 사업계획서 서식 등 1부.\n붙임  3. 산학연혁신허브 면적 및 임대조건 1부.\n붙임  4. 리플렛 1부.",
+    "char_count": 851,
+    "attachments": [
+      {
+        "name": "2. 임대신청서 및 사업계획서 서식 등.hwpx",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261105024053729.hwpx&path=/bbs/81&fn=2. 임대신청서 및 사업계획서 서식 등.hwpx"
+      },
+      {
+        "name": "3. 면적 및 임대조건.xlsx",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261105024054679.xlsx&path=/bbs/81&fn=3. 면적 및 임대조건.xlsx"
+      },
+      {
+        "name": "4. 홍보 리플렛.pdf",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261105024058592.pdf&path=/bbs/81&fn=4. 홍보 리플렛.pdf"
+      },
+      {
+        "name": "1. 모집 공고문.pdf",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261105024059999.pdf&path=/bbs/81&fn=1. 모집 공고문.pdf"
+      }
+    ],
+    "attachment_extracted_text": "[2. 임대신청서 및 사업계획서 서식 등.hwpx 첨부파일 원문 추출]\n붙임 1\n임대신청서 및 사업계획서 서식\n강원대 캠퍼스혁신파크 산학연혁신허브 임대신청서\n신청\n기업\n회사명\n법인등록번호\n대표자 성명\n사업자등록번호\n이메일 주소\n대표자 주민등록번호\n주소(법인소재지)\n연락처\n(휴대폰)\n우편송달가능주소\n당첨자 발표,\n계약 체결 등\n문자 안내용 연락처\n사업\n개요\n업     종\n(한국표준산업분류 명칭)\n분류코드\n(5자리)\n(한국표준산업분류 코드)\n생 산 품 목\n(구체적으로)\n종업원수\n영업차량\n출퇴근차량\n대\n대\n신청\n사항\n시 설 명\n공장시설, 업무시설\n신청호실\n예:301호∼303호(총3호)\n신청면적\n임대면적(A)+(B)+(C)\n전용면적(A)\n공용면적(B)\n기타공용면적(C)\n입주업종\n※ 오염물질 배출업종 입주 불가\n소음진동여부\n(※반드시 기재)\n있음 (대  중  소) / 없음\n장비 등의 총 하중\n톤\n접수번호\n(미기재)\n신청예약금\n신청예약금\n반환 계좌\n은 행 명 :                  은행                지점\n계좌번호 :\n예 금 주 :\n공고문(인터넷 게시공고문 포함)의 신청유의사항을 숙지하였으며 그 조건을 전부 수인하고\n위와 같이 임대를 신청합니다.\n2026년      월      일\n신 청 인 :                󰂙\n한국토지주택공사 강원지역본부장\n귀하\n사업계획서\n※ 확약사항\n1.\n본 신청자는 강원대 캠퍼스혁신파크 산학연혁신허브 임대신청서\n및\n사업계획서 등 제출 서류를 신의성실의 원칙에 입각하여 작성·\n제출합니다.\n2. 제출서류는 원본과 사본을 동일하게 작성하였으며,\n기재사항이 사실과 다를 경우에는\n입주대상자 선정 취소, 법적 불이익 등 어떠한 처분도 감수할 것입니다.\n3. 본 신청자가 입주 대상자로 선정되는 경우 관련 법규 및 계약 내용을 성실히 이행하겠습니다.\n20   년    월    일\n신청자(기업명)                     (인)\n한국토지주택공사 강원지역본부장\n귀하\nⅠ. 기업현황\n1. 일반현황\n기업\n현황\n기업명\n법인등록번호\n대표자\n사업자등록번호\n사업개시일\n(사업자등록증상)         .     .\n(법인등기부등본상)       .     .\n유형\n□ 개인\n□ 법인\n업력구분\n□\n7년 이하\n□ 7\n년 초과\n소재지\n홈페이지 주소\n현재업종\n(한국표준산업분류코드)\n상시근로자수\n(\n‘25년도 기준으로 작성)\n신청내용\n설립형태\n□\n본사\n□\n공장\n□\n기업부설연구소\n□\n사무소\n□\n(기타 :                )\n신청위치 등\n호수\n입주예정인원\n사업내용\n(신청업종)\n한국표준산업\n분류번호(5자리)\n업종\n생산제품 또는 주요품목\n※ 입주 신청 업종이 제조업인 경우, 입주 공간에 반드시 제조시설을 갖추어야 함\n특 기 사 항\n인․허가 사항 :\n기술인증사항(특허 등) :\n정부지원사항 :\n주  요  연  혁\n년   월\n주  요  내  용\n2. 재무현황\n(단위 : 백만원)\n[요약대차대조표]\n[요약손익계산서]\n구분\n2023년\n2024년\n2025년\n구분\n2023년\n2024년\n2025년\n①유동자산\n매 출 액\n매출원가\n②\n비유동자산\n매출총손익\n자산총계\n(①+②)\n판매비와관리비\n영업손익\n③유동부채\n영업외수익\n④\n비유동부채\n영업외비용\n부채총계\n(③+④)\n경상이익\n특별이익\n⑤자본금\n특별손실\n⑥\n자본잉여금\n세전순이익\n법인세\n⑦\n이익잉여금\n당기순손익\n자본총계\n(⑤+⑥+⑦)\n(연구개발비)\n※ 국세청 「표준재무제표증명원」 등 증빙할 수 있는 자료 제출 필요\n(미첨부시 불인정)\nⅡ. 기술력\n1. 연구개발 투자 비중\n연구개발비\n※ 국세청 「표준재무제표증명원」 등 증빙할 수 있는 자료 제출 필요\n미첨부시 불인정\n)\n연구개발비(천원)\n2023\n2024\n2025\n예시) 100,200\n110,200\n210,200\n2. 지식재산권 보유현황\n(증빙서류 첨부, 3개 이상일 경우 3개 첨부, 미첨부시 점수 미반영)\n출원인\n등록번호\n지적재산권 명칭\n등록일\n※ 지식재산권의 범위\n1. 산업재산권\n- 「특허법」, 「실용신안법」, 「상표법」, 「디자인보호법」에 따른 지식재산권\n2. 저작권\n- 「저작권법」에 따른 저작권\n3. 신지식재산권\n- 「식물신품종 보호법」에 따른 품종보호권\n- 「반도체집적회로의 배치설계에 관한 법률」에 따른 배치설계권\n- 「산업기술의 유출방지 및 보호에 관한 법률」에 따른 산업기술\nⅢ. 경영진의 경영능력\n1. 대표자 인적사항\n성    명\n생년월일\n주요학력\n기   간\n학 교 명\n전  공\n졸업여부\n비 고\n~\n~\n경    력\n기   간\n근 무 처(소 재 지)\n직위\n담당업무\n~\n~\n~\n특기\n사항\n기술자격현황\n(분야, 등급 등)\n- 수상실적\n- 사회활동\n- 단체가입 등\n연구개발 및\n사업화실적\n개발과제명 및 내용\n근무처\n실시기간\n사업규모\n(소요자금)\n비    고\n(사업화현황 등)\n2. 주요 경영인력 인적사항(해당시 작성)\n성    명\n생년월일\n주요학력\n기   간\n학 교 명\n전  공\n졸업여부\n비 고\n~\n경    력\n기   간\n근 무 처(소 재 지)\n직위\n담당업무\n~\n~\n~\n특기\n사항\n기술자격현황\n(분야, 등급 등)\n- 수상실적\n- 사회활동\n- 단체가입 등\n연구개발 및\n사업화실적\n개발과제명 및 내용\n근무처\n실시기간\n사업규모\n(소요자금)\n비    고\n(사업화현황 등)\n~\n~\n~\n3.",
+    "deadline": "2026-11-27 16:00",
+    "benefit_label_ko": "산학연혁신허브 입주기업 모집",
+    "benefit_label_zh": "产学研创新中心入驻企业招募",
+    "benefit_label_en": "Campus Innovation Park Startup Tenancy",
+    "benefit_krw": 0,
+    "title_ko": "강원대학교 캠퍼스 혁신파크 산학연혁신허브 입주기업 모집 공고(3차)",
+    "title_zh": "江原大学校园创新园 产学研创新中心入驻企业招募公告（第3批）",
+    "title_en": "KNU Campus Innovation Park Hub Tenant Company Recruitment (Round 3)",
+    "summary_ko": "강원대 캠퍼스 혁신파크 도시첨단산업단지 산학연혁신허브 입주 창업기업·성장기업 모집 (총 33호, 11/23~11/27 접수). 일반 학부생 대상 공지가 아닌 창업기업/교원창업/지역기업 대상 공지.",
+    "summary_zh": "面向创业企业及成长型企业招募江原大学校园创新园入驻（共33间，11/23~11/27受理）。属于企业/教职工产学研通知，普通在读生可忽略。",
+    "summary_en": "Recruiting startup & growth companies for KNU Campus Innovation Park (33 units, Nov 23–27). Targeted at businesses/faculty startups.",
+    "rules": {
+      "campuses": [
+        "춘천"
+      ],
+      "status_allowed": [
+        "staff_citizen"
+      ],
+      "min_gpa": 0.0,
+      "max_income": 10,
+      "note_ko": "창업(BI)·성장기업 및 산학협력 대상 공지 (일반 학부 재학생 대상 아님)",
+      "note_zh": "面向创业企业及产学研合作人员（非普通本科生日常通知，已为您标记过滤）",
+      "note_en": "For startup companies & industry partners (Not for general undergrads)"
+    },
+    "has_hwp_extracted": true
+  },
+  {
+    "id": "knu-real-15",
+    "category": "일반",
+    "campus": "삼척",
+    "title": "삼척캠퍼스 재학생을 위한 방과 후 영어 연수(English Workshop) 참가 신청",
+    "author": "일반담당부서",
+    "posted_date": "2026-11-05",
+    "phone": "033-250-6114",
+    "email": "",
+    "url": "https://kangwon.ac.kr/ko/bbs/504/detail.do?pstSn=11618&pageIndex=1&pageItm=10&searchOrderSort=0&searchGbn=0",
+    "body": "삼척캠퍼스 재학생을 위한 특별 프로그램.\n영국 버밍엄대학 영어과정 선생님과 함께하는 방과 후 Real English 워크숍\n영어 수준과 상관없이 누구나 참여 가능! 참가비 전액 지원!\n한 번 쯤 어학연수를 꿈꾸었지만 시간과 비용 때문에 아직 참가를 못하셨나요? 수업 후 그린에너지연구관 909호로 오시면 됩니다.\n재미 있는 주제로 삼척캠퍼스에서 공부하는 다양한 국적의 친구들과 함께 영어 연수를 즐기는 시간입니다.\n매 시간 따듯한 커피와 맛있는 간식이 제공됩니다.\n신청링크 :\nhttps://forms.cloud.microsoft/pages/responsepage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAMAAGo8UftUNTFFS1I0UjRBV043REpOWjRNMlVPVDdVSS4u&route=shorturl",
+    "char_count": 419,
+    "attachments": [
+      {
+        "name": "홍보포스터1.png",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261105111320731.png&path=/bbs/81&fn=홍보포스터1.png"
+      },
+      {
+        "name": "홍보포스터2.png",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261105111321675.png&path=/bbs/81&fn=홍보포스터2.png"
+      }
+    ],
+    "attachment_extracted_text": "",
+    "deadline": "2026-11-15 18:00",
+    "benefit_label_ko": "무료 영어연수 + 다과 제공",
+    "benefit_label_zh": "免费英语工作坊（提供咖啡茶点）",
+    "benefit_label_en": "Free English Workshop (Coffee & Snacks)",
+    "benefit_krw": 0,
+    "title_ko": "삼척캠퍼스 재학생을 위한 방과 후 영어 연수(English Workshop) 참가 신청",
+    "title_zh": "三陟校区在读生课后免费英语工作坊（Real English Workshop）报名",
+    "title_en": "Samcheok Campus After-School Real English Workshop Registration",
+    "summary_ko": "삼척캠퍼스 재학생 전용 영국 버밍엄대학 강사 초청 방과 후 영어 워크숍 (참가비 무료, 그린에너지연구관 909호).",
+    "summary_zh": "仅限三陟校区在读生参加的英国伯明翰大学讲师课后英语工作坊（全额免费，提供咖啡茶点）。春川校区学生无需查看。",
+    "summary_en": "Free after-school English workshop with Univ of Birmingham instructors exclusively for Samcheok Campus students.",
+    "rules": {
+      "campuses": [
+        "삼척"
+      ],
+      "status_allowed": [
+        "undergrad_kr",
+        "intl"
+      ],
+      "min_gpa": 0.0,
+      "max_income": 10,
+      "note_ko": "삼척캠퍼스 재학생 전용 (춘천·강릉·원주캠퍼스 해당 없음)",
+      "note_zh": "仅限三陟校区在读生（已为春川校区学生自动过滤）",
+      "note_en": "Exclusively for Samcheok Campus students"
+    },
+    "has_hwp_extracted": false
+  },
+  {
+    "id": "knu-real-16",
+    "category": "일반",
+    "campus": "ALL",
+    "title": "[청년도약 부트캠프] AI 활용 웹/앱 개발(고급) 과정 참여자 모집",
+    "author": "일반담당부서",
+    "posted_date": "2026-11-05",
+    "phone": "033-250-8776",
+    "email": "bootplus@kangwon.ac.kr",
+    "url": "https://kangwon.ac.kr/ko/bbs/504/detail.do?pstSn=11616&pageIndex=1&pageItm=10&searchOrderSort=0&searchGbn=0",
+    "body": "[강원대학교] 2026 AI 활용 웹/앱 개발(고급) 과정 참여자 모집\n[강원대학교] 2026 청년도약 부트캠프 고급 과정 「AI 활용 웹/앱 개발」 참여자 모집\n취업 준비 중인 청년들을 위한 무료 AI 실무교육!\nAWS Korea 본사에서 직접 배우는 AI 서비스 개발부터 AWS 자격증 취득, 청년도약 부트캠프 워크숍까지! AI·클라우드 실전 역량을 취업 포트폴리오로 완성하는 120시간 고급 과정에 참여해 보세요.\n■ 모집 안내\n모집대상: 인공지능 관련 학과 전공자 중, 만 19~34세 미취업 청년(졸업생·구직자 및 1년 이상 장기 휴학생 참여 가능)\n모집인원: 30명 내외\n모집기간: 2026. 11. 2.(월) ~ 11. 30.(월)\n교육기간: 2026. 12. 1.(화) ~ 2027. 1. 31.(일)\n교육방식: 온라인 교육 + 오프라인 실습(서울 센터필드)\n■ 교육 구성(총 120시간)\n실무 60시간: 온라인 18시간 + AWS Korea 본사 오프라인 실습 42시간\n└ 2027. 1. 8.(금) ~ 1. 23.(토) 매주 금·토, 총 6일(각 7시간)\n교양 30시간: AWS 자격증 취득 대비(온라인), 전문강사 특강 등\n사회 30시간: 청년도약 부트캠프 워크숍(2026. 12. 16.(수) ~ 12. 18.(금), 2박 3일, 강릉 세인트존스) 등\n■ 참여 혜택\n활동지원금 120만원(총 120시간 중 80% 이상 이수 시)\n취업격려금 50만원(과정 이수 후 취업 시)\nAWS 자격증 취득 지원, 디지털 배지 및 수료증 발급\n■ 신청방법: 첨부 포스터의 QR코드 또는 링크(https://bit.ly/4BlqUbr)를 통해 신청\n※ 선발 결과는 개별 안내 예정\n※ 실무·교양·사회 전 과정 필수 참여\n※ 재학생 및 주 30시간 이상 근로자 지원 불가\n문의: 강원대학교 청년도약인재양성부트캠프사업단\n033-250-8776 / bootplus@kangwon.ac.kr",
+    "char_count": 945,
+    "attachments": [],
+    "attachment_extracted_text": "",
+    "deadline": "2026-11-30 18:00",
+    "benefit_label_ko": "활동지원금 120만원 + 취업격려금 50만원",
+    "benefit_label_zh": "活动补贴120万 + 就业奖励50万韩元",
+    "benefit_label_en": "1.2M KRW Stipend + 500K KRW Job Bonus",
+    "benefit_krw": 1700000,
+    "title_ko": "[청년도약 부트캠프] AI 활용 웹/앱 개발(고급) 과정 참여자 모집",
+    "title_zh": "[青年跳跃训练营] AI Web/App 开发（高级）课程招募（补贴170万·限毕业生/休学生）",
+    "title_en": "[Youth Bootcamp] Advanced AI Web/App Dev Course (1.7M KRW Stipend · Grads/Leave Only)",
+    "summary_ko": "AWS Korea 본사 실습 및 활동지원금 최대 170만원 지원. ⚠️ [주의] 공고문 하단 제약사항: '재학생 및 주 30시간 이상 근로자 지원 불가' — 졸업생·구직자·1년 이상 장기 휴학생만 지원 가능!",
+    "summary_zh": "AWS Korea 实训及最高170万韩元补贴。⚠️【核心避坑提醒】正文最底部注明：“在读生（재학생）不可申请”，仅限毕业生、待业青年及休学1年以上者报名！为您省去白看半天的精力。",
+    "summary_en": "AWS Korea training + 1.7M KRW stipend. ⚠️ Note hidden at bottom: 'Currently enrolled students CANNOT apply' — only for graduates & long-term leave students!",
+    "rules": {
+      "campuses": [
+        "춘천",
+        "삼척",
+        "강릉",
+        "원주"
+      ],
+      "status_allowed": [
+        "leave_grad"
+      ],
+      "min_gpa": 0.0,
+      "max_income": 10,
+      "note_ko": "⚠️ 재학생 지원 불가! (졸업생·미취업자·1년 이상 장기 휴학생 전용)",
+      "note_zh": "⚠️ 在读生不可申请！（正文底部限定：仅限毕业生、待业者及长期休学生）",
+      "note_en": "⚠️ Enrolled students NOT eligible! (Graduates & long-term leave only)"
+    },
+    "has_hwp_extracted": false
+  },
+  {
+    "id": "knu-real-17",
+    "category": "일반",
+    "campus": "춘천",
+    "title": "[춘천] 2026년 강원대학교 사랑의 연탄 나눔 봉사활동 참가자 모집",
+    "author": "일반담당부서",
+    "posted_date": "2026-11-05",
+    "phone": "033-250-6114",
+    "email": "",
+    "url": "https://kangwon.ac.kr/ko/bbs/504/detail.do?pstSn=11614&pageIndex=1&pageItm=10&searchOrderSort=0&searchGbn=0",
+    "body": "2026년 강원대학교 사랑의 연탄 나눔 봉사활동\n을 다음과 같이 시행하오니, 봉사를 희망하는 교직원 및 재학생은 신청해주시기 바랍니다.\n가. 봉사일시:\n2026. 11. 25.(수) 14:00 ~\n※13:30분까지 나래관 뒤 집결\n나. 참가대상: 강원대학교\n춘천캠퍼스\n교직원 및 재학생 100명 내외\n다. 봉사지역: 강원 춘천시 일대((사)춘천연탄은행의 추천을 통해 선정 예정)\n라. 신청방법: 개인별 네이버폼 제출(포스터 QR코드)\n마. 신청기간:\n2026. 11. 9.(월) 10:00 ~ 11. 11.(수) 13:00 까지\n바. 행정사항\n(\n여비지급\nX,\n개인 차량 이용 금지\n)\n- (교직원) 봉사 당일\n13:30\n부터 개인별\n출장처리\n- (재학생) 봉사 당일\n13:00\n부터 개인별\n공결처리\n(요청 학생에 한하여 가능)\n사. 참여혜택\n1)\n상시학습시간(교내 봉사시간)\n및 1365자원봉사센터 실적 인정\n(3시간)\n2) 만족도 조사 후\n기념품 증정\n,\n평가 간담회(저녁식사 제공)\n실시\n※ 우천 시 일정 변경 가능하며, 사정에 따라 집합장소·봉사구역 등 변경 가능",
+    "char_count": 543,
+    "attachments": [
+      {
+        "name": "붙임 1. 2026년 강원대학교 사랑의 연탄 나눔 봉사활동 계획(안).pdf",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261105102349370.pdf&path=/bbs/81&fn=붙임 1. 2026년 강원대학교 사랑의 연탄 나눔 봉사활동 계획(안).pdf"
+      }
+    ],
+    "attachment_extracted_text": "",
+    "deadline": "2026-11-11 13:00",
+    "benefit_label_ko": "봉사 3시간 + 수업공결 + 저녁식사·기념품",
+    "benefit_label_zh": "3小时志愿时长 + 课程公假 + 晚餐纪念品",
+    "benefit_label_en": "3 Volunteer Hrs + Excused Absence + Dinner",
+    "benefit_krw": 30000,
+    "title_ko": "[춘천] 2026년 강원대학교 사랑의 연탄 나눔 봉사활동 참가자 모집",
+    "title_zh": "[春川] 2026年江原大学爱心蜂窝煤分享志愿活动招募（公假+晚餐+纪念品）",
+    "title_en": "[Chuncheon] 2026 KNU Briquette Sharing Volunteer Activity Recruitment",
+    "summary_ko": "춘천캠퍼스 교직원 및 재학생 100명 모집 (11/25 14:00 봉사). 참가 학생은 당일 오후 수업 공결 처리 가능 + 1365 봉사 3시간 인정 + 기념품 및 저녁식사 제공. 신청마감: 11/11(수) 13:00.",
+    "summary_zh": "面向春川校区教职工及在读生招募100人（11月25日14:00活动）。参加学生可办理当日下午课程公假（공결）+ 认证3小时志愿时长 + 赠送纪念品与免费晚餐。报名截止：11月11日13:00。",
+    "summary_en": "Open to Chuncheon staff & students (100 spots, Nov 25). Includes official class absence excuse, 3 volunteer hours, gift & dinner. Apply by Nov 11, 13:00.",
+    "rules": {
+      "campuses": [
+        "춘천"
+      ],
+      "status_allowed": [
+        "undergrad_kr",
+        "intl",
+        "staff_citizen"
+      ],
+      "min_gpa": 0.0,
+      "max_income": 10,
+      "note_ko": "춘천캠퍼스 재학생 및 교직원 누구나 (수업 공결처리 + 저녁식사 제공)",
+      "note_zh": "春川校区在读生、留学生及教职工均可参加（提供课程公假+免费晚餐）",
+      "note_en": "Open to Chuncheon students & staff (Excused class absence + free dinner)"
+    },
+    "has_hwp_extracted": false
+  },
+  {
+    "id": "knu-real-18",
+    "category": "일반",
+    "campus": "ALL",
+    "title": "2026 인공지능 입문 과정 2기 참여자 모집",
+    "author": "일반담당부서",
+    "posted_date": "2026-11-05",
+    "phone": "033-250-8772",
+    "email": "bootplus@kangwon.ac.kr",
+    "url": "https://kangwon.ac.kr/ko/bbs/504/detail.do?pstSn=11613&pageIndex=1&pageItm=10&searchOrderSort=0&searchGbn=0",
+    "body": "[강원대학교] 2026 인공지능 입문 과정 2기 참여자 모집\n취업 준비 중인 청년들을 위한 무료 AI 실무교육!\nClaude를 활용한 웹서비스 제작부터 AI·SW 자격증 취득, 마음챙김 워크숍까지! 취업 경쟁력을 높일 수 있는 90시간의 통합 교육과정에 참여해 보세요.\n■\n모집 안내\n- 모집대상:\n만 19~34세 미취업 청년\n(졸업생 및 1년 이상 장기 휴학생 참여 가능)\n※ 사업자등록증 보유의 경우: 휴업, 사업 미영위, 사업소득이 일정수준(월 250만원) 미만인 사업자의 경우 신청 가능\n※ 휴업자는 관할 세무서에 휴업 신고를 하고 현재 휴업 중 이여야 함\n※ 사업 미영위자는 실질적인 사업활동을 하지 않아야 함\n- 모집기간: ~ 2026. 12. 6.(일)\n- 교육기간: 2026. 12. 7.(월) ~ 2027. 1. 31.(일)\n- 교육방식: 온라인 교육 + 오프라인 실습\n■\n참여 혜택\n- 활동지원금 60만원\n- 취업격려금 50만원(과정 이수 후 취업 시)\n- 자격증 취득 지원, 디지털 배지 및 수료증 발급\n■ 신청: https://forms.gle/RHPPLNT1u4Daujd27\n■ 문의: 강원대학교 청년도약인재양성부트캠프사업단 (033-250-8772 / bootplus@kangwon.ac.kr)",
+    "char_count": 626,
+    "attachments": [],
+    "attachment_extracted_text": "",
+    "deadline": "2026-12-06 23:59",
+    "benefit_label_ko": "활동지원금 60만원 + 취업격려금 50만원",
+    "benefit_label_zh": "活动补贴60万 + 就业奖励50万韩元",
+    "benefit_label_en": "600K KRW Stipend + 500K KRW Job Bonus",
+    "benefit_krw": 1100000,
+    "title_ko": "2026 인공지능 입문 과정 2기 참여자 모집",
+    "title_zh": "2026 人工智能入门课程第2期招募（Claude Web开发·限毕业生/长期休学生）",
+    "title_en": "2026 Intro to AI Course Cohort 2 (Claude Web Dev · Grads/Long-Term Leave Only)",
+    "summary_ko": "Claude 활용 웹서비스 제작 90시간 교육 및 활동지원금 60만원 지급. ⚠️ 모집대상: 졸업생 및 1년 이상 장기 휴학생(미취업 청년) 전용.",
+    "summary_zh": "使用 Claude 开发 Web 服务 90 小时培训及 60 万韩元补贴。⚠️ 仅限毕业生及休学 1 年以上待业青年报名。",
+    "summary_en": "90-hour Claude web service course with 600K KRW stipend. ⚠️ Restricted to graduates and students on leave for 1+ year.",
+    "rules": {
+      "campuses": [
+        "춘천",
+        "삼척",
+        "강릉",
+        "원주"
+      ],
+      "status_allowed": [
+        "leave_grad"
+      ],
+      "min_gpa": 0.0,
+      "max_income": 10,
+      "note_ko": "⚠️ 졸업생 및 1년 이상 장기 휴학생 전용 (일반 재학생 제외)",
+      "note_zh": "⚠️ 仅限毕业生及休学1年以上者（普通在读生不适用）",
+      "note_en": "⚠️ For graduates & 1+ year leave students only"
+    },
+    "has_hwp_extracted": false
+  },
+  {
+    "id": "knu-real-20",
+    "category": "행사",
+    "campus": "춘천",
+    "title": "2026 문화예술·공과대학 ACE 페스티벌 \"고교생 대상 전공체험 부스 안내\"",
+    "author": "행사담당부서",
+    "posted_date": "2026-11-03",
+    "phone": "033-250-6202",
+    "email": "",
+    "url": "https://kangwon.ac.kr/ko/bbs/715/detail.do?pstSn=3482&pageIndex=1&pageItm=10&searchOrderSort=0&searchGbn=0",
+    "body": "1. 일시: 2026. 11. 3.(화) ~ 11. 4.(수), 13:00 ~ 16:00\n2. 장소: 강원대학교 춘천캠퍼스 미래광장\n3. 내용: ACE 페스티벌 전공부스 체험\n4. 대상: 춘천시내 고등학생\n5. 문의: 033-250-6202",
+    "char_count": 134,
+    "attachments": [
+      {
+        "name": "KakaoTalk_20261103_092423675.png",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261103094501346.png&path=/bbs/38&fn=KakaoTalk_20261103_092423675.png"
+      },
+      {
+        "name": "부스 배치도.png",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261103094506516.png&path=/bbs/38&fn=부스 배치도.png"
+      }
+    ],
+    "attachment_extracted_text": "",
+    "deadline": "2026-11-04 16:00",
+    "benefit_label_ko": "고교생 대상 행사",
+    "benefit_label_zh": "面向高中生开放日活动",
+    "benefit_label_en": "High School Student Booth Event",
+    "benefit_krw": 0,
+    "title_ko": "2026 문화예술·공과대학 ACE 페스티벌 \"고교생 대상 전공체험 부스 안내\"",
+    "title_zh": "2026 文化艺术·工科学院 ACE 庆典“高中生专业体验展位通知”",
+    "title_en": "2026 ACE Festival Major Experience Booths for High School Students",
+    "summary_ko": "춘천시내 고등학생 대상 전공부스 체험 안내 (대학 재학생 신청 대상 아님).",
+    "summary_zh": "面向春川市内高中生的专业体验活动（非本校大学生申请项目，已自动为您过滤）。",
+    "summary_en": "Major experience booths for local high school students (Not for university students).",
+    "rules": {
+      "campuses": [
+        "춘천"
+      ],
+      "status_allowed": [
+        "staff_citizen"
+      ],
+      "min_gpa": 0.0,
+      "max_income": 10,
+      "note_ko": "춘천시내 고등학생 대상 행사 (학부 재학생 해당 없음)",
+      "note_zh": "面向春川高中生（非大学生申请项目）",
+      "note_en": "For local high school students only"
+    },
+    "has_hwp_extracted": false
+  },
+  {
+    "id": "knu-real-21",
+    "category": "행사",
+    "campus": "춘천",
+    "title": "2026년 산업입지학회 창립 학술대회 안내",
+    "author": "행사담당부서",
+    "posted_date": "2026-10-21",
+    "phone": "033-250-6114",
+    "email": "",
+    "url": "https://kangwon.ac.kr/ko/bbs/715/detail.do?pstSn=3481&pageIndex=1&pageItm=10&searchOrderSort=0&searchGbn=0",
+    "body": "새로 창립된 산업입지학회의 학술대회를 아래와 같이 안내드립니다.\n-\n일시:\n2026년 11월 6일(금) 13:00 ~ 18:00\n-\n장소:\n강원대학교 캠퍼스혁신파크 산학연혁신허브 1층 다목적실\n-\n등록비:\n일반 30,000원 / 학생 및 강원대학교 교직원은 무료\n여러분의 많은 관심 부탁드립니다.  감사합니다.",
+    "char_count": 173,
+    "attachments": [],
+    "attachment_extracted_text": "",
+    "deadline": "2026-11-06 18:00",
+    "benefit_label_ko": "강원대 학생·교직원 등록비(3만원) 무료",
+    "benefit_label_zh": "江原大师生免注册费（原价3万韩元）",
+    "benefit_label_en": "Free Registration for KNU Students & Staff",
+    "benefit_krw": 30000,
+    "title_ko": "2026년 산업입지학회 창립 학술대회 안내",
+    "title_zh": "2026年产业区位学会创立学术大会通知（江原大学生及教职工免费参加）",
+    "title_en": "2026 Industrial Location Society Inaugural Academic Conference (Free for KNU)",
+    "summary_ko": "11월 6일(금) 13:00~18:00 강원대 캠퍼스혁신파크 산학연혁신허브 1층에서 개최. 일반인 등록비 30,000원이나 강원대 학생 및 교직원은 전액 무료 참가 가능.",
+    "summary_zh": "11月6日（周五）13:00~18:00 在江原大学校园创新园产学研中心1楼举办。外部人员注册费3万韩元，江原大学在读生及教职工全额免费。",
+    "summary_en": "Held Nov 6, 13:00–18:00 at KNU Campus Innovation Park Hub 1F. Free admission for KNU students and faculty/staff (30,000 KRW waived).",
+    "rules": {
+      "campuses": [
+        "춘천"
+      ],
+      "status_allowed": [
+        "undergrad_kr",
+        "intl",
+        "leave_grad",
+        "staff_citizen"
+      ],
+      "min_gpa": 0.0,
+      "max_income": 10,
+      "note_ko": "강원대 재학생 및 교직원 참가비(30,000원) 면제",
+      "note_zh": "江原大学学生及教职工免收30,000韩元注册费",
+      "note_en": "30,000 KRW registration fee waived for KNU members"
+    },
+    "has_hwp_extracted": false
+  },
+  {
+    "id": "knu-real-23",
+    "category": "행사",
+    "campus": "강릉",
+    "title": "[특강] 2026 강릉자유전공학부 진로설계 특강(10월)",
+    "author": "행사담당부서",
+    "posted_date": "2026-10-19",
+    "phone": "033-250-6114",
+    "email": "",
+    "url": "https://kangwon.ac.kr/ko/bbs/715/detail.do?pstSn=3479&pageIndex=1&pageItm=10&searchOrderSort=0&searchGbn=0",
+    "body": "■ 일시: 2026.10.26.(월) 11:00~\n■ 장소: 교육지원센터 119호\n■ 강사: 지역인재 7급 합격자(경제학과)\n■ 강릉캠퍼스 학생들 모두 참여 가능합니다. (QR로 참여신청하세요~)\n■ 문의: 자유전공학부 차유란(640-2551)",
+    "char_count": 136,
+    "attachments": [],
+    "attachment_extracted_text": "",
+    "deadline": "2026-10-26 11:00",
+    "benefit_label_ko": "강릉캠퍼스 특강",
+    "benefit_label_zh": "江陵校区专场讲座",
+    "benefit_label_en": "Gangneung Campus Lecture",
+    "benefit_krw": 0,
+    "title_ko": "[특강] 2026 강릉자유전공학부 진로설계 특강(10월)",
+    "title_zh": "[特讲] 2026 江陵自由专业学部 生涯规划特讲",
+    "title_en": "[Lecture] 2026 Gangneung Liberal Arts Career Design Lecture",
+    "summary_ko": "강릉캠퍼스 교육지원센터 119호에서 진행되는 지역인재 7급 합격자 초청 특강.",
+    "summary_zh": "江陵校区专属生涯规划讲座（春川校区学生无需查看）。",
+    "summary_en": "Career lecture held at Gangneung Campus Education Support Center 119.",
+    "rules": {
+      "campuses": [
+        "강릉"
+      ],
+      "status_allowed": [
+        "undergrad_kr",
+        "intl"
+      ],
+      "min_gpa": 0.0,
+      "max_income": 10,
+      "note_ko": "강릉캠퍼스 전용 특강",
+      "note_zh": "仅限江陵校区学生",
+      "note_en": "Gangneung Campus only"
+    },
+    "has_hwp_extracted": false
+  },
+  {
+    "id": "knu-real-26",
+    "category": "공모",
+    "campus": "ALL",
+    "title": "「강원대학교 개교 80주년 기념 디자인 공모전」 결과 발표 일정 변경 안내",
+    "author": "공모담당부서",
+    "posted_date": "2026-10-29",
+    "phone": "033-250-6114",
+    "email": "",
+    "url": "https://kangwon.ac.kr/ko/bbs/719/detail.do?pstSn=4269&pageIndex=1&pageItm=10&searchOrderSort=0&searchGbn=0",
+    "body": "「강원대학교 개교 80주년 기념 디자인 공모전」에 많은 관심과 참여를 보내주셔서 감사드립니다.\n당초 예상보다 많은 작품이 접수됨에 따라, 보다 면밀하고 공정한 심사를 위해\n결과 발표 일정을 다음과 같이 변경하오니 양해 부탁드립니다.\n- 당초 발표일 : 2026. 10. 28.(수)\n- 변경 발표일 : 2026. 11. 13.(금)\n발표 방법 : 강원대학교 홈페이지 공지사항 게시 및 수상자 개별 통보\n※ 변경된 발표 일정은 심사 진행 상황에 따라 추가 조정될 수 있으며, 변경 시 별도 안내드리겠습니다.\n공모전에 참여해 주신 모든 분께 감사드립니다.\n강원대학교 대외협력과",
+    "char_count": 320,
+    "attachments": [],
+    "attachment_extracted_text": "",
+    "deadline": "2026-11-13 18:00",
+    "benefit_label_ko": "공모전 결과 발표일정 안내",
+    "benefit_label_zh": "校庆80周年设计大赛结果公布改期通知",
+    "benefit_label_en": "80th Anniversary Design Contest Result Date Notice",
+    "benefit_krw": 0,
+    "title_ko": "「강원대학교 개교 80주년 기념 디자인 공모전」 결과 발표 일정 변경 안내",
+    "title_zh": "「江原大学建校80周年纪念设计大赛」结果公布日程变更通知（11/13公布）",
+    "title_en": "KNU 80th Anniversary Design Contest Result Announcement Rescheduled (Nov 13)",
+    "summary_ko": "개교 80주년 디자인 공모전 심사 결과 발표일이 11월 13일(금)로 변경됨을 안내.",
+    "summary_zh": "江原大学建校80周年纪念设计大赛结果公布日期调整为11月13日（周五）。",
+    "summary_en": "Results for the KNU 80th Anniversary Design Contest will be announced on Friday, Nov 13.",
+    "rules": {
+      "campuses": [
+        "춘천",
+        "삼척",
+        "강릉",
+        "원주"
+      ],
+      "status_allowed": [
+        "undergrad_kr",
+        "intl",
+        "leave_grad",
+        "staff_citizen"
+      ],
+      "min_gpa": 0.0,
+      "max_income": 10,
+      "note_ko": "전 캠퍼스 구성원 참고 공지",
+      "note_zh": "全校区参赛者通知",
+      "note_en": "Notice for all campuses"
+    },
+    "has_hwp_extracted": false
+  },
+  {
+    "id": "knu-real-27",
+    "category": "공모",
+    "campus": "춘천삼척",
+    "title": "2026학년도 지역문제 기반 프로젝트 공모전 안내",
+    "author": "공모담당부서",
+    "posted_date": "2026-11-05",
+    "phone": "033-250-7163",
+    "email": "jyh0908@kangwon.ac.kr",
+    "url": "https://kangwon.ac.kr/ko/bbs/719/detail.do?pstSn=4276&pageIndex=1&pageItm=10&searchOrderSort=0&searchGbn=0",
+    "body": "[ 2026학년도 지역문제 기반 프로젝트 공모전 ]\n교수학습개발원에서는 글로컬대학사업의 핵심 교육모델인 지역연계 P3L(Place–Problem–Project-based Learning) 기반 교육과정을 운영하고 있으며, 학생들의 지역문제 해결역량을 강화하고 실천적 학습성과를 확산하고자 「지역문제 기반 프로젝트 공모전」을 개최합니다.\nⅠ. 공모 개요\n❍ 공모명 : 2026학년도 지역문제 기반 프로젝트 공모전\n❍ 강원지역의 현안·요구 등을 탐색·분석하고, 이를 해결 또는 개선하기 위해 수행한 프로젝트 또는 구체적인 실행방안을 제시하는 아이디어 프로젝트\n❍ 공모내용\n- P3L 등 지역연계형 수업에서 수행한 프로젝트뿐만 아니라 학생이 직접 지역문제를 발굴·기획한 프로젝트도 참여 가능\n- 지역문제의 발굴·분석, 프로젝트의 기획·수행 과정, 결과 또는 기대효과, 향후 적용·발전 가능성 등을 포함\n❍ 공모 대상 : 춘천·삼척·도계 캠퍼스 소속 강원대학교 재학생(개인 또는 팀 단위 참여)\n❍ 참여 특전 : 참여자 전원 비교과 마일리지 부여\n❍ 시상금 총액 : 12,000,000원\nⅡ. 접수 방법\n❍ 지원 방법\n- 접수기간 : 2026. 10. 20.(화) ~ 11. 23.(월) 23:59까지\n- 제출방법 : 교수학습개발원 홈페이지를 통한 온라인 접수 (\n※ 홈페이지 접속이 안될 경우 jyh0908@kangwon.ac.kr. 메일로 제출\n)\n- 교수학습개발원 홈페이지 → 로그인 → 학습지원 프로그램 신청 → 공모전 프로그램 → 「지역문제 기반 프로젝트 공모전」 → 신청하기(파일 첨부)\n[[[[[ 제출 링크 ]]]]]\n※ 홈페이지 접속이 안될 경우\njyh0908@kangwon.ac.kr\n메일로 제출\n- 파일 제출 형식 : 제출서류를 하나의 압축파일(.zip)로 제출\n- 파일명 규칙 : 팀명(대표자명)_2026학년도 지역문제 기반 프로젝트\n- 문의처 : 교수학습개발원(☎ 033-250-7163, 7389), jyh0908@kangwon.ac.kr\n❍ 제출 서류(첨부파일 참고)\n- 참가 신청서\n- 저작물 활용 동의서\n- 프로젝트 제안·결과서",
+    "char_count": 1035,
+    "attachments": [
+      {
+        "name": "[붙임1] 2026학년도 지역문제 기반 프로젝트 공모전 안내.pdf",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261105092615228.pdf&path=/bbs/345&fn=[붙임1] 2026학년도 지역문제 기반 프로젝트 공모전 안내.pdf"
+      },
+      {
+        "name": "[붙임2] 신청 양식.hwp",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261105092624072.hwp&path=/bbs/345&fn=[붙임2] 신청 양식.hwp"
+      },
+      {
+        "name": "[붙임3] 2026학년도 지역문제 기반 프로젝트 공모전 포스터(수정).png",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261105092629213.png&path=/bbs/345&fn=[붙임3] 2026학년도 지역문제 기반 프로젝트 공모전 포스터(수정).png"
+      }
+    ],
+    "attachment_extracted_text": "[[붙임2] 신청 양식.hwp 첨부파일 원문 추출]\n[붙임 1] 참가 신청서                                                                ※ 필수 제출\n2026학년도 지역문제 기반 프로젝트 공모전 참가 신청서\n※ 팀원이 5명을 초과하는 경우 행 추가 가능\n참가 신청, 심사 및 운영, 참가자 연락 및 관련 안내 ■ 수집하는 개인정보 항목 성명, 소속학과, 학번, 연락처, 이메일 ■ 개인정보 보유 및 이용 기간 사업 종료 후 3년간 보관 후 파기(전자파일 영구삭제 포함) ■ 개인정보 수집\n이용 동의 거부 권리 및 불이익 개인정보 수집\n이용에 대한 동의를 거부할 권리가 있으며, 동의를 거부할 경우 공모전 참가가 제한될 수 있습니다.",
+    "deadline": "2026-11-23 23:59",
+    "benefit_label_ko": "총 상금 1,200만원 + 전원 비교과 마일리지",
+    "benefit_label_zh": "总奖金 1,200万韩元 + 全员第二课堂积分",
+    "benefit_label_en": "12,000,000 KRW Total Prize + Extracurricular Mileage",
+    "benefit_krw": 1000000,
+    "title_ko": "2026학년도 지역문제 기반 프로젝트 공모전 안내",
+    "title_zh": "2026学年度 基于地区问题的项目竞赛通知（总奖金1,200万韩元·全员赋分）",
+    "title_en": "2026 Regional Problem-Based Project Contest (12M KRW Prize Pool + Mileage)",
+    "summary_ko": "춘천·삼척·도계 캠퍼스 재학생(개인 또는 팀) 누구나 참여 가능! 수업 프로젝트나 해커톤/동아리에서 발굴한 지역·캠퍼스 문제 해결 프로젝트 제출 시 전원 비교과 마일리지 부여 및 총 상금 1,200만원 시상. 마감: 11/23(월) 23:59, 이메일(jyh0908@kangwon.ac.kr) 또는 CTL 홈페이지 접수.",
+    "summary_zh": "春川、三陟校区在读生（个人或团队）均可报名！提交课堂项目或黑客松/社团开发的地区及校园问题解决项目，全员可获第二课堂积分（비교과 마일리지）并角逐1,200万韩元总奖金！截止：11月23日23:59，支持直接发邮件至 jyh0908@kangwon.ac.kr 提交。",
+    "summary_en": "Open to all Chuncheon/Samcheok active students (individual or team). Submit a regional/campus problem-solving project to earn extracurricular mileage and compete for 12M KRW in prizes. Due Nov 23, 23:59 via CTL or email (jyh0908@kangwon.ac.kr).",
+    "rules": {
+      "campuses": [
+        "춘천",
+        "삼척"
+      ],
+      "status_allowed": [
+        "undergrad_kr",
+        "intl"
+      ],
+      "min_gpa": 0.0,
+      "max_income": 10,
+      "note_ko": "춘천·삼척 재학생 누구나 (해커톤 프로젝트 그대로 출품 가능! 평점/소득 제한 없음)",
+      "note_zh": "春川·三陟在读生（含留学生）零门槛可投！（可将本次AI黑客松作品直接投递参赛）",
+      "note_en": "Open to all Chuncheon/Samcheok active students (No GPA/income limit — great for hackathon projects!)"
+    },
+    "has_hwp_extracted": true
+  },
+  {
+    "id": "knu-real-29",
+    "category": "공모",
+    "campus": "ALL",
+    "title": "2026년도 공공데이터 활용 경진대회",
+    "author": "공모담당부서",
+    "posted_date": "2026-11-02",
+    "phone": "033-250-6114",
+    "email": "",
+    "url": "https://kangwon.ac.kr/ko/bbs/719/detail.do?pstSn=4274&pageIndex=1&pageItm=10&searchOrderSort=0&searchGbn=0",
+    "body": "[공공데이터 활용 사례 공모전(안내문).hwp 첨부파일 원문 추출]\n한국체육산업개발(주)에서 개방중인 공공데이터를 활용한 사례를 발굴하고 국민의 개방\n활용 수요를 반영하기 위한 경진대회를 개최합니다.\n□ 대회 개요\r\n ○ 대 회 명: 2026년도 공공데이터 활용 경진대회\r\n ○ 공모주제: 한국체육산업개발(주) 개방 공공데이터를 활용한 \r\n              활용사례 (웹/앱 개발, 실감형콘텐츠 활용 등)\r\n   - 기관 개방 데이터 1종 이상을 활용하고 타 기관 데\n공공데이터 포털(www.data.go.kr)에 한국체육산업개발(주) 공공데이터 57종\r\n   - 공모 예시\n공연 정보를 활용한 올림픽공원 공연 티켓 예약 알림 서비스\n입출차 정보를 연계한 방문객 혼잡도 예측 및 분산 안내 서비스",
+    "char_count": 393,
+    "attachments": [
+      {
+        "name": "공공데이터 활용 사례 공모전(안내문).hwp",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261102104805636.hwp&path=/bbs/345&fn=공공데이터 활용 사례 공모전(안내문).hwp"
+      }
+    ],
+    "attachment_extracted_text": "[공공데이터 활용 사례 공모전(안내문).hwp 첨부파일 원문 추출]\n한국체육산업개발(주)에서 개방중인 공공데이터를 활용한 사례를 발굴하고 국민의 개방\n활용 수요를 반영하기 위한 경진대회를 개최합니다.\n□ 대회 개요\r\n ○ 대 회 명: 2026년도 공공데이터 활용 경진대회\r\n ○ 공모주제: 한국체육산업개발(주) 개방 공공데이터를 활용한 \r\n              활용사례 (웹/앱 개발, 실감형콘텐츠 활용 등)\r\n   - 기관 개방 데이터 1종 이상을 활용하고 타 기관 데\n공공데이터 포털(www.data.go.kr)에 한국체육산업개발(주) 공공데이터 57종\r\n   - 공모 예시\n공연 정보를 활용한 올림픽공원 공연 티켓 예약 알림 서비스\n입출차 정보를 연계한 방문객 혼잡도 예측 및 분산 안내 서비스",
+    "deadline": "2026-11-18 18:00",
+    "benefit_label_ko": "공공데이터 활용 공모전 (HWP 원문 추출됨)",
+    "benefit_label_zh": "公共数据应用大赛（已自动提取HWP附件正文）",
+    "benefit_label_en": "Public Data Utilization Contest (HWP Extracted)",
+    "benefit_krw": 500000,
+    "title_ko": "2026년도 공공데이터 활용 경진대회",
+    "title_zh": "2026年度 公共数据应用案例征集大赛（已自动提取 .hwp 附件内容）",
+    "title_en": "2026 Public Data Utilization Case Contest (.hwp Content Auto-Extracted)",
+    "summary_ko": "학교 홈페이지 본문이 비어있고 .hwp 첨부파일로만 제공된 공고입니다. KNU Radar가 .hwp 내부 텍스트를 자동 추출하여 바로 열람할 수 있습니다.",
+    "summary_zh": "该通知在学校官网上正文为空白，所有内容均锁在 .hwp 附件中。本系统已自动为您提取 .hwp 内部韩文正文，免去下载安装韩컴 Office。",
+    "summary_en": "This notice had an empty webpage body on kangwon.ac.kr with details locked inside a .hwp file. KNU Radar automatically extracted the .hwp text for instant reading.",
+    "rules": {
+      "campuses": [
+        "춘천",
+        "삼척",
+        "강릉",
+        "원주"
+      ],
+      "status_allowed": [
+        "undergrad_kr",
+        "intl",
+        "leave_grad",
+        "staff_citizen"
+      ],
+      "min_gpa": 0.0,
+      "max_income": 10,
+      "note_ko": "전 캠퍼스 학생 및 일반 참가 가능 (.hwp 원문 자동 추출 완료)",
+      "note_zh": "全校区学生及市民均可报名（已自动解析 .hwp 空正文附件）",
+      "note_en": "Open to all students & citizens (.hwp attachment auto-extracted)"
+    },
+    "has_hwp_extracted": true
+  },
+  {
+    "id": "knu-real-30",
+    "category": "공모",
+    "campus": "ALL",
+    "title": "2026년 재난안전 AI 데이터 활용 해커톤",
+    "author": "공모담당부서",
+    "posted_date": "2026-11-02",
+    "phone": "033-250-6114",
+    "email": "heosj@nia.or.kr",
+    "url": "https://kangwon.ac.kr/ko/bbs/719/detail.do?pstSn=4273&pageIndex=1&pageItm=10&searchOrderSort=0&searchGbn=0",
+    "body": "[2026년 재난안전 AI 데이터 활용 해커톤 공고문.hwpx 첨부파일 원문 추출]\n행정안전부 공고 2026-1358호\n｢재난안전 AI 데이터 활용 해커톤｣ 공고\n행정안전부 공고 2026-1358호\n행정안전부는 창의적인 아이디어와 재난안전 AI 학습데이터를 활용하여 재난안전 대응 AI 서비스 개발을 지원하는 프로젝트, ｢재난안전 AI 데이터 활용 해커톤｣을 아래와 같이 개최합니다. 많은 관심과 참여를 바랍니다.\n2026년 10월 27일\n행정안전부장관\n공모 개요\n◇\n공모 주제\n:\n재난안전데이터를 활용한 재난관\n리\n(\n예방‧대비·대응·복구)\n서\n비스 개발\n◇\n주최 / 주관\n: 행정안전부 / 한국지능정보사회진흥원\n◇\n참가 대상\n:\n재난안전 AI 서비스 개발에 관심 있는 전 국민 누구나\n< 참가 자격 관련 유의 사항 >\n‣ 개인 또는 팀\n(2~3인)\n으로 참가 가능\n‣\n동일 과제\n(아이템)\n로 타 경진대회 및 공모전에 참가한 경우 참가 불가\n‣\n타인의 지식재산권 등 권리를 침해할 우려가 있는 과제\n(아이템)\n로 참가 불가\n◇\n접수 기간\n: ‘26. 10. 27.(화) ~ ’26. 11. 9.(월) 23시 59분\n◇\n참가 방법\n:\n참가신청서 등 붙임서류를 작성하여 이메\n일\n(\n0\nmailto:heosj@nia.or.kr;2;0;0\nmailto:heosj@nia.or.kr\nHWPHYPERLINK_TYPE_EMAIL\nHWPHYPERLINK_TARGET_BOOKMARK\nHWPHYPERLINK_JUMP_CURRENTTAB\nheosj@nia.or.kr\n)\n접수\n◇\n포상 : 총 170만 원\n상훈\n시상 수\n상금\n대상\n행정안전부장관상\n1점\n80만 원\n최우수상\n행정안전부장관상\n1점\n50만 원\n우수상\n한국지능정보사회진흥원장상\n1점\n40만 원\n◇\n문의처\n: 행정안전부 재난안전데이터과(☎044-205-4469)\n1\n추진일정\n접수 및\n▶\n전문가 교육 및\n(대면)\n▶\n팀별 활동 및\n(비대면)\n▶\n결선·시상\n(대면)\n10.27.\n(화)\n∼ 11.12.\n(목)\n11.16.\n(월)\n11.17.\n(화)\n~\n12.2.\n(수)\n예정\n12.3.\n(목)\n예정\n이메일 접수\n(\n0\nmailto:heosj@nia.or.kr;2;0;0\nmailto:heosj@nia.or.kr\nHWPHYPERLINK_TYPE_EMAIL\nHWPHYPERLINK_TARGET_BOOKMARK\nHWPHYPERLINK_JUMP_CURRENTTAB\nheosj@nia.or.kr\n)\n5개 팀 선정\n데이터 활용 교육\n1차 멘토링\n(\n문제정의 등 지도)\n※ 장소: NIA 서울사무소\n아이디어 및 서비스 고도화\n2차 멘토링\n(팀당 1회 중간 점검)\nPT 발표\n(10분)\n및 심사\n(5분)\n후 수상팀\n(3팀)\n결정\n※ 장소: 행안부(민원동)\n*\n상기 추진 절차 및 일정은 대내·외 사정에 의해 조정될 수 있음\n2\n평가 및 선정\n□\n심사 방법\n○\n(1차 심사)\n제출 서류\n(참가신청서, 아이디어 제안서)\n를 행정안전부 내부 평가 위원의 서면 심사를 통한 5팀 선정\n- 4개 평가 기준\n(문제 적합성, 데이터 활용계획, 창의성, 구현 가능성)\n의 종합 점수 고득점순으로 5팀 선정\n< 1차 서류 평가 기준\n(안)\n>\n기준\n배점\n세부 평가 내용\n문제적합성\n20점\n재난안전 분야의 구체적인 사회현안과 해결 필요성을 적절하게 제시하였는가?\n데이터\n활용계획\n20점\n제공되는 재난안전 AI 학습용 데이터 중 1종 이상에 대한\n20점\n공공데이터 선정이 목적에 적합하며, 데이터가 서비스의 핵심 기능 구현에 실질적으로 기여하는가?\n창의성\n20점\n기존 서비스와 차별화된 아이디어인가? 재난안전 현안 해결에 새로운 접근방식을 제시하는가?\n구현가능성\n20점\n대회 기간 내 프로토타입으로 구현할 수 있는 수준이며 서비스 기능과 개발계획이 구체적인가?\n합계\n8\n=SUM(?2:?6)??%g,;;100\n=SUM(?2:?6)\n%g,\n100\n100\n점\n○\n(2차 심사)\n1차 심사 통과 5팀에 대하여 교육·멘토링 지원 이후, 전문가로 구성된 심사위원회를 통해 서비스 시연 및 발표심사\n*\n*\n서비스 시연·PT 발표\n(10분)\n및 심사\n(5분)\n-\n전문가평가\n(90점)\n+ 참가팀 상호평가\n(10점)\n합산 점수의 고득점순으로 3팀 선정\n< 2차 결선 평가 기준\n(안)\n>\n구분\n기준\n배점\n세부 평가내용\n전문가\n평가\n(90점)\n문제\n적합성\n10점\n재난안전 분야의 구체적인 사회 현안과 해결 필요성을 적절하게 제시하였는가?\n데이터\n20점\n제공된 재난안전 AI 데이터를 실제 결과물에 활용하였는가?\n20점\n공공데이터가 서비스의 핵심 기능 구현에 실질적으로 기여하는가?\n창의성\n15점\n기존 서비스와 차별화된 아이디어인가? 재난안전 현안 해결에 새로운 접근방식을 제시하는가?\n완결성\n25점\n프로토타입이 안정적이고 구체적이며, 실제 재난안전 업무나 대국민 서비스에 적용할 수 있는가?\n상호\n평가\n(10점)\n종합 평가\n10점\n본인팀 제외, 우수하다고 판단한 4개 팀 순위대로 점수 부여\n투표 순위\n1위\n2위\n3위\n4위\n평가점수\n10점\n8점\n6점\n4점\n합계\n8\n=SUM(?2:?7)??%g,;;100\n=SUM(?2:?7)\n%g,\n100\n100\n점\n< 평가 개요 >\n구분\n1차 서류평가\n(예선)\n2차 발표평가\n(결선)\n평가대상\n전체 신청팀\n결선 진출 5개 \n\n[2026년 재난안전 AI 데이터 활용 해커톤 제출서류.hwpx 첨부파일 원문 추출]\n참가신청서\n팀명\n*****팀(팀원 수:   )\n*한 아이템에 팀 구성 1~3명 이내\n구분\n이름\n생년월일\n성별\n소속\n휴대폰 번호\nE-mail\n팀원1\n(대표)\n팀원 2\n팀원 3\n사업\n아이디어\n아이디어명\n요약\n위와 같이 본인(팀)은 『재난안전 AI 해커톤』 참가를 신청합니다.\n2026년     10월     일\n신청인(대표자)                          (서명)\n*자필서명\n한국지능정보사회진흥원장 귀하\n[ 개인정보 수집·이용에 대한 동의 ]\n수집․이용 목적\n해커톤 참가자 선정 적합 여부 심사 및 본인 확인, 참가자 확정 후 교육과정 안내를 위해 개인정보(전화번호 등) 수집·이용 동의서 작성 필요\n본 개인정보는 데이터 활용 기업과 개인 지원을 위한 기타사업 등에 사용될 수 있음\n수집․이용 항목\n성명, 생년월일, 성별, 소속, 전화번호, 이메일 등\n보유․이용 기간\n해커톤 기간에만 보유, 심사 종료 시 즉시 파기\n단, 해커톤 참가자의 정보는 활동 종료 시 즉시 파기\n[ 사진 촬영 및 초상권 활용에 대한 동의 ]\n사용 형태\n본 해커톤 프로그램 진행 시, 참가자 모습을 사전 혹은 영상으로 기록하여 홍보자료(온·오프라인 홍보물, 홈페이지 등) 및 기록자료(내부 보관용)로 활용\n개인정보 수집·이용 동의를 거부할 권리가 있으며, 동의를 거부할 경우\n‘제2회 오픈데이터포럼 해커톤’ 참가자 선정 심사에 참여할 수 없습니다.\n위와 같이 개인정보를 수집․이용하는 것에 동의하십니까? ( √ 체크)\n팀원 1     □동의함       □동의하지 않음\n팀원 2     □동의함       □동의하지 않음\n팀원 3     □동의함       □동의하지 않음\n유의사항\n1. 제출된 서류는 일절 반환하지 않으며, 제출한 작품의 저작권은 출품자(팀)에게 귀속됨\n2.\n수상에 적합한 수준의 작품이 없으면 등 발생 시 시상 규모가 축소 또는 변경될 수 있음\n3. 시상금에 따른 제세공과금은 수상자 부담임\n심사제외\n입상취소\n대상\n‣\n타 경진대회 또는 공모전에서 이미 채택된 아이디어이거나 그 기본 구상이 매\n우 유사한 경우\n‣\n이미 공개되었거나 기존에 개발·이용되고 있는 사업이나 기술을 모방한 경우\n‣\n타인이 취득한 특허권, 실용신안권, 디자인권, 저작권에 속하거\n나 단순히 국내외 사례를 모방 또는\n재난안전 AI 해커톤 아이디어 제안서\n*파란색은 삭제 후 제출\n팀명\n팀원 수\n팀원 이름\n홍길동1, 홍길동2, 홍길동3\n휴대전화\n(대표)\nemail\n(대표)\n아이디어명\n□\n제안 개요 및 문제정의\n※ 해결하고자 하는 재난안전 분야의 사회현안과 제안 배경, 서비스 이용대상 및 추진목표 기술\no 재난안전 현안의 발생 원인과 현재의 문제점\no 문제해결이 필요한 이유와 달성하고자 하는 구체적인 목표\n□\n아이디어 및 서비스 내용\n※ 제안한 아이디어의 주요 내용과 서비스 이용방식, 핵심 기능을 구체적으로 기술\no 서비스의 주요 기능 및 이용절차\no 재난 예측 방법, 대피 행동요령 안내 등 재난예방과 대응의 지원 방식\no 기존 유사 서비스와의 차별성 및 제안 아이디어의 특징·장점\no 활용한 AI 도구의 명칭 및 적용범위를 명확히 기재\n□\n재난안전 데이터 활용계획\n※ 제안 서비스에 활용할 재난안전 AI 학습용 데이터와 공공데이터의 종류 및 활용 방법 기술\no 각 데이터가 서비스의 주요 기능 구현에 기여하는 방식\no 데이터 활용 전·후의 차이점과 활용 과정에서 예상되는 한계 및 개선방안\n□\n프로토타입 구현 및 실행계획\n※ 서비스 프로토타입을 구현하기 위한 구체적인 개발범위와 단계별 실행계획을 기술\no 프로토타입으로 구현할 핵심 기능\no 멘토링을 통해 보완하거나 지원받고자 하는 사항\n□ 기대효과 및 확장·적용 가능성\n※ 제안 서비스가 재난안전 현안 해결에 미치는 효고와 향후 활용·확장 가능성 기술\no 국민 편의 증진, 공공업무 효율화 측면의 기대효과\no 추가 데이터 연계, 기능 고도화를 통해 타 재난 분야로의 확장 가능성\n참여 확약서\n본인은 주최기관이 제공하는 ‘재난안전 AI 학습용 데이터’를 본 대회의 참가 및 결과물 개발 목적으로만 사용하고, 주최기관의 사전 승인 없이 타 경진대회·공모전 등에 활용하거나 제3자에게 제공·공유·재배포하는 등 대회 목적 외의 용도로 사용하지 않을 것을 확약합니다.\n2026년 10월 0일\n팀 장 :                 (서명)\n팀 원 :                 (서명)\n팀 원 :                 (서명)\n한국지능정보사회진흥원장 귀하",
+    "char_count": 4775,
+    "attachments": [
+      {
+        "name": "2026년 재난안전 AI 데이터 활용 해커톤 공고문.hwpx",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261102104555223.hwpx&path=/bbs/345&fn=2026년 재난안전 AI 데이터 활용 해커톤 공고문.hwpx"
+      },
+      {
+        "name": "2026년 재난안전 AI 데이터 활용 해커톤 제출서류.hwpx",
+        "url": "https://kangwon.ac.kr/ko/cmmn/download.do?dn=20261102104556909.hwpx&path=/bbs/345&fn=2026년 재난안전 AI 데이터 활용 해커톤 제출서류.hwpx"
+      }
+    ],
+    "attachment_extracted_text": "[2026년 재난안전 AI 데이터 활용 해커톤 공고문.hwpx 첨부파일 원문 추출]\n행정안전부 공고 2026-1358호\n｢재난안전 AI 데이터 활용 해커톤｣ 공고\n행정안전부 공고 2026-1358호\n행정안전부는 창의적인 아이디어와 재난안전 AI 학습데이터를 활용하여 재난안전 대응 AI 서비스 개발을 지원하는 프로젝트, ｢재난안전 AI 데이터 활용 해커톤｣을 아래와 같이 개최합니다. 많은 관심과 참여를 바랍니다.\n2026년 10월 27일\n행정안전부장관\n공모 개요\n◇\n공모 주제\n:\n재난안전데이터를 활용한 재난관\n리\n(\n예방‧대비·대응·복구)\n서\n비스 개발\n◇\n주최 / 주관\n: 행정안전부 / 한국지능정보사회진흥원\n◇\n참가 대상\n:\n재난안전 AI 서비스 개발에 관심 있는 전 국민 누구나\n< 참가 자격 관련 유의 사항 >\n‣ 개인 또는 팀\n(2~3인)\n으로 참가 가능\n‣\n동일 과제\n(아이템)\n로 타 경진대회 및 공모전에 참가한 경우 참가 불가\n‣\n타인의 지식재산권 등 권리를 침해할 우려가 있는 과제\n(아이템)\n로 참가 불가\n◇\n접수 기간\n: ‘26. 10. 27.(화) ~ ’26. 11. 9.(월) 23시 59분\n◇\n참가 방법\n:\n참가신청서 등 붙임서류를 작성하여 이메\n일\n(\n0\nmailto:heosj@nia.or.kr;2;0;0\nmailto:heosj@nia.or.kr\nHWPHYPERLINK_TYPE_EMAIL\nHWPHYPERLINK_TARGET_BOOKMARK\nHWPHYPERLINK_JUMP_CURRENTTAB\nheosj@nia.or.kr\n)\n접수\n◇\n포상 : 총 170만 원\n상훈\n시상 수\n상금\n대상\n행정안전부장관상\n1점\n80만 원\n최우수상\n행정안전부장관상\n1점\n50만 원\n우수상\n한국지능정보사회진흥원장상\n1점\n40만 원\n◇\n문의처\n: 행정안전부 재난안전데이터과(☎044-205-4469)\n1\n추진일정\n접수 및\n▶\n전문가 교육 및\n(대면)\n▶\n팀별 활동 및\n(비대면)\n▶\n결선·시상\n(대면)\n10.27.\n(화)\n∼ 11.12.\n(목)\n11.16.\n(월)\n11.17.\n(화)\n~\n12.2.\n(수)\n예정\n12.3.\n(목)\n예정\n이메일 접수\n(\n0\nmailto:heosj@nia.or.kr;2;0;0\nmailto:heosj@nia.or.kr\nHWPHYPERLINK_TYPE_EMAIL\nHWPHYPERLINK_TARGET_BOOKMARK\nHWPHYPERLINK_JUMP_CURRENTTAB\nheosj@nia.or.kr\n)\n5개 팀 선정\n데이터 활용 교육\n1차 멘토링\n(\n문제정의 등 지도)\n※ 장소: NIA 서울사무소\n아이디어 및 서비스 고도화\n2차 멘토링\n(팀당 1회 중간 점검)\nPT 발표\n(10분)\n및 심사\n(5분)\n후 수상팀\n(3팀)\n결정\n※ 장소: 행안부(민원동)\n*\n상기 추진 절차 및 일정은 대내·외 사정에 의해 조정될 수 있음\n2\n평가 및 선정\n□\n심사 방법\n○\n(1차 심사)\n제출 서류\n(참가신청서, 아이디어 제안서)\n를 행정안전부 내부 평가 위원의 서면 심사를 통한 5팀 선정\n- 4개 평가 기준\n(문제 적합성, 데이터 활용계획, 창의성, 구현 가능성)\n의 종합 점수 고득점순으로 5팀 선정\n< 1차 서류 평가 기준\n(안)\n>\n기준\n배점\n세부 평가 내용\n문제적합성\n20점\n재난안전 분야의 구체적인 사회현안과 해결 필요성을 적절하게 제시하였는가?\n데이터\n활용계획\n20점\n제공되는 재난안전 AI 학습용 데이터 중 1종 이상에 대한\n20점\n공공데이터 선정이 목적에 적합하며, 데이터가 서비스의 핵심 기능 구현에 실질적으로 기여하는가?\n창의성\n20점\n기존 서비스와 차별화된 아이디어인가? 재난안전 현안 해결에 새로운 접근방식을 제시하는가?\n구현가능성\n20점\n대회 기간 내 프로토타입으로 구현할 수 있는 수준이며 서비스 기능과 개발계획이 구체적인가?\n합계\n8\n=SUM(?2:?6)??%g,;;100\n=SUM(?2:?6)\n%g,\n100\n100\n점\n○\n(2차 심사)\n1차 심사 통과 5팀에 대하여 교육·멘토링 지원 이후, 전문가로 구성된 심사위원회를 통해 서비스 시연 및 발표심사\n*\n*\n서비스 시연·PT 발표\n(10분)\n및 심사\n(5분)\n-\n전문가평가\n(90점)\n+ 참가팀 상호평가\n(10점)\n합산 점수의 고득점순으로 3팀 선정\n< 2차 결선 평가 기준\n(안)\n>\n구분\n기준\n배점\n세부 평가내용\n전문가\n평가\n(90점)\n문제\n적합성\n10점\n재난안전 분야의 구체적인 사회 현안과 해결 필요성을 적절하게 제시하였는가?\n데이터\n20점\n제공된 재난안전 AI 데이터를 실제 결과물에 활용하였는가?\n20점\n공공데이터가 서비스의 핵심 기능 구현에 실질적으로 기여하는가?\n창의성\n15점\n기존 서비스와 차별화된 아이디어인가? 재난안전 현안 해결에 새로운 접근방식을 제시하는가?\n완결성\n25점\n프로토타입이 안정적이고 구체적이며, 실제 재난안전 업무나 대국민 서비스에 적용할 수 있는가?\n상호\n평가\n(10점)\n종합 평가\n10점\n본인팀 제외, 우수하다고 판단한 4개 팀 순위대로 점수 부여\n투표 순위\n1위\n2위\n3위\n4위\n평가점수\n10점\n8점\n6점\n4점\n합계\n8\n=SUM(?2:?7)??%g,;;100\n=SUM(?2:?7)\n%g,\n100\n100\n점\n< 평가 개요 >\n구분\n1차 서류평가\n(예선)\n2차 발표평가\n(결선)\n평가대상\n전체 신청팀\n결선 진출 5개 \n\n[2026년 재난안전 AI 데이터 활용 해커톤 제출서류.hwpx 첨부파일 원문 추출]\n참가신청서\n팀명\n*****팀(팀원 수:   )\n*한 아이템에 팀 구성 1~3명 이내\n구분\n이름\n생년월일\n성별\n소속\n휴대폰 번호\nE-mail\n팀원1\n(대표)\n팀원 2\n팀원 3\n사업\n아이디어\n아이디어명\n요약\n위와 같이 본인(팀)은 『재난안전 AI 해커톤』 참가를 신청합니다.\n2026년     10월     일\n신청인(대표자)                          (서명)\n*자필서명\n한국지능정보사회진흥원장 귀하\n[ 개인정보 수집·이용에 대한 동의 ]\n수집․이용 목적\n해커톤 참가자 선정 적합 여부 심사 및 본인 확인, 참가자 확정 후 교육과정 안내를 위해 개인정보(전화번호 등) 수집·이용 동의서 작성 필요\n본 개인정보는 데이터 활용 기업과 개인 지원을 위한 기타사업 등에 사용될 수 있음\n수집․이용 항목\n성명, 생년월일, 성별, 소속, 전화번호, 이메일 등\n보유․이용 기간\n해커톤 기간에만 보유, 심사 종료 시 즉시 파기\n단, 해커톤 참가자의 정보는 활동 종료 시 즉시 파기\n[ 사진 촬영 및 초상권 활용에 대한 동의 ]\n사용 형태\n본 해커톤 프로그램 진행 시, 참가자 모습을 사전 혹은 영상으로 기록하여 홍보자료(온·오프라인 홍보물, 홈페이지 등) 및 기록자료(내부 보관용)로 활용\n개인정보 수집·이용 동의를 거부할 권리가 있으며, 동의를 거부할 경우\n‘제2회 오픈데이터포럼 해커톤’ 참가자 선정 심사에 참여할 수 없습니다.\n위와 같이 개인정보를 수집․이용하는 것에 동의하십니까? ( √ 체크)\n팀원 1     □동의함       □동의하지 않음\n팀원 2     □동의함       □동의하지 않음\n팀원 3     □동의함       □동의하지 않음\n유의사항\n1. 제출된 서류는 일절 반환하지 않으며, 제출한 작품의 저작권은 출품자(팀)에게 귀속됨\n2.\n수상에 적합한 수준의 작품이 없으면 등 발생 시 시상 규모가 축소 또는 변경될 수 있음\n3. 시상금에 따른 제세공과금은 수상자 부담임\n심사제외\n입상취소\n대상\n‣\n타 경진대회 또는 공모전에서 이미 채택된 아이디어이거나 그 기본 구상이 매\n우 유사한 경우\n‣\n이미 공개되었거나 기존에 개발·이용되고 있는 사업이나 기술을 모방한 경우\n‣\n타인이 취득한 특허권, 실용신안권, 디자인권, 저작권에 속하거\n나 단순히 국내외 사례를 모방 또는\n재난안전 AI 해커톤 아이디어 제안서\n*파란색은 삭제 후 제출\n팀명\n팀원 수\n팀원 이름\n홍길동1, 홍길동2, 홍길동3\n휴대전화\n(대표)\nemail\n(대표)\n아이디어명\n□\n제안 개요 및 문제정의\n※ 해결하고자 하는 재난안전 분야의 사회현안과 제안 배경, 서비스 이용대상 및 추진목표 기술\no 재난안전 현안의 발생 원인과 현재의 문제점\no 문제해결이 필요한 이유와 달성하고자 하는 구체적인 목표\n□\n아이디어 및 서비스 내용\n※ 제안한 아이디어의 주요 내용과 서비스 이용방식, 핵심 기능을 구체적으로 기술\no 서비스의 주요 기능 및 이용절차\no 재난 예측 방법, 대피 행동요령 안내 등 재난예방과 대응의 지원 방식\no 기존 유사 서비스와의 차별성 및 제안 아이디어의 특징·장점\no 활용한 AI 도구의 명칭 및 적용범위를 명확히 기재\n□\n재난안전 데이터 활용계획\n※ 제안 서비스에 활용할 재난안전 AI 학습용 데이터와 공공데이터의 종류 및 활용 방법 기술\no 각 데이터가 서비스의 주요 기능 구현에 기여하는 방식\no 데이터 활용 전·후의 차이점과 활용 과정에서 예상되는 한계 및 개선방안\n□\n프로토타입 구현 및 실행계획\n※ 서비스 프로토타입을 구현하기 위한 구체적인 개발범위와 단계별 실행계획을 기술\no 프로토타입으로 구현할 핵심 기능\no 멘토링을 통해 보완하거나 지원받고자 하는 사항\n□ 기대효과 및 확장·적용 가능성\n※ 제안 서비스가 재난안전 현안 해결에 미치는 효고와 향후 활용·확장 가능성 기술\no 국민 편의 증진, 공공업무 효율화 측면의 기대효과\no 추가 데이터 연계, 기능 고도화를 통해 타 재난 분야로의 확장 가능성\n참여 확약서\n본인은 주최기관이 제공하는 ‘재난안전 AI 학습용 데이터’를 본 대회의 참가 및 결과물 개발 목적으로만 사용하고, 주최기관의 사전 승인 없이 타 경진대회·공모전 등에 활용하거나 제3자에게 제공·공유·재배포하는 등 대회 목적 외의 용도로 사용하지 않을 것을 확약합니다.\n2026년 10월 0일\n팀 장 :                 (서명)\n팀 원 :                 (서명)\n팀 원 :                 (서명)\n한국지능정보사회진흥원장 귀하",
+    "deadline": "2026-11-09 23:59",
+    "benefit_label_ko": "AI 해커톤 공모 (HWPX 4,775자 자동 추출!)",
+    "benefit_label_zh": "AI数据黑客松（已从空白页 .hwpx 提取4,775字！）",
+    "benefit_label_en": "Disaster Safety AI Hackathon (4,775 chars extracted from .hwpx!)",
+    "benefit_krw": 1000000,
+    "title_ko": "2026년 재난안전 AI 데이터 활용 해커톤",
+    "title_zh": "2026年 灾难安全 AI 数据应用黑客松大赛（已自动解析 .hwpx 附件全文）",
+    "title_en": "2026 Disaster Safety AI Data Hackathon (.hwpx Full Text Extracted)",
+    "summary_ko": "홈페이지 본문이 0자(빈 페이지)이고 .hwpx 첨부파일에만 내용이 들어있던 공고입니다! KNU Radar가 .hwpx 파일 내부 XML에서 4,775자의 요강(마감: 11/9 23:59, 접수처: heosj@nia.or.kr, 개인 또는 2~3인 팀 누구나 참가 가능)을 완벽히 추출했습니다.",
+    "summary_zh": "官网网页正文为 0 字（完全空白），详情藏在 .hwpx 附件中！系统已直接从 .hwpx 内部解包提取出 4,775 字完整章程：截止时间 11月9日 23:59，个人或 2~3 人组队不限国籍均可报名，直接发邮件至 heosj@nia.or.kr 即可参赛！",
+    "summary_en": "Webpage body was completely empty (0 chars) on kangwon.ac.kr! Our engine extracted all 4,775 chars from the attached .hwpx file: Open to individuals or 2–3 person teams, due Nov 9, 23:59 via email (heosj@nia.or.kr).",
+    "rules": {
+      "campuses": [
+        "춘천",
+        "삼척",
+        "강릉",
+        "원주"
+      ],
+      "status_allowed": [
+        "undergrad_kr",
+        "intl",
+        "leave_grad",
+        "staff_citizen"
+      ],
+      "min_gpa": 0.0,
+      "max_income": 10,
+      "note_ko": "전 국민·재학생·유학생 누구나 (개인 또는 2~3인 팀, 11/9 23:59 이메일 heosj@nia.or.kr 제출)",
+      "note_zh": "在校生、留学生、市民均可报名（个人或2~3人队，11/9 23:59前发邮件至 heosj@nia.or.kr）",
+      "note_en": "Open to everyone in 1–3 person teams (Submit to heosj@nia.or.kr by Nov 9, 23:59)"
+    },
+    "has_hwp_extracted": true
+  }
+]

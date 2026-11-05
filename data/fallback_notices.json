@@ -1,0 +1,420 @@
+[
+  {
+    "id": "knu-2026-1101",
+    "bbs_category": "장학공지",
+    "campus": "춘천",
+    "title_ko": "[춘천/장학] 2026학년도 2학기 첨단AI·SW융합 우수인재 특별장학생 선발 공고 (1인당 200만원)",
+    "title_zh": "[春川/奖学金] 2026学年度第2学期 尖端AI·SW融合优秀人才特别奖学金选拔公告（每人200万韩元）",
+    "title_en": "[Chuncheon/Scholarship] 2026-2 Advanced AI & SW Convergence Excellence Scholarship (2,000,000 KRW)",
+    "summary_ko": "춘천캠퍼스 AI·SW 관련 학과 재학생(2~4학년) 중 직전학기 평점 3.5 이상인 학생에게 학업장려금 200만원 지급 (타 장학금 중복 수혜 가능).",
+    "summary_zh": "面向春川校区AI·SW相关专业2~4年级本科生，上学期GPA 3.5以上可申请200万韩元学业奖励金（生活费性质，可与其他学费奖学金叠加）。",
+    "summary_en": "2,000,000 KRW living-expense scholarship for 2nd–4th year AI/SW majors at Chuncheon Campus with GPA >= 3.5 (can be combined with tuition scholarships).",
+    "raw_content_ko": "1. 관련: 학생과-11482(2026.11.02.) 「2026학년도 첨단산업 인재양성 장학사업 운영계획」\n2. 2026학년도 2학기 첨단AI·SW융합 우수인재 특별장학생을 다음과 같이 선발하오니 해당 학과 재학생들의 많은 신청 바랍니다.\n\n가. 선발대상: 강원대학교 춘천캠퍼스 첨단AI공학부, 컴퓨터공학과, 데이터사이언스학과 재학생 (2학년~4학년, 휴학생 및 초과학기생 제외)\n나. 자격요건:\n  1) 직전학기(2026-1학기) 이수학점 12학점 이상 및 평점평균(GPA) 3.5/4.5 이상인 자\n  2) 소득구간 제한 없음 (단, 동점자 발생 시 소득구간 하위자 및 AI 해커톤·경진대회 참가자 우선 선발)\n  3) 외국인 유학생도 학부 정규과정 재학 중이면 동일하게 신청 가능\n다. 장학금액: 1인당 2,000,000원 (생활비성 학업장려금으로 등록금 범위 초과 중복수혜 가능)\n라. 신청기간: 2026. 11. 03.(화) 09:00 ~ 2026. 11. 10.(화) 18:00까지 (기한 엄수, 마감 후 추가접수 불가)\n마. 제출장소: 5공학관 6층 첨단AI공학부 행정실 또는 K-Cloud 온라인 장학신청 메뉴 업로드\n바. 제출서류: 장학금 신청서 및 학업·프로젝트 계획서(500자 내외) 1부, 성적증명서 1부, 본인 명의 통장사본 1부.\n사. 문의처: 학생과 장학팀 (033-250-6033, knuscholar@kangwon.ac.kr)",
+    "word_count": 1420,
+    "estimated_manual_read_minutes": 6.5,
+    "url": "https://www.kangwon.ac.kr/ko/contents.do?key=1017",
+    "posted_date": "2026-11-04",
+    "deadline": "2026-11-10 18:00",
+    "department_ko": "학생과 장학팀 / 첨단AI공학부",
+    "department_email": "knuscholar@kangwon.ac.kr",
+    "department_phone": "033-250-6033",
+    "location_ko": "춘천캠퍼스 5공학관 행정실 및 K-Cloud",
+    "benefit_krw": 2000000,
+    "eligibility_rules": {
+      "campuses": ["춘천"],
+      "roles": ["student_kr", "student_intl"],
+      "departments": ["첨단AI공학부", "IT대학", "전체"],
+      "min_grade": 2,
+      "max_grade": 4,
+      "min_gpa": 3.5,
+      "max_income_bracket": 10,
+      "min_topik": 0,
+      "foreigner_only": false,
+      "citizen_open": false
+    },
+    "required_documents_ko": [
+      "장학금 신청서 및 AI 프로젝트/학업계획서 (500자 내외) 1부",
+      "2026-1학기 성적증명서 1부 (GPA 3.5 이상 확인용)",
+      "본인 명의 국내 은행 통장사본 1부",
+      "(선택) AI 해커톤/학술동아리(영하나 등) 참가 확인서"
+    ],
+    "required_documents_zh": [
+      "奖学金申请书及AI项目/学业计划书（500字左右）1份",
+      "2026-1学期成绩单证明 1份（核验GPA 3.5以上）",
+      "本人名义韩国银行存折复印件 1份",
+      "（选交）AI黑客松/学术社团（如영하나）参赛证明"
+    ],
+    "required_documents_en": [
+      "Scholarship Application & AI Study/Project Plan (~500 chars)",
+      "Official Academic Transcript (verifying GPA >= 3.5)",
+      "Copy of Korean Bank Account Book",
+      "(Optional) Certificate of AI Hackathon / Academic Club participation"
+    ]
+  },
+  {
+    "id": "knu-2026-1102",
+    "bbs_category": "국제교류",
+    "campus": "공통",
+    "title_ko": "[국제교류처] 2026-2학기 외국인 유학생 TOPIK 성적우수 및 정착지원 장학금 신청 안내 (최대 120만원)",
+    "title_zh": "[国际交流处] 2026-2学期 外国留学生TOPIK成绩优秀及定居支援奖学金申请通知（最高120万韩元）",
+    "title_en": "[OIA] 2026-2 International Student TOPIK & Settlement Grant Application (Up to 1,200,000 KRW)",
+    "summary_ko": "강원대 학부/대학원 외국인 유학생 중 직전학기 평점 2.8 이상 및 TOPIK 3급 이상 보유(또는 신규 취득)자에게 최대 120만원 지급.",
+    "summary_zh": "江原大学本科/研究生外国留学生，上学期GPA 2.8以上且持有（或新考取）TOPIK 3级以上证书者，发放最高120万韩元补助。",
+    "summary_en": "Up to 1,200,000 KRW grant for international degree students at KNU with previous semester GPA >= 2.8 and TOPIK Level 3 or higher.",
+    "raw_content_ko": "강원대학교 국제교류처에서는 외국인 유학생들의 한국어 능력 향상과 안정적인 유학생활을 지원하기 위하여 2026학년도 2학기 외국인 유학생 특별장학금 신청을 안내합니다.\n\n가. 신청대상: 강원대학교(춘천·삼척·강릉·원주) 학부 및 대학원 재학 외국인 유학생\n나. 세부 자격조건:\n  - 직전학기 평균평점(GPA) 2.8 이상 이수자 (신입생은 첫 학기 성적 기준 제외)\n  - 한국어능력시험(TOPIK) 3급 이상 유효 성적표 소지자 (4급 이상 80만원, 5~6급 120만원, 3급 50만원)\n  - 체류자격(D-2) 유지 및 유학생 의무보험 가입 완료자\n다. 접수기간: 2026. 11. 04.(수) ~ 2026. 11. 11.(수) 17:00 마감\n라. 제출방법: 국제교류처 2층 유학생지원팀 방문 제출 또는 이메일(intn@kangwon.ac.kr) 접수\n마. 제출서류: 유학생 장학금 신청서, TOPIK 성적표 원본, 외국인등록증 사본, 건강보험 납부확인서.",
+    "word_count": 1350,
+    "estimated_manual_read_minutes": 8.0,
+    "url": "https://www.kangwon.ac.kr/ko/selectBbsNttList.do?bbsNo=21&key=297",
+    "posted_date": "2026-11-04",
+    "deadline": "2026-11-11 17:00",
+    "department_ko": "국제교류처 유학생지원팀",
+    "department_email": "intn@kangwon.ac.kr",
+    "department_phone": "033-250-6984",
+    "location_ko": "국제교류처(태백관) 2층 유학생지원팀",
+    "benefit_krw": 1200000,
+    "eligibility_rules": {
+      "campuses": ["춘천", "삼척", "강릉", "원주", "공통"],
+      "roles": ["student_intl"],
+      "departments": ["첨단AI공학부", "IT대학", "인문대학", "경영대학", "전체"],
+      "min_grade": 1,
+      "max_grade": 4,
+      "min_gpa": 2.8,
+      "max_income_bracket": 10,
+      "min_topik": 3,
+      "foreigner_only": true,
+      "citizen_open": false
+    },
+    "required_documents_ko": [
+      "외국인 유학생 장학금 신청서 1부",
+      "유효한 TOPIK 성적증명서 1부 (3급 이상)",
+      "외국인등록증(ARC) 앞·뒷면 사본 1부",
+      "국민건강보험 가입 및 납부확인서 1부"
+    ],
+    "required_documents_zh": [
+      "外国留学生奖学金申请表 1份",
+      "有效期内TOPIK成绩单 1份（3级以上）",
+      "外国人登陆证（ARC）正反面复印件 1份",
+      "国民健康保险参保及缴费确认书 1份"
+    ],
+    "required_documents_en": [
+      "International Student Scholarship Application Form",
+      "Valid TOPIK Score Report (Level 3 or above)",
+      "Copy of Alien Registration Card (ARC, front & back)",
+      "National Health Insurance Payment Confirmation"
+    ]
+  },
+  {
+    "id": "knu-2026-1103",
+    "bbs_category": "학사공지",
+    "campus": "공통",
+    "title_ko": "[학사공지] 2026학년도 동계 계절수업(겨울학기) 수강신청 및 학점교류 일정 안내",
+    "title_zh": "[学事公告] 2026学年度冬季学期（寒假小学期）选课及学分交流日程通知",
+    "title_en": "[Academic] 2026 Winter Session Course Registration & Credit Exchange Schedule",
+    "summary_ko": "11월 9일(월)부터 동계 계절수업 예비수강신청 및 본수강신청 진행. 최대 6학점까지 이수 가능하며 졸업을 앞둔 3~4학년 및 재수강 희망자 필수 확인.",
+    "summary_zh": "11月9日（周一）起开启冬季小学期预选课及正式选课，最多可修读6学分，全校区本科生（含留学生）均可报名。",
+    "summary_en": "Winter session course registration begins Nov 9. Up to 6 credits allowed for all undergraduate students across campuses.",
+    "raw_content_ko": "2026학년도 동계 계절수업(겨울학기) 운영 일정을 다음과 같이 공고하오니 수강을 희망하는 재학생 및 휴학생은 기간 내에 신청하시기 바랍니다.\n\n1. 수강신청 대상: 강원대학교 전체 캠퍼스(춘천·삼척·강릉·원주) 재학생 및 휴학생 (단, 2027년 2월 졸업예정자 중 휴학생은 수강 불가)\n2. 신청 가능 학점: 최대 6학점 이내\n3. 주요 일정:\n  - 개설강좌 공고: 2026. 11. 05.(목)\n  - 본 수강신청 기간: 2026. 11. 09.(월) 10:00 ~ 11. 11.(수) 17:00\n  - 수강료 납부 기간: 2026. 11. 18.(수) ~ 11. 20.(금) (1학점당 실험·실습 과목 45,000원, 이론 과목 40,000원)\n4. 유의사항: 기한 내 수강료를 납부하지 않을 경우 수강신청 내역이 일괄 자동 취소됩니다.\n5. 문의: 학사지원과 수업팀 (033-250-6014, knuacad@kangwon.ac.kr)",
+    "word_count": 1180,
+    "estimated_manual_read_minutes": 5.5,
+    "url": "https://www.kangwon.ac.kr/ko/selectBbsNttList.do?bbsNo=22&key=298",
+    "posted_date": "2026-11-05",
+    "deadline": "2026-11-11 17:00",
+    "department_ko": "학사지원과 수업팀",
+    "department_email": "knuacad@kangwon.ac.kr",
+    "department_phone": "033-250-6014",
+    "location_ko": "K-Cloud 온라인 수강신청 시스템",
+    "benefit_krw": 0,
+    "eligibility_rules": {
+      "campuses": ["춘천", "삼척", "강릉", "원주", "공통"],
+      "roles": ["student_kr", "student_intl"],
+      "departments": ["첨단AI공학부", "IT대학", "인문대학", "경영대학", "전체"],
+      "min_grade": 1,
+      "max_grade": 4,
+      "min_gpa": 0.0,
+      "max_income_bracket": 10,
+      "min_topik": 0,
+      "foreigner_only": false,
+      "citizen_open": false
+    },
+    "required_documents_ko": [
+      "K-Cloud 동계 계절수업 희망과목 사전 담기",
+      "수강료 납부용 가상계좌 확인 (1학점당 40,000~45,000원)"
+    ],
+    "required_documents_zh": [
+      "在 K-Cloud 系统中提前将冬季小学期意向课程加入收藏",
+      "确认学费缴纳虚拟账户（每学分40,000~45,000韩元）"
+    ],
+    "required_documents_en": [
+      "Pre-select desired winter courses on K-Cloud",
+      "Check virtual account for tuition payment (40,000–45,000 KRW per credit)"
+    ]
+  },
+  {
+    "id": "knu-2026-1104",
+    "bbs_category": "장학공지",
+    "campus": "춘천",
+    "title_ko": "[춘천/장학] 2026년 동계방학 국가근로장학생 및 교내 AI튜터 근로장학생 모집 (시급 12,500원)",
+    "title_zh": "[春川/奖学金] 2026年寒假国家勤工俭学及校内AI助教勤工奖学金招募（时薪12,500韩元）",
+    "title_en": "[Chuncheon/Work-Study] 2026 Winter National Work-Study & AI Tutor Recruitment (12,500 KRW/hr)",
+    "summary_ko": "소득 8구간 이하 학부 재학생 대상 동계방학 중 교내 행정실 및 5공학관 실습실 근로장학생 모집 (월 최대 120만원).",
+    "summary_zh": "面向所得分位8区间以下的韩国本科生，招募寒假期间在5工学馆实验室及行政室工作的勤工俭学学生（月最高120万韩元）。",
+    "summary_en": "Winter work-study recruitment at Engineering Bldg 5 labs & admin offices for domestic students in income brackets 1–8 (up to 1.2M KRW/month).",
+    "raw_content_ko": "2026학년도 동계방학 중 교내 행정부서 및 첨단AI공학부 실습실(5공학관)에서 근무할 국가근로 및 교내 특별근로장학생을 모집합니다.\n\n1. 신청자격:\n  - 춘천캠퍼스 학부 재학생 중 한국장학재단 학자금 지원구간(소득분위) 8구간 이하인 자 (대한민국 국적자 한정)\n  - 직전학기 백분위 성적 70점(평점 1.88) 이상인 자\n2. 근무조건: 시급 12,500원, 주 최대 25시간 (동계방학 8주간 총 2,000,000원 내외 지급)\n3. 신청마감: 2026. 11. 09.(월) 18:00까지\n4. 문의처: 학생과 장학팀 (033-250-6034, workstudy@kangwon.ac.kr)",
+    "word_count": 980,
+    "estimated_manual_read_minutes": 5.0,
+    "url": "https://www.kangwon.ac.kr/ko/contents.do?key=1017",
+    "posted_date": "2026-11-03",
+    "deadline": "2026-11-09 18:00",
+    "department_ko": "학생과 근로장학담당",
+    "department_email": "workstudy@kangwon.ac.kr",
+    "department_phone": "033-250-6034",
+    "location_ko": "춘천캠퍼스 5공학관 실습실 및 교내 행정실",
+    "benefit_krw": 1500000,
+    "eligibility_rules": {
+      "campuses": ["춘천"],
+      "roles": ["student_kr"],
+      "departments": ["첨단AI공학부", "IT대학", "인문대학", "경영대학", "전체"],
+      "min_grade": 1,
+      "max_grade": 4,
+      "min_gpa": 2.0,
+      "max_income_bracket": 8,
+      "min_topik": 0,
+      "foreigner_only": false,
+      "citizen_open": false
+    },
+    "required_documents_ko": [
+      "한국장학재단 2026-2학기 학자금지원구간 통지서 1부",
+      "교내 근로장학 신청서 및 근무가능 시간표 1부"
+    ],
+    "required_documents_zh": [
+      "韩国奖学财团 2026-2学期 学费支援区间（所得分位）通知书 1份",
+      "校内勤工助学申请表及可工作时间表 1份"
+    ],
+    "required_documents_en": [
+      "KOSAF Income Bracket Notification Document (2026-2)",
+      "Campus Work-Study Application & Available Schedule Form"
+    ]
+  },
+  {
+    "id": "knu-2026-1105",
+    "bbs_category": "지역/교직원",
+    "campus": "춘천",
+    "title_ko": "[지역협력/열린강좌] 2026 강원대학교-춘천시민과 함께하는 '생성형 AI 활용 마스터클래스' 무료 수강생 모집",
+    "title_zh": "[地区合作/公开课] 2026 江原大学-春川市民、教职工共享“生成式AI实战大师班”免费学员招募",
+    "title_en": "[Community/Open Lecture] Free 'Generative AI Masterclass' for KNU Staff, Local Citizens & Students",
+    "summary_ko": "교직원, 춘천 지역주민, 재학생 누구나 무료 참여 가능한 주말 AI 실습 특강 (수료증 발급 및 기념품·다과 제공).",
+    "summary_zh": "面向教职工、春川当地居民、访客及在校生免费开放的周末生成式AI实操特讲（颁发结业证书并提供纪念品与茶歇）。",
+    "summary_en": "Free weekend hands-on Generative AI workshop open to KNU faculty/staff, Chuncheon residents, visitors, and students (Certificate & refreshments provided).",
+    "raw_content_ko": "강원대학교 SW중심대학사업단 및 첨단AI공학부에서는 글로컬대학30 지역상생 프로그램의 일환으로 교직원, 춘천시민, 지역 소상공인 및 재학생을 위한 『생성형 AI 업무자동화 마스터클래스』를 무료로 개최합니다.\n\n1. 교육대상: 강원대학교 교직원, 춘천시 거주 지역주민, 지역 직장인 및 본교 재학생 (선착순 60명)\n2. 일시 및 장소: 2026. 11. 14.(토) 13:00 ~ 17:00 / 강원대학교 춘천캠퍼스 5공학관 604호\n3. 주요내용: LLM 에이전트를 활용한 문서 작성, 엑셀 자동화, 홍보 이미지 제작 실습\n4. 참가혜택: 수강료 전액 무료, 총장 명의 이수증 발급, 무료 주차권 및 다과키트(3만원 상당) 제공\n5. 신청기간: ~ 2026. 11. 12.(목) 18:00까지\n6. 문의: SW중심대학사업단 지역확산팀 (033-250-7910, aiedu@kangwon.ac.kr)",
+    "word_count": 920,
+    "estimated_manual_read_minutes": 4.5,
+    "url": "https://www.kangwon.ac.kr/ko/selectBbsNttList.do?bbsNo=21&key=297",
+    "posted_date": "2026-11-04",
+    "deadline": "2026-11-12 18:00",
+    "department_ko": "SW중심대학사업단 지역확산팀",
+    "department_email": "aiedu@kangwon.ac.kr",
+    "department_phone": "033-250-7910",
+    "location_ko": "춘천캠퍼스 5공학관 604호",
+    "benefit_krw": 150000,
+    "eligibility_rules": {
+      "campuses": ["춘천", "공통"],
+      "roles": ["staff_citizen", "student_kr", "student_intl"],
+      "departments": ["첨단AI공학부", "IT대학", "인문대학", "경영대학", "교직원/시민", "전체"],
+      "min_grade": 1,
+      "max_grade": 4,
+      "min_gpa": 0.0,
+      "max_income_bracket": 10,
+      "min_topik": 0,
+      "foreigner_only": false,
+      "citizen_open": true
+    },
+    "required_documents_ko": [
+      "온라인 참가 신청서 (소속: 교직원/춘천시민/재학생 선택)",
+      "개인 노트북 지참 (현장 무료 Wi-Fi 및 전원 제공)"
+    ],
+    "required_documents_zh": [
+      "在线报名申请表（选择身份：教职工/春川市民/在校生）",
+      "自备笔记本电脑（现场提供免费Wi-Fi及电源）"
+    ],
+    "required_documents_en": [
+      "Online Registration Form (Select: Staff / Local Resident / Student)",
+      "Bring personal laptop (Free Wi-Fi and power outlets provided)"
+    ]
+  },
+  {
+    "id": "knu-2026-1106",
+    "bbs_category": "장학공지",
+    "campus": "삼척",
+    "title_ko": "[삼척/도계] 2026학년도 2학기 삼척캠퍼스 지역정주형 인재 장학금 신청 안내",
+    "title_zh": "[三陟/道溪] 2026学年度第2学期 三陟校区地区定居型人才奖学金申请通知",
+    "title_en": "[Samcheok/Dogye] 2026-2 Samcheok Campus Regional Settlement Scholarship Notice",
+    "summary_ko": "삼척·도계캠퍼스 소속 재학생 전용 장학금 (춘천·강릉·원주캠퍼스 소속 학생은 신청 대상 아님).",
+    "summary_zh": "仅限三陟·道溪校区在读学生申请（春川、江陵、原州校区学生不在申请范围内）。",
+    "summary_en": "Exclusively for students enrolled at Samcheok/Dogye Campus (Chuncheon/Gangneung/Wonju students are not eligible).",
+    "raw_content_ko": "삼척시 및 강원대학교 삼척캠퍼스 학생지원과에서는 삼척·도계캠퍼스 재학생의 학업 장려를 위하여 지역정주형 장학생을 선발합니다.\n\n1. 선발대상: 강원대학교 삼척·도계캠퍼스 재학생 중 삼척시 주소지 이전 6개월 이상 경과자 (춘천캠퍼스 학생 신청 불가)\n2. 장학금액: 1인당 1,000,000원\n3. 신청기한: 2026. 11. 13.(금) 18:00\n4. 문의: 삼척캠퍼스 학생지원과 (033-570-6215)",
+    "word_count": 1150,
+    "estimated_manual_read_minutes": 5.0,
+    "url": "https://www.kangwon.ac.kr/ko/contents.do?key=1017",
+    "posted_date": "2026-11-02",
+    "deadline": "2026-11-13 18:00",
+    "department_ko": "삼척캠퍼스 학생지원과",
+    "department_email": "samcheok_stu@kangwon.ac.kr",
+    "department_phone": "033-570-6215",
+    "location_ko": "삼척캠퍼스 학생회관 2층",
+    "benefit_krw": 1000000,
+    "eligibility_rules": {
+      "campuses": ["삼척"],
+      "roles": ["student_kr"],
+      "departments": ["전체"],
+      "min_grade": 1,
+      "max_grade": 4,
+      "min_gpa": 3.0,
+      "max_income_bracket": 10,
+      "min_topik": 0,
+      "foreigner_only": false,
+      "citizen_open": false
+    },
+    "required_documents_ko": [
+      "주민등록초본 (삼척시 전입일 포함) 1부",
+      "삼척캠퍼스 재학증명서 1부"
+    ],
+    "required_documents_zh": [
+      "住民登录誊本（含三陟市迁入日期）1份",
+      "三陟校区在读证明 1份"
+    ],
+    "required_documents_en": [
+      "Certificate of Resident Registration (Samcheok address)",
+      "Samcheok Campus Enrollment Certificate"
+    ]
+  },
+  {
+    "id": "knu-2026-1107",
+    "bbs_category": "장학공지",
+    "campus": "강릉",
+    "title_ko": "[강릉/원주] 2026-2학기 해양바이오·신소재 특성화 학부 장학생 모집 공고",
+    "title_zh": "[江陵/原州] 2026-2学期 海洋生物·新材料特色学部奖学金招募公告",
+    "title_en": "[Gangneung/Wonju] 2026-2 Marine Bio & Advanced Materials Scholarship Recruitment",
+    "summary_ko": "강릉캠퍼스 생명과학대학 및 해양바이오 계열 3~4학년 전용 장학금 (타 캠퍼스 및 IT/AI 계열 제외).",
+    "summary_zh": "仅限江陵校区生命科学学院及海洋生物类3~4年级学生申请（其他校区及IT/AI专业不适用）。",
+    "summary_en": "Exclusively for 3rd–4th year Marine Bio majors at Gangneung Campus (Other campuses and IT/AI majors excluded).",
+    "raw_content_ko": "강원대학교 강릉캠퍼스 특성화장학위원회에서는 해양바이오 및 신소재 분야 우수 학부생을 선발합니다. 춘천캠퍼스 및 타 단과대학 소속 학생은 지원 대상에서 제외되오니 착오 없으시기 바랍니다.",
+    "word_count": 1240,
+    "estimated_manual_read_minutes": 5.5,
+    "url": "https://www.kangwon.ac.kr/ko/contents.do?key=1017",
+    "posted_date": "2026-11-01",
+    "deadline": "2026-11-10 17:00",
+    "department_ko": "강릉캠퍼스 학생처",
+    "department_email": "gn_scholar@kangwon.ac.kr",
+    "department_phone": "033-640-2033",
+    "location_ko": "강릉캠퍼스 대학본부",
+    "benefit_krw": 1500000,
+    "eligibility_rules": {
+      "campuses": ["강릉"],
+      "roles": ["student_kr", "student_intl"],
+      "departments": ["생명과학대학"],
+      "min_grade": 3,
+      "max_grade": 4,
+      "min_gpa": 3.5,
+      "max_income_bracket": 10,
+      "min_topik": 0,
+      "foreigner_only": false,
+      "citizen_open": false
+    },
+    "required_documents_ko": ["연구실 인턴십 확인서 1부"],
+    "required_documents_zh": ["实验室实习确认书 1份"],
+    "required_documents_en": ["Lab Internship Certificate"]
+  },
+  {
+    "id": "knu-2026-1108",
+    "bbs_category": "일반/행사",
+    "campus": "춘천",
+    "title_ko": "[첨단AI공학부] 2026 학술동아리·캡스톤디자인 프로토타입 발표회 및 클라우드 API 바우처 지원 (팀당 50만원)",
+    "title_zh": "[尖端AI工程系] 2026 学术社团·毕业设计原型发表会及云端API代金券支援（每队50万韩元）",
+    "title_en": "[Advanced AI Eng] 2026 Academic Club & Capstone Prototype Showcase + Cloud/LLM API Grant (500,000 KRW/team)",
+    "summary_ko": "첨단AI공학부 및 IT대학 재학생(내·외국인 모두 포함) 대상 AI 프로젝트 개발비·서버비 최대 50만원 사후 정산 지원.",
+    "summary_zh": "面向尖端AI工程系及IT学院在读学生（含本国生与留学生），提供AI项目开发及云服务器费用最高50万韩元报销补贴。",
+    "summary_en": "Up to 500,000 KRW reimbursement grant for AI project cloud hosting & API costs for Advanced AI Engineering & IT College students (domestic & international).",
+    "raw_content_ko": "첨단AI공학부에서는 학부생들의 실전 AI 서비스 개발 역량 강화를 위하여 해커톤, 학술동아리(영하나 등), 캡스톤디자인 프로젝트 수행 팀을 대상으로 클라우드 서버 및 LLM API 활용 바우처(팀당 최대 500,000원)를 지원합니다.\n\n1. 지원대상: 춘천캠퍼스 첨단AI공학부 및 IT대학 소속 학부생 (1~4학년, 외국인 유학생 포함)\n2. 지원내용: 프로젝트 개발에 소요된 클라우드 배포 비용, 도메인 비용, 실험 재료비 팀당 최대 50만원 실비 지원\n3. 신청기한: 2026. 11. 13.(금) 17:00까지\n4. 제출처: 5공학관 첨단AI공학부 과사무실 (033-250-6390, aieng@kangwon.ac.kr)",
+    "word_count": 1060,
+    "estimated_manual_read_minutes": 5.0,
+    "url": "https://www.kangwon.ac.kr/ko/selectBbsNttList.do?bbsNo=21&key=297",
+    "posted_date": "2026-11-05",
+    "deadline": "2026-11-13 17:00",
+    "department_ko": "첨단AI공학부 행정실",
+    "department_email": "aieng@kangwon.ac.kr",
+    "department_phone": "033-250-6390",
+    "location_ko": "춘천캠퍼스 5공학관 첨단AI공학부 사무실",
+    "benefit_krw": 500000,
+    "eligibility_rules": {
+      "campuses": ["춘천"],
+      "roles": ["student_kr", "student_intl"],
+      "departments": ["첨단AI공학부", "IT대학"],
+      "min_grade": 1,
+      "max_grade": 4,
+      "min_gpa": 2.0,
+      "max_income_bracket": 10,
+      "min_topik": 0,
+      "foreigner_only": false,
+      "citizen_open": false
+    },
+    "required_documents_ko": [
+      "AI 프로젝트 요약서 및 GitHub 저장소 링크 1부",
+      "팀원 명단 및 대표자 통장사본 1부"
+    ],
+    "required_documents_zh": [
+      "AI项目摘要书及 GitHub 仓库链接 1份",
+      "队员名单及队长银行存折复印件 1份"
+    ],
+    "required_documents_en": [
+      "AI Project Summary & GitHub Repository Link",
+      "Team Roster & Team Leader Bank Account Copy"
+    ]
+  },
+  {
+    "id": "knu-2026-1109",
+    "bbs_category": "지역/교직원",
+    "campus": "춘천",
+    "title_ko": "[도서관/지역개방] 강원대학교 미래도서관(정강홀) 교직원·춘천시민 문화의 밤 & 무료 도서대출증 발급 안내",
+    "title_zh": "[图书馆/市民开放] 江原大学未来图书馆 教职工·春川市民文化之夜及免费借书证办理通知",
+    "title_en": "[Mirae Library] Cultural Night & Free Library Pass for KNU Faculty, Staff & Chuncheon Citizens",
+    "summary_ko": "교직원, 춘천시민, 방문객 및 재학생 대상 미래도서관 클래식 북콘서트 초청 및 지역주민 무료 열람증 즉시 발급.",
+    "summary_zh": "面向教职工、春川市民、访客及在校生开放未来图书馆古典音乐读书会，并为当地居民免费办理图书借阅证。",
+    "summary_en": "Mirae Library Book Concert & free library membership card issuance for KNU staff, Chuncheon residents, visitors, and students.",
+    "raw_content_ko": "강원대학교 중앙도서관(미래도서관)에서는 대학과 지역사회의 문화 공유를 위하여 교직원, 춘천시민, 캠퍼스 방문객 및 재학생을 초청하는 『2026 가을밤 미래도서관 북콘서트』와 지역주민 무료 도서대출증 현장 발급 행사를 진행합니다.\n\n1. 대상: 본교 교직원, 춘천시 거주 시민, 캠퍼스 방문객 및 재학생 누구나\n2. 일시: 2026. 11. 12.(목) 18:30 ~ 20:30\n3. 장소: 춘천캠퍼스 미래도서관 1층 브라우징밸리\n4. 혜택: 무료 입장, 샌드위치 및 커피 케이터링 제공, 지역주민 도서관 회원증 발급 수수료(1만원) 면제\n5. 문의: 학술정보운영과 (033-250-8012, lib@kangwon.ac.kr)",
+    "word_count": 890,
+    "estimated_manual_read_minutes": 4.0,
+    "url": "https://www.kangwon.ac.kr/ko/selectBbsNttList.do?bbsNo=21&key=297",
+    "posted_date": "2026-11-04",
+    "deadline": "2026-11-12 18:00",
+    "department_ko": "중앙도서관 학술정보운영과",
+    "department_email": "lib@kangwon.ac.kr",
+    "department_phone": "033-250-8012",
+    "location_ko": "춘천캠퍼스 미래도서관 1층",
+    "benefit_krw": 30000,
+    "eligibility_rules": {
+      "campuses": ["춘천", "공통"],
+      "roles": ["staff_citizen", "student_kr", "student_intl"],
+      "departments": ["첨단AI공학부", "IT대학", "인문대학", "경영대학", "교직원/시민", "전체"],
+      "min_grade": 1,
+      "max_grade": 4,
+      "min_gpa": 0.0,
+      "max_income_bracket": 10,
+      "min_topik": 0,
+      "foreigner_only": false,
+      "citizen_open": true
+    },
+    "required_documents_ko": [
+      "온라인 사전 좌석 예약 신청",
+      "(지역주민 도서대출증 발급 시) 신분증 지참"
+    ],
+    "required_documents_zh": [
+      "在线提前预约座位",
+      "（市民办理借书证时）携带身份证件"
+    ],
+    "required_documents_en": [
+      "Online Seat Reservation",
+      "Photo ID (for local residents applying for a library pass)"
+    ]
+  }
+]
+

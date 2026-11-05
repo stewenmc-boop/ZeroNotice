@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZeroNotice (제로노티스) — 강원대학교 공지·HWP 판독 AI 비서</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', 'Noto Sans KR', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #ffffff;
+      color: #09090b;
+      -webkit-font-smoothing: antialiased;
+      letter-spacing: -0.012em;
+    }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #e4e4e7; border-radius: 999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #a1a1aa; }
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      height: 4px;
+      background: #e4e4e7;
+      border-radius: 999px;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: #09090b;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="h-screen flex flex-col overflow-hidden select-none sm:select-auto">
+
+  <!-- Slim Top Bar (48px) -->
+  <header class="h-12 border-b border-zinc-200 bg-white px-4 flex items-center justify-between shrink-0 z-30">
+    <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2">
+        <span class="w-5 h-5 rounded bg-zinc-950 text-white text-[11px] font-bold flex items-center justify-center">Z</span>
+        <span class="font-semibold text-sm text-zinc-950 tracking-tight" id="app-title">ZeroNotice · 제로노티스</span>
+      </div>
+      <span class="text-zinc-200">|</span>
+      <a href="https://kangwon.ac.kr/ko/bbs/721/list.do" target="_blank"
+         class="inline-flex items-center gap-1.5 text-xs text-zinc-500 hover:text-zinc-900 transition">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+        <span id="live-source-label">kangwon.ac.kr 실시간 공지 연동</span>
+      </a>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <!-- Time Saved Counter Pill -->
+      <div class="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-zinc-100 text-xs text-zinc-600 tabular-nums">
+        <span id="saved-summary-pill">HWP·공지 자동 판독 · 약 68분 절약</span>
+      </div>
+
+      <!-- Paste Live URL Button -->
+      <button onclick="openUrlModal()"
+              class="px-2.5 py-1 rounded-md border border-zinc-200 hover:border-zinc-900 text-xs font-medium text-zinc-700 hover:text-zinc-950 transition">
+        <span id="btn-url-modal">+ 공지 URL/원문 분석</span>
+      </button>
+
+      <!-- Groq API Setting -->
+      <button onclick="openGroqModal()"
+              class="px-2.5 py-1 rounded-md border border-zinc-200 hover:border-zinc-900 text-xs font-medium text-zinc-700 hover:text-zinc-950 flex items-center gap-1.5 transition">
+        <span class="w-1.5 h-1.5 rounded-full bg-zinc-400" id="groq-dot"></span>
+        <span>Groq API</span>
+      </button>
+
+      <!-- Language Switcher -->
+      <div class="inline-flex bg-zinc-100 p-0.5 rounded-md border border-zinc-200/70 text-[11px]">
+        <button onclick="setLanguage('ko')" id="lang-ko" class="px-2 py-0.5 rounded font-medium bg-white text-zinc-950 shadow-xs">한국어</button>
+        <button onclick="setLanguage('zh')" id="lang-zh" class="px-2 py-0.5 rounded font-medium text-zinc-500 hover:text-zinc-900">中文</button>
+        <button onclick="setLanguage('en')" id="lang-en" class="px-2 py-0.5 rounded font-medium text-zinc-500 hover:text-zinc-900">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main 3-Pane Workspace -->
+  <div class="flex-1 flex overflow-hidden">
+
+    <!-- PANE 1: Left Filter & My Conditions Sidebar (256px) -->
+    <aside class="w-64 border-r border-zinc-200 bg-zinc-50/60 flex flex-col justify-between overflow-y-auto shrink-0 p-4 space-y-6">
+      <div class="space-y-6">
+
+        <!-- Board Categories -->
+        <div class="space-y-1">
+          <div class="px-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-zinc-400" id="lbl-boards">게시판 분류</div>
+          <button onclick="setCategory('ALL')" id="cat-ALL"
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-medium bg-zinc-900 text-white">
+            <span id="cat-lbl-all">전체 공지</span>
+            <span id="cnt-ALL" class="tabular-nums opacity-80">18</span>
+          </button>
+          <button onclick="setCategory('장학')" id="cat-장학"
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-medium text-zinc-600 hover:bg-zinc-200/60">
+            <span id="cat-lbl-sch">장학공지</span>
+            <span id="cnt-장학" class="tabular-nums text-zinc-400">4</span>
+          </button>
+          <button onclick="setCategory('학사')" id="cat-학사"
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-medium text-zinc-600 hover:bg-zinc-200/60">
+            <span id="cat-lbl-aca">학사공지</span>
+            <span id="cnt-학사" class="tabular-nums text-zinc-400">5</span>
+          </button>
+          <button onclick="setCategory('공모')" id="cat-공모"
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-medium text-zinc-600 hover:bg-zinc-200/60">
+            <span id="cat-lbl-con">공모·대외활동</span>
+            <span id="cnt-공모" class="tabular-nums text-zinc-400">4</span>
+          </button>
+          <button onclick="setCategory('일반행사')" id="cat-일반행사"
+                  class="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-medium text-zinc-600 hover:bg-zinc-200/60">
+            <span id="cat-lbl-gen">일반·행사안내</span>
+            <span id="cnt-일반행사" class="tabular-nums text-zinc-400">5</span>
+          </button>
+        </div>
+
+        <!-- Smart Eligibility Toggle -->
+        <div class="pt-3 border-t border-zinc-200/80">
+          <label class="flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-zinc-100 cursor-pointer">
+            <span class="text-xs font-medium text-zinc-800" id="lbl-only-eligible">지원 가능한 공지만 보기</span>
+            <input type="checkbox" id="chk-only-eligible" onchange="renderNoticeList()" class="accent-zinc-950 w-4 h-4 rounded cursor-pointer" />
+          </label>
+          <p class="px-2 text-[11px] text-zinc-400 mt-0.5 leading-snug" id="sub-only-eligible">
+            타 캠퍼스 및 자격 미달(<span id="cnt-ineligible" class="tabular-nums font-medium text-zinc-600">0</span>건) 숨김
+          </p>
+        </div>
+
+        <!-- My Profile Conditions -->
+        <div class="pt-3 border-t border-zinc-200/80 space-y-3">
+          <div class="px-1 flex items-center justify-between">
+            <span class="text-[11px] font-semibold uppercase tracking-wider text-zinc-400" id="lbl-my-cond">내 학적 조건</span>
+            <span class="text-[10px] text-emerald-600 font-medium" id="lbl-auto-match">실시간 판정</span>
+          </div>
+
+          <div class="space-y-2.5 text-xs">
+            <div>
+              <label class="block text-zinc-500 mb-1" id="lbl-campus">소속 캠퍼스</label>
+              <select id="inp-campus" onchange="loadNotices(false)"
+                      class="w-full rounded-lg border border-zinc-200 bg-white px-2.5 py-1.5 font-medium text-zinc-900 focus:outline-none focus:border-zinc-900">
+                <option value="춘천" id="opt-c-cc">춘천캠퍼스</option>
+                <option value="삼척" id="opt-c-sc">삼척·도계캠퍼스</option>
+                <option value="강릉" id="opt-c-gn">강릉캠퍼스</option>
+                <option value="원주" id="opt-c-wj">원주캠퍼스</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-zinc-500 mb-1" id="lbl-status">재학/신분 구분</label>
+              <select id="inp-status" onchange="loadNotices(false)"
+                      class="w-full rounded-lg border border-zinc-200 bg-white px-2.5 py-1.5 font-medium text-zinc-900 focus:outline-none focus:border-zinc-900">
+                <option value="undergrad_kr" id="opt-s-kr">학부 재학생 (내국인)</option>
+                <option value="intl" id="opt-s-intl">외국인 유학생</option>
+                <option value="leave_grad" id="opt-s-grad">휴학생 / 졸업생</option>
+                <option value="staff_citizen" id="opt-s-staff">교직원 / 춘천시민</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-zinc-500 mb-1 flex justify-between">
+                <span id="lbl-gpa">평점 (GPA)</span>
+                <span id="val-gpa" class="font-semibold text-zinc-950 tabular-nums">3.8</span>
+              </label>
+              <input type="range" id="inp-gpa" min="1.5" max="4.5" step="0.1" value="3.8"
+                     oninput="document.getElementById('val-gpa').innerText=this.value"
+                     onchange="loadNotices(false)"
+                     class="w-full" />
+            </div>
+
+            <div>
+              <label class="block text-zinc-500 mb-1" id="lbl-income">한국장학재단 소득구간</label>
+              <select id="inp-income" onchange="loadNotices(false)"
+                      class="w-full rounded-lg border border-zinc-200 bg-white px-2.5 py-1.5 font-medium text-zinc-900 focus:outline-none focus:border-zinc-900">
+                <option value="3" id="opt-inc-3" selected>0 ~ 4구간</option>
+                <option value="6" id="opt-inc-6">5 ~ 8구간</option>
+                <option value="9" id="opt-inc-9">9 ~ 10구간 / 미산정</option>
+              </select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-1.5">
+              <div>
+                <label class="block text-zinc-500 mb-1" id="lbl-dept">전공</label>
+                <input type="text" id="inp-dept" value="첨단AI공학부"
+                       class="w-full rounded-lg border border-zinc-200 bg-white px-2 py-1.5 text-xs font-medium text-zinc-900 focus:outline-none focus:border-zinc-900" />
+              </div>
+              <div>
+                <label class="block text-zinc-500 mb-1" id="lbl-grade">학년</label>
+                <select id="inp-grade" class="w-full rounded-lg border border-zinc-200 bg-white px-2 py-1.5 text-xs font-medium text-zinc-900">
+                  <option value="1">1학년</option>
+                  <option value="2">2학년</option>
+                  <option value="3" selected>3학년</option>
+                  <option value="4">4학년</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Sync Button -->
+      <div class="pt-3 border-t border-zinc-200/80">
+        <button onclick="loadNotices(true)"
+                class="w-full py-2 px-3 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-100 text-xs font-medium text-zinc-800 flex items-center justify-center gap-2 transition">
+          <span id="sync-spinner" class="inline-block w-3 h-3 rounded-full border-2 border-zinc-400 border-t-zinc-900 hidden animate-spin"></span>
+          <span id="btn-sync">학교 홈페이지 새로고침</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- PANE 2: Notice Feed List (390px) -->
+    <section class="w-full sm:w-[390px] border-r border-zinc-200 bg-white flex flex-col shrink-0">
+      <!-- Search Input -->
+      <div class="p-3 border-b border-zinc-100">
+        <input type="text" id="inp-search" oninput="renderNoticeList()"
+               placeholder="공지 제목·본문·HWP 내용 검색 (예: 장학금, 계절수업, 해커톤)"
+               class="w-full rounded-lg border border-zinc-200 bg-zinc-50/70 px-3 py-2 text-xs text-zinc-900 placeholder:text-zinc-400 focus:bg-white focus:border-zinc-900 focus:outline-none transition" />
+      </div>
+
+      <!-- Scrollable Notice Rows -->
+      <div id="notice-list" class="flex-1 overflow-y-auto divide-y divide-zinc-100"></div>
+    </section>
+
+    <!-- PANE 3: Notice Detail Reader & AI Assistant (Flex-1) -->
+    <main id="detail-pane" class="flex-1 bg-white overflow-y-auto p-6 lg:p-8">
+      <!-- Populated dynamically when a notice is selected -->
+    </main>
+
+  </div>
+
+  <!-- MODAL 1: AI Action Output (Email / Application Draft) -->
+  <div id="agent-modal" class="fixed inset-0 bg-zinc-950/40 backdrop-blur-xs z-50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-2xl w-full shadow-2xl border border-zinc-200 overflow-hidden flex flex-col max-h-[86vh]">
+      <div class="px-6 py-4 border-b border-zinc-100 flex items-center justify-between">
+        <div>
+          <h3 id="modal-title" class="font-semibold text-sm text-zinc-950">AI 작성 완료</h3>
+          <p id="modal-sub" class="text-[11px] text-zinc-400 mt-0.5"></p>
+        </div>
+        <button onclick="closeAgentModal()" class="w-7 h-7 rounded-lg hover:bg-zinc-100 text-zinc-400 hover:text-zinc-900 flex items-center justify-center text-sm">✕</button>
+      </div>
+      <div id="modal-body" class="p-6 overflow-y-auto space-y-4 text-xs flex-1"></div>
+      <div class="px-6 py-3.5 bg-zinc-50 border-t border-zinc-100 flex items-center justify-between">
+        <span id="modal-foot-note" class="text-xs text-zinc-500"></span>
+        <div id="modal-actions" class="flex items-center gap-2"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: Live kangwon.ac.kr URL / Raw Text Analyzer -->
+  <div id="url-modal" class="fixed inset-0 bg-zinc-950/40 backdrop-blur-xs z-50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-xl w-full shadow-2xl border border-zinc-200 overflow-hidden flex flex-col max-h-[85vh]">
+      <div class="px-6 py-4 border-b border-zinc-100 flex items-center justify-between">
+        <h3 class="font-semibold text-sm text-zinc-950" id="url-modal-title">강원대 공지 URL 또는 본문 직접 판독 (.hwp 자동 추출)</h3>
+        <button onclick="closeUrlModal()" class="w-7 h-7 rounded-lg hover:bg-zinc-100 text-zinc-400 hover:text-zinc-900 flex items-center justify-center text-sm">✕</button>
+      </div>
+      <div class="p-6 space-y-4 text-xs overflow-y-auto">
+        <p class="text-zinc-500 leading-relaxed" id="url-modal-desc">
+          <code>https://kangwon.ac.kr/ko/bbs/.../detail.do?pstSn=...</code> 형태의 링크나 공고문 텍스트를 붙여넣으면 본문과 첨부된 <code>.hwp / .hwpx</code> 파일을 실시간으로 추출하여 내 학적 조건과 대조합니다.
+        </p>
+        <textarea id="inp-live-url" rows="3"
+                  placeholder="https://kangwon.ac.kr/ko/bbs/721/detail.do?pstSn=2534"
+                  class="w-full rounded-xl border border-zinc-200 p-3 text-xs font-mono focus:border-zinc-900 focus:outline-none"></textarea>
+        <div class="flex gap-2">
+          <button onclick="document.getElementById('inp-live-url').value='https://kangwon.ac.kr/ko/bbs/721/detail.do?pstSn=2534'"
+                  class="px-3 py-2 rounded-lg border border-zinc-200 hover:bg-zinc-50 text-zinc-700 font-medium">
+            창업장학금(200만원) 실제 URL 넣기
+          </button>
+          <button onclick="runLiveUrlParse()"
+                  class="flex-1 py-2 rounded-lg bg-zinc-950 hover:bg-zinc-800 text-white font-medium">
+            실시간 추출 및 자격 판정
+          </button>
+        </div>
+        <div id="url-parse-output" class="hidden rounded-xl bg-zinc-50 border border-zinc-200 p-4 whitespace-pre-line leading-relaxed text-zinc-800"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: Groq API Key -->
+  <div id="groq-modal" class="fixed inset-0 bg-zinc-950/40 backdrop-blur-xs z-50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl border border-zinc-200 overflow-hidden">
+      <div class="px-6 py-4 border-b border-zinc-100 flex items-center justify-between">
+        <h3 class="font-semibold text-sm text-zinc-950">Groq API 설정</h3>
+        <button onclick="closeGroqModal()" class="w-7 h-7 rounded-lg hover:bg-zinc-100 text-zinc-400 hover:text-zinc-900 flex items-center justify-center text-sm">✕</button>
+      </div>
+      <div class="p-6 space-y-4 text-xs">
+        <p class="text-zinc-500 leading-relaxed">
+          <code>.env</code> 파일에 설정하거나 아래에 Groq API 키(<code>gsk_...</code>)를 입력하면 실시간 LPU 추론이 활성화됩니다.
+        </p>
+        <input type="password" id="inp-groq-key" placeholder="gsk_..."
+               class="w-full rounded-lg border border-zinc-200 px-3 py-2 text-xs font-mono focus:border-zinc-900 focus:outline-none" />
+        <select id="inp-groq-model" class="w-full rounded-lg border border-zinc-200 px-3 py-2 text-xs">
+          <option value="llama-3.3-70b-versatile">llama-3.3-70b-versatile</option>
+          <option value="llama-3.1-8b-instant">llama-3.1-8b-instant</option>
+        </select>
+        <div class="flex justify-end gap-2">
+          <button onclick="closeGroqModal()" class="px-3.5 py-2 rounded-lg border border-zinc-200 text-zinc-600">취소</button>
+          <button onclick="saveGroqKey()" class="px-4 py-2 rounded-lg bg-zinc-950 text-white font-medium">저장</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentLang = 'ko';
+    let currentCategory = 'ALL';
+    let allNotices = [];
+    let selectedNoticeId = null;
+
+    const I18N = {
+      ko: {
+        appTitle: "ZeroNotice · 제로노티스",
+        liveSource: "kangwon.ac.kr 실시간 공지 연동",
+        btnUrlModal: "+ 공지 URL/원문 분석",
+        lblBoards: "게시판 분류",
+        catAll: "전체 공지",
+        catSch: "장학공지",
+        catAca: "학사공지",
+        catCon: "공모·대외활동",
+        catGen: "일반·행사안내",
+        lblOnlyEligible: "지원 가능한 공지만 보기",
+        lblMyCond: "내 학적 조건",
+        lblAutoMatch: "실시간 판정",
+        lblCampus: "소속 캠퍼스",
+        lblStatus: "재학/신분 구분",
+        lblGpa: "평점 (GPA)",
+        lblIncome: "한국장학재단 소득구간",
+        lblDept: "전공",
+        lblGrade: "학년",
+        optCC: "춘천캠퍼스",
+        optSC: "삼척·도계캠퍼스",
+        optGN: "강릉캠퍼스",
+        optWJ: "원주캠퍼스",
+        optSKr: "학부 재학생 (내국인)",
+        optSIntl: "외국인 유학생",
+        optSGrad: "휴학생 / 졸업생",
+        optSStaff: "교직원 / 춘천시민",
+        optInc3: "0 ~ 4구간",
+        optInc6: "5 ~ 8구간",
+        optInc9: "9 ~ 10구간 / 미산정",
+        btnSync: "학교 홈페이지 새로고침",
+        searchPlaceholder: "공지 제목·본문·HWP 내용 검색 (예: 장학금, 계절수업, 해커톤)",
+        badgeEligible: "지원 가능",
+        badgeCond: "조건 확인",
+        badgeIneligible: "대상 아님",
+        hwpBadge: "HWP 추출됨",
+        secSummary: "AI 핵심 요약 & 내 조건 적합도 판정",
+        lblVerdict: "내 조건 판정",
+        lblBenefit: "핵심 혜택·내용",
+        lblDeadline: "신청 마감일",
+        lblContact: "담당 부서·문의처",
+        secFiles: "첨부파일 다운로드 & HWP/HWPX 원문 바로보기",
+        secBody: "학교 홈페이지 공지 본문",
+        btnIcs: "📅 마감일 캘린더 등록 (.ics)",
+        btnEmail: "✉️ 담당자 문의메일 작성",
+        btnApp: "📝 신청서·계획서 초안 AI 작성",
+        btnOrig: "학교 홈페이지 원문 열기 ↗",
+        noFiles: "첨부파일 없음",
+        hwpExtractedHeader: "📄 첨부파일(.hwp / .hwpx) 내부 텍스트 자동 추출 결과 (한글 오피스 없이 열람)"
+      },
+      zh: {
+        appTitle: "ZeroNotice · 江原大通知助手",
+        liveSource: "已同步 kangwon.ac.kr 真实公告",
+        btnUrlModal: "+ 粘贴官网 URL 实时解析",
+        lblBoards: "公告板块",
+        catAll: "全部通知",
+        catSch: "奖学金公告 (장학)",
+        catAca: "学事通知 (학사)",
+        catCon: "竞赛·活动 (공모)",
+        catGen: "综合·校园活动",
+        lblOnlyEligible: "只看我能申请的通知",
+        lblMyCond: "我的学籍条件",
+        lblAutoMatch: "实时核对",
+        lblCampus: "所属校区",
+        lblStatus: "在读/身份状态",
+        lblGpa: "平均绩点 (GPA)",
+        lblIncome: "韩国奖学财团所得区间",
+        lblDept: "专业",
+        lblGrade: "年级",
+        optCC: "春川校区",
+        optSC: "三陟·道溪校区",
+        optGN: "江陵校区",
+        optWJ: "原州校区",
+        optSKr: "本科在读生（韩国籍）",
+        optSIntl: "外国留学生（在读）",
+        optSGrad: "休学生 / 毕业生",
+        optSStaff: "教职工 / 当地市民",
+        optInc3: "0 ~ 4区间",
+        optInc6: "5 ~ 8区间",
+        optInc9: "9 ~ 10区间 / 不适用",
+        btnSync: "同步学校官网最新公告",
+        searchPlaceholder: "搜索通知标题、正文或 HWP 附件内容（如：奖学金、小学期、转专业）",
+        badgeEligible: "可申请",
+        badgeCond: "需核对条件",
+        badgeIneligible: "不适用",
+        hwpBadge: "已解析 HWP",
+        secSummary: "AI 核心摘要与个人资格核对",
+        lblVerdict: "资格判定结论",
+        lblBenefit: "核心金额 / 事项",
+        lblDeadline: "申请截止时间",
+        lblContact: "负责部门与联系方式",
+        secFiles: "官网附件直接下载 & HWP/HWPX 附件免安装预览",
+        secBody: "学校官网通知韩文原文",
+        btnIcs: "📅 添加截止日历提醒 (.ics)",
+        btnEmail: "✉️ 生成韩语敬语咨询邮件",
+        btnApp: "📝 AI 撰写韩文申请书草稿",
+        btnOrig: "打开江原大官网原帖 ↗",
+        noFiles: "无附件",
+        hwpExtractedHeader: "📄 已自动从 .hwp / .hwpx 附件中提取内部韩文正文（无需安装韩컴 Office）"
+      },
+      en: {
+        appTitle: "ZeroNotice · KNU Agent",
+        liveSource: "Synced with kangwon.ac.kr",
+        btnUrlModal: "+ Parse KNU URL / Text",
+        lblBoards: "Notice Boards",
+        catAll: "All Notices",
+        catSch: "Scholarships",
+        catAca: "Academic",
+        catCon: "Contests & Hackathons",
+        catGen: "General & Events",
+        lblOnlyEligible: "Show only eligible for me",
+        lblMyCond: "My Academic Profile",
+        lblAutoMatch: "Live Filter",
+        lblCampus: "Campus",
+        lblStatus: "Enrollment Status",
+        lblGpa: "GPA",
+        lblIncome: "KOSAF Income Bracket",
+        lblDept: "Department",
+        lblGrade: "Year",
+        optCC: "Chuncheon",
+        optSC: "Samcheok",
+        optGN: "Gangneung",
+        optWJ: "Wonju",
+        optSKr: "Undergrad (Korean)",
+        optSIntl: "International Student",
+        optSGrad: "On Leave / Graduate",
+        optSStaff: "Staff / Citizen",
+        optInc3: "Tier 0–4",
+        optInc6: "Tier 5–8",
+        optInc9: "Tier 9–10 / N/A",
+        btnSync: "Refresh kangwon.ac.kr",
+        searchPlaceholder: "Search titles, full text, or extracted HWP content...",
+        badgeEligible: "Eligible",
+        badgeCond: "Check Rule",
+        badgeIneligible: "Ineligible",
+        hwpBadge: "HWP Extracted",
+        secSummary: "AI Executive Summary & Eligibility Check",
+        lblVerdict: "Eligibility Verdict",
+        lblBenefit: "Benefit / Topic",
+        lblDeadline: "Application Deadline",
+        lblContact: "Department & Contact",
+        secFiles: "Official Attachments & Direct HWP/HWPX Text Reader",
+        secBody: "Original Korean Notice Body",
+        btnIcs: "📅 Add Deadline (.ics)",
+        btnEmail: "✉️ Draft Polite Inquiry Email",
+        btnApp: "📝 Generate Application Draft",
+        btnOrig: "Open on kangwon.ac.kr ↗",
+        noFiles: "No attachments",
+        hwpExtractedHeader: "📄 Text Automatically Extracted from Attached .hwp / .hwpx File"
+      }
+    };
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      ['ko', 'zh', 'en'].forEach(l => {
+        const b = document.getElementById(`lang-${l}`);
+        b.className = l === lang
+          ? "px-2 py-0.5 rounded font-medium bg-white text-zinc-950 shadow-xs"
+          : "px-2 py-0.5 rounded font-medium text-zinc-500 hover:text-zinc-900";
+      });
+
+      const t = I18N[lang];
+      const map = {
+        'app-title': t.appTitle,
+        'live-source-label': t.liveSource,
+        'btn-url-modal': t.btnUrlModal,
+        'lbl-boards': t.lblBoards,
+        'cat-lbl-all': t.catAll,
+        'cat-lbl-sch': t.catSch,
+        'cat-lbl-aca': t.catAca,
+        'cat-lbl-con': t.catCon,
+        'cat-lbl-gen': t.catGen,
+        'lbl-only-eligible': t.lblOnlyEligible,
+        'lbl-my-cond': t.lblMyCond,
+        'lbl-auto-match': t.lblAutoMatch,
+        'lbl-campus': t.lblCampus,
+        'lbl-status': t.lblStatus,
+        'lbl-gpa': t.lblGpa,
+        'lbl-income': t.lblIncome,
+        'lbl-dept': t.lblDept,
+        'lbl-grade': t.lblGrade,
+        'opt-c-cc': t.optCC,
+        'opt-c-sc': t.optSC,
+        'opt-c-gn': t.optGN,
+        'opt-c-wj': t.optWJ,
+        'opt-s-kr': t.optSKr,
+        'opt-s-intl': t.optSIntl,
+        'opt-s-grad': t.optSGrad,
+        'opt-s-staff': t.optSStaff,
+        'opt-inc-3': t.optInc3,
+        'opt-inc-6': t.optInc6,
+        'opt-inc-9': t.optInc9,
+        'btn-sync': t.btnSync
+      };
+      Object.entries(map).forEach(([id, val]) => {
+        const el = document.getElementById(id);
+        if (el) el.innerText = val;
+      });
+      document.getElementById('inp-search').placeholder = t.searchPlaceholder;
+
+      renderNoticeList();
+      if (selectedNoticeId) renderDetailPane(selectedNoticeId);
+    }
+
+    function getProfile(liveCheck = false) {
+      return {
+        campus: document.getElementById('inp-campus').value,
+        status: document.getElementById('inp-status').value,
+        department: document.getElementById('inp-dept').value || "첨단AI공학부",
+        grade: parseInt(document.getElementById('inp-grade').value, 10),
+        gpa: parseFloat(document.getElementById('inp-gpa').value),
+        income_bracket: parseInt(document.getElementById('inp-income').value, 10),
+        name: document.getElementById('inp-status').value === 'intl' ? 'Li Wei' : '김강원',
+        student_id: '202411234',
+        live_check: liveCheck
+      };
+    }
+
+    async function loadNotices(liveCheck = false) {
+      const sp = document.getElementById('sync-spinner');
+      if (sp && liveCheck) sp.classList.remove('hidden');
+      try {
+        const resp = await fetch('/api/notices', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(getProfile(liveCheck))
+        });
+        const data = await resp.json();
+        allNotices = data.notices || [];
+
+        // Update stats
+        const st = data.stats;
+        document.getElementById('cnt-ineligible').innerText = st.ineligible;
+        if (currentLang === 'zh') {
+          document.getElementById('saved-summary-pill').innerText =
+            `已自动解析 ${st.total} 篇官网通知与 ${st.hwp_parsed_count} 份 HWP 附件 · 省时约 ${st.saved_minutes} 分钟`;
+        } else if (currentLang === 'en') {
+          document.getElementById('saved-summary-pill').innerText =
+            `Parsed ${st.total} notices & ${st.hwp_parsed_count} HWP files · ~${st.saved_minutes}m saved`;
+        } else {
+          document.getElementById('saved-summary-pill').innerText =
+            `공지 ${st.total}건 · HWP ${st.hwp_parsed_count}건 자동 판독 (약 ${st.saved_minutes}분 절약)`;
+        }
+
+        // Update Groq status dot
+        if (data.groq) {
+          document.getElementById('groq-dot').className = data.groq.configured
+            ? "w-1.5 h-1.5 rounded-full bg-emerald-500"
+            : "w-1.5 h-1.5 rounded-full bg-zinc-400";
+        }
+
+        updateCategoryCounts();
+        renderNoticeList();
+      } catch (e) {
+        console.error(e);
+      } finally {
+        if (sp) sp.classList.add('hidden');
+      }
+    }
+
+    function updateCategoryCounts() {
+      const onlyEligible = document.getElementById('chk-only-eligible').checked;
+      const base = onlyEligible
+        ? allNotices.filter(n => n.match_status !== 'ineligible')
+        : allNotices;
+
+      document.getElementById('cnt-ALL').innerText = base.length;
+      document.getElementById('cnt-장학').innerText = base.filter(n => n.category === '장학').length;
+      document.getElementById('cnt-학사').innerText = base.filter(n => n.category === '학사').length;
+      document.getElementById('cnt-공모').innerText = base.filter(n => n.category === '공모').length;
+      document.getElementById('cnt-일반행사').innerText = base.filter(n => n.category === '일반' || n.category === '행사').length;
+    }
+
+    function setCategory(cat) {
+      currentCategory = cat;
+      ['ALL', '장학', '학사', '공모', '일반행사'].forEach(c => {
+        const btn = document.getElementById(`cat-${c}`);
+        if (c === cat) {
+          btn.className = "w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-medium bg-zinc-900 text-white";
+        } else {
+          btn.className = "w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-medium text-zinc-600 hover:bg-zinc-200/60";
+        }
+      });
+      renderNoticeList();
+    }
+
+    function renderNoticeList() {
+      updateCategoryCounts();
+      const onlyEligible = document.getElementById('chk-only-eligible').checked;
+      const q = (document.getElementById('inp-search').value || '').trim().toLowerCase();
+      const t = I18N[currentLang];
+
+      const filtered = allNotices.filter(n => {
+        if (onlyEligible && n.match_status === 'ineligible') return false;
+        if (currentCategory === '장학' && n.category !== '장학') return false;
+        if (currentCategory === '학사' && n.category !== '학사') return false;
+        if (currentCategory === '공모' && n.category !== '공모') return false;
+        if (currentCategory === '일반행사' && !(n.category === '일반' || n.category === '행사')) return false;
+
+        if (q) {
+          const hay = `${n.title_ko} ${n.title_zh} ${n.title_en} ${n.body} ${n.attachment_extracted_text} ${n.summary_ko} ${n.summary_zh}`.toLowerCase();
+          if (!hay.includes(q)) return false;
+        }
+        return true;
+      });
+
+      const listEl = document.getElementById('notice-list');
+      if (filtered.length === 0) {
+        listEl.innerHTML = `<div class="p-8 text-center text-xs text-zinc-400">조건에 맞는 공지가 없습니다.</div>`;
+        document.getElementById('detail-pane').innerHTML = '';
+        return;
+      }
+
+      if (!selectedNoticeId || !filtered.some(n => n.id === selectedNoticeId)) {
+        selectedNoticeId = filtered[0].id;
+      }
+
+      listEl.innerHTML = filtered.map(n => {
+        const isSelected = n.id === selectedNoticeId;
+        const title = n[`title_${currentLang}`] || n.title_ko || n.title;
+        const verdict = n[`verdict_${currentLang}`] || n.verdict_ko;
+        const benefitLbl = n[`benefit_label_${currentLang}`] || n.benefit_label_ko;
+
+        let statusBadge = '';
+        if (n.match_status === 'eligible') {
+          statusBadge = `<span class="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>${t.badgeEligible}</span>`;
+        } else if (n.match_status === 'conditional') {
+          statusBadge = `<span class="inline-flex items-center gap-1 text-[11px] font-medium text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>${t.badgeCond}</span>`;
+        } else {
+          statusBadge = `<span class="inline-flex items-center gap-1 text-[11px] font-medium text-zinc-400 bg-zinc-100 px-1.5 py-0.5 rounded">✕ ${t.badgeIneligible}</span>`;
+        }
+
+        const hwpTag = n.has_hwp_extracted
+          ? `<span class="text-[10px] font-medium text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded">${t.hwpBadge}</span>`
+          : '';
+
+        return `
+          <div onclick="selectNotice('${n.id}')"
+               class="p-3.5 cursor-pointer transition ${isSelected ? 'bg-zinc-100/90 border-l-2 border-l-zinc-950' : 'hover:bg-zinc-50'} ${n.match_status === 'ineligible' ? 'opacity-60' : ''}">
+            <div class="flex items-center justify-between gap-2 mb-1">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                ${statusBadge}
+                <span class="text-[11px] text-zinc-500 font-medium">${n.category} · ${n.campus}</span>
+                ${hwpTag}
+              </div>
+              <span class="text-[11px] font-medium text-zinc-400 tabular-nums shrink-0">${n.d_day}</span>
+            </div>
+
+            <h4 class="text-xs font-semibold text-zinc-950 leading-snug line-clamp-2">${title}</h4>
+
+            <div class="mt-1.5 flex items-center justify-between gap-2 text-[11px]">
+              <span class="${n.match_status === 'ineligible' ? 'text-rose-600' : 'text-zinc-500'} truncate">${verdict}</span>
+            </div>
+            ${benefitLbl ? `<div class="mt-1 text-[11px] font-medium text-zinc-700">${benefitLbl}</div>` : ''}
+          </div>
+        `;
+      }).join('');
+
+      renderDetailPane(selectedNoticeId);
+    }
+
+    function selectNotice(id) {
+      selectedNoticeId = id;
+      renderNoticeList();
+    }
+
+    function renderDetailPane(id) {
+      const n = allNotices.find(x => x.id === id);
+      if (!n) return;
+      const t = I18N[currentLang];
+
+      const title = n[`title_${currentLang}`] || n.title_ko || n.title;
+      const summary = n[`summary_${currentLang}`] || n.summary_ko;
+      const verdict = n[`verdict_${currentLang}`] || n.verdict_ko;
+      const benefitLbl = n[`benefit_label_${currentLang}`] || n.benefit_label_ko;
+
+      const verdictColor = n.match_status === 'eligible'
+        ? 'bg-emerald-50/70 border-emerald-200 text-emerald-900'
+        : (n.match_status === 'conditional'
+            ? 'bg-amber-50/70 border-amber-200 text-amber-900'
+            : 'bg-rose-50/70 border-rose-200 text-rose-900');
+
+      const attachments = n.attachments || [];
+      const filesHtml = attachments.length > 0
+        ? attachments.map(a => `
+            <a href="${a.url}" target="_blank"
+               class="flex items-center justify-between p-2.5 rounded-lg border border-zinc-200 hover:border-zinc-900 bg-zinc-50/50 hover:bg-white text-xs transition group">
+              <span class="font-medium text-zinc-800 truncate pr-3">📎 ${a.name}</span>
+              <span class="text-[11px] font-medium text-zinc-500 group-hover:text-zinc-950 shrink-0">Download ↓</span>
+            </a>
+          `).join('')
+        : `<div class="text-xs text-zinc-400">${t.noFiles}</div>`;
+
+      const hwpExtractedHtml = n.attachment_extracted_text
+        ? `
+          <div class="mt-3 rounded-xl border border-blue-200/80 bg-blue-50/30 p-4 space-y-2">
+            <div class="text-xs font-semibold text-blue-950">${t.hwpExtractedHeader}</div>
+            <div class="text-xs text-zinc-700 whitespace-pre-line leading-relaxed max-h-72 overflow-y-auto pr-2">${n.attachment_extracted_text}</div>
+          </div>
+        `
+        : '';
+
+      const pane = document.getElementById('detail-pane');
+      pane.innerHTML = `
+        <div class="max-w-3xl space-y-6">
+
+          <!-- Top Header & Sticky Action Bar -->
+          <div class="space-y-4 pb-5 border-b border-zinc-200">
+            <div class="flex flex-wrap items-center justify-between gap-2 text-xs text-zinc-500">
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded bg-zinc-100 text-zinc-800 font-medium">${n.category} · ${n.campus}</span>
+                <span class="tabular-nums">게시일 ${n.posted_date}</span>
+                <span>·</span>
+                <span>${n.author} (${n.phone})</span>
+              </div>
+              <a href="${n.url}" target="_blank" class="text-zinc-700 hover:text-zinc-950 font-medium underline underline-offset-4">
+                ${t.btnOrig}
+              </a>
+            </div>
+
+            <h1 class="text-xl font-bold text-zinc-950 leading-snug tracking-tight">${title}</h1>
+
+            <!-- Practical 3-Button Action Bar -->
+            <div class="flex flex-wrap items-center gap-2 pt-1">
+              <a href="/api/agent/ics/${n.id}?lang=${currentLang}" download
+                 class="px-3.5 py-2 rounded-lg border border-zinc-200 hover:border-zinc-900 bg-white text-zinc-900 text-xs font-medium transition">
+                ${t.btnIcs}
+              </a>
+              <button onclick="runEmailAgent('${n.id}')"
+                      class="px-3.5 py-2 rounded-lg border border-zinc-200 hover:border-zinc-900 bg-white text-zinc-900 text-xs font-medium transition">
+                ${t.btnEmail}
+              </button>
+              <button onclick="runApplicationAgent('${n.id}')"
+                      class="px-4 py-2 rounded-lg bg-zinc-950 hover:bg-zinc-800 text-white text-xs font-medium transition">
+                ${t.btnApp}
+              </button>
+            </div>
+          </div>
+
+          <!-- Section 1: AI Summary & My Eligibility Verdict -->
+          <div class="rounded-xl border border-zinc-200 p-5 space-y-4">
+            <div class="text-xs font-semibold text-zinc-900">${t.secSummary}</div>
+
+            <!-- Verdict Banner -->
+            <div class="p-3.5 rounded-lg border ${verdictColor} text-xs font-medium leading-relaxed">
+              <span class="font-bold">${t.lblVerdict}:</span> ${verdict}
+            </div>
+
+            <!-- Summary Paragraph -->
+            <p class="text-sm text-zinc-800 leading-relaxed">${summary}</p>
+
+            <!-- 3 Metadata Cells -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-zinc-100 text-xs">
+              <div>
+                <span class="text-zinc-400 block">${t.lblBenefit}</span>
+                <span class="font-semibold text-zinc-900 mt-0.5 block">${benefitLbl}</span>
+              </div>
+              <div>
+                <span class="text-zinc-400 block">${t.lblDeadline}</span>
+                <span class="font-semibold text-zinc-900 mt-0.5 block tabular-nums">${n.deadline} (${n.d_day})</span>
+              </div>
+              <div>
+                <span class="text-zinc-400 block">${t.lblContact}</span>
+                <span class="font-semibold text-zinc-900 mt-0.5 block">${n.author} (${n.email || n.phone})</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2: Attachments & Direct HWP/HWPX Text Reader -->
+          <div class="rounded-xl border border-zinc-200 p-5 space-y-3">
+            <div class="text-xs font-semibold text-zinc-900">${t.secFiles}</div>
+            <div class="grid grid-cols-1 gap-2">${filesHtml}</div>
+            ${hwpExtractedHtml}
+          </div>
+
+          <!-- Section 3: Full Original Webpage Text -->
+          <div class="rounded-xl border border-zinc-200 p-5 space-y-3">
+            <div class="text-xs font-semibold text-zinc-900">${t.secBody}</div>
+            <div class="text-xs text-zinc-600 whitespace-pre-line leading-relaxed">${n.body || '(홈페이지 본문 없음 — 위 첨부파일 추출 원문을 참고하세요)'}</div>
+          </div>
+
+        </div>
+      `;
+    }
+
+    async function runEmailAgent(noticeId) {
+      openAgentModalLoading("담당 부서 문의메일 초안 작성 중...");
+      try {
+        const resp = await fetch('/api/agent/email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            notice_id: noticeId,
+            profile: getProfile(false),
+            lang: currentLang
+          })
+        });
+        const res = await resp.json();
+        document.getElementById('modal-title').innerText = `${res.department} (${res.email}) 문의메일`;
+        document.getElementById('modal-sub').innerText = res.engine;
+        document.getElementById('modal-foot-note').innerText = `문의전화: ${res.phone}`;
+
+        document.getElementById('modal-body').innerHTML = `
+          <div class="space-y-2">
+            <div class="text-xs text-zinc-500">제목: <strong class="text-zinc-900">${res.subject}</strong></div>
+            <textarea id="modal-copy-box" rows="12" class="w-full rounded-xl border border-zinc-200 p-3.5 text-xs bg-zinc-50 text-zinc-900 leading-relaxed focus:bg-white focus:outline-none">${res.body}</textarea>
+          </div>
+        `;
+
+        const mailto = `mailto:${encodeURIComponent(res.email)}?subject=${encodeURIComponent(res.subject)}&body=${encodeURIComponent(res.body)}`;
+        document.getElementById('modal-actions').innerHTML = `
+          <button onclick="copyModalBox()" class="px-3.5 py-2 rounded-lg border border-zinc-200 hover:bg-zinc-100 text-xs font-medium">복사</button>
+          <a href="${mailto}" class="px-4 py-2 rounded-lg bg-zinc-950 text-white text-xs font-medium">메일 앱으로 발송</a>
+        `;
+      } catch (e) {
+        closeAgentModal();
+      }
+    }
+
+    async function runApplicationAgent(noticeId) {
+      openAgentModalLoading("공고문 맞춤형 지원서·계획서 초안 작성 중...");
+      try {
+        const resp = await fetch('/api/agent/application', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            notice_id: noticeId,
+            profile: getProfile(false),
+            lang: currentLang
+          })
+        });
+        const res = await resp.json();
+        document.getElementById('modal-title').innerText = res.notice_title;
+        document.getElementById('modal-sub').innerText = res.engine;
+        document.getElementById('modal-foot-note').innerText = "공고문 요강에 맞춰 자동 작성된 초안입니다.";
+
+        document.getElementById('modal-body').innerHTML = `
+          <textarea id="modal-copy-box" rows="14" class="w-full rounded-xl border border-zinc-200 p-3.5 text-xs bg-zinc-50 text-zinc-900 leading-relaxed focus:bg-white focus:outline-none">${res.draft}</textarea>
+        `;
+        document.getElementById('modal-actions').innerHTML = `
+          <button onclick="copyModalBox()" class="px-3.5 py-2 rounded-lg border border-zinc-200 hover:bg-zinc-100 text-xs font-medium">복사</button>
+          <button onclick="downloadModalBox('${res.notice_id}_draft.txt')" class="px-4 py-2 rounded-lg bg-zinc-950 text-white text-xs font-medium">.txt 다운로드</button>
+        `;
+      } catch (e) {
+        closeAgentModal();
+      }
+    }
+
+    function openAgentModalLoading(title) {
+      const m = document.getElementById('agent-modal');
+      m.classList.remove('hidden');
+      m.classList.add('flex');
+      document.getElementById('modal-title').innerText = title;
+      document.getElementById('modal-body').innerHTML = `<div class="py-12 text-center text-xs text-zinc-400">${title}</div>`;
+      document.getElementById('modal-actions').innerHTML = '';
+    }
+
+    function closeAgentModal() {
+      const m = document.getElementById('agent-modal');
+      m.classList.add('hidden');
+      m.classList.remove('flex');
+    }
+
+    function copyModalBox() {
+      const el = document.getElementById('modal-copy-box');
+      if (!el) return;
+      el.select();
+      navigator.clipboard.writeText(el.value);
+    }
+
+    function downloadModalBox(filename) {
+      const el = document.getElementById('modal-copy-box');
+      if (!el) return;
+      const blob = new Blob([el.value], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function openUrlModal() {
+      const m = document.getElementById('url-modal');
+      m.classList.remove('hidden');
+      m.classList.add('flex');
+    }
+
+    function closeUrlModal() {
+      const m = document.getElementById('url-modal');
+      m.classList.add('hidden');
+      m.classList.remove('flex');
+    }
+
+    async function runLiveUrlParse() {
+      const val = document.getElementById('inp-live-url').value.trim();
+      if (!val) return;
+      const out = document.getElementById('url-parse-output');
+      out.classList.remove('hidden');
+      out.innerText = "강원대 서버에서 본문 및 .hwp/.hwpx 첨부파일을 추출하고 있습니다...";
+
+      try {
+        const resp = await fetch('/api/parse-url', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            url_or_text: val,
+            profile: getProfile(false),
+            lang: currentLang
+          })
+        });
+        const data = await resp.json();
+        const ext = data.extracted || {};
+        const attText = ext.attachment_extracted_text
+          ? `\n\n[첨부 HWP/HWPX 자동 추출 원문]\n${ext.attachment_extracted_text.slice(0, 800)}...`
+          : '';
+        out.innerText = `[${data.engine}]\n${data.analysis}${attText}`;
+      } catch (e) {
+        out.innerText = "분석 중 오류가 발생했습니다.";
+      }
+    }
+
+    function openGroqModal() {
+      const m = document.getElementById('groq-modal');
+      m.classList.remove('hidden');
+      m.classList.add('flex');
+    }
+
+    function closeGroqModal() {
+      const m = document.getElementById('groq-modal');
+      m.classList.add('hidden');
+      m.classList.remove('flex');
+    }
+
+    async function saveGroqKey() {
+      const key = document.getElementById('inp-groq-key').value.trim();
+      const model = document.getElementById('inp-groq-model').value;
+      await fetch('/api/config/groq', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ api_key: key, model: model })
+      });
+      closeGroqModal();
+      loadNotices(false);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadNotices(false);
+    });
+  </script>
+</body>
+</html>
