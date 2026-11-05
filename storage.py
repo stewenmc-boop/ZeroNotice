@@ -12,6 +12,7 @@ Without configuration every helper is a no-op and the app keeps using its local
 JSON files, so the demo never breaks.
 """
 
+import hashlib
 import json
 import os
 import time
@@ -21,10 +22,14 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional
 
 import requests
+from dotenv import load_dotenv
+
+load_dotenv()
 
 ROOT = Path(__file__).parent
 IDENTITY_PATH = ROOT / "data" / "identity.json"
 TIMEOUT = 20.0
+_LAST_AUTH_ERROR = ""
 
 
 # --------------------------------------------------------------------------- #
@@ -102,7 +107,16 @@ def sign_in_anonymous() -> Dict[str, Any]:
             timeout=TIMEOUT,
         )
         if resp.status_code not in (200, 201):
-            return {"ok": False, "status": resp.status_code, "error": resp.text[:250]}
+            global _LAST_AUTH_ERROR
+            body = resp.text[:250]
+            if "anonymous_provider_disabled" in body:
+                _LAST_AUTH_ERROR = (
+                    "Supabase 익명 로그인이 꺼져 있습니다. "
+                    "Dashboard → Authentication → Sign In/Providers → Anonymous sign-ins 를 켜주세요."
+                )
+            else:
+                _LAST_AUTH_ERROR = body
+            return {"ok": False, "status": resp.status_code, "error": body}
         payload = resp.json()
         user = payload.get("user") or {}
         identity = {
@@ -166,6 +180,8 @@ def status() -> Dict[str, Any]:
         "retention_days": c["retention_days"],
         "user_id": identity.get("user_id"),
         "anonymous": bool(identity.get("user_id")),
+        "auth_error": _LAST_AUTH_ERROR,
+        "per_user_sync": bool(identity.get("user_id")),
     }
 
 
@@ -280,6 +296,22 @@ def push_images(images: Dict[str, Any]) -> Dict[str, Any]:
         for nid, p in (images or {}).items()
     ]
     return _upsert("notice_images", rows, "notice_id", service=True)
+
+
+def safe_object_path(notice_id: str, name: str) -> str:
+    """Supabase Storage keys must be ASCII-safe; keep the original name in the DB."""
+    ext = os.path.splitext(name or "")[1].lower()
+    digest = hashlib.sha1((name or "").encode("utf-8")).hexdigest()[:12]
+    return f"{notice_id}/{digest}{ext}"
+
+
+def upload_attachment(notice_id: str, name: str, data: bytes, mime: str) -> Dict[str, Any]:
+    """Upload with an ASCII-safe key, then register the row with the original name."""
+    path = safe_object_path(notice_id, name)
+    result = upload_file(path, data, mime or "application/octet-stream")
+    if result.get("ok"):
+        register_attachment(notice_id, name, path, mime, len(data))
+    return result
 
 
 def upload_file(path: str, data: bytes, content_type: str = "application/octet-stream") -> Dict[str, Any]:

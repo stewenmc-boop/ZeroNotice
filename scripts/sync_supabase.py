@@ -22,7 +22,7 @@ import storage  # noqa: E402
 
 DATA = ROOT / "data"
 UPLOAD_EXT = (".png", ".jpg", ".jpeg", ".gif", ".webp", ".pdf", ".xlsx", ".docx", ".hwp", ".hwpx")
-MAX_BYTES = 8 * 1024 * 1024
+MAX_BYTES = 15 * 1024 * 1024
 MIME = {
     ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".gif": "image/gif",
     ".webp": "image/webp", ".pdf": "application/pdf",
@@ -64,6 +64,21 @@ def main() -> int:
         return 2
 
     notices = load("real_knu_notices.json", [])
+    # never push rows the retention policy would delete right away
+    from datetime import datetime, timedelta
+    cutoff = datetime.now() - timedelta(days=30)
+    kept = []
+    for n in notices:
+        try:
+            posted = datetime.strptime((n.get("posted_date") or "")[:10], "%Y-%m-%d")
+        except Exception:
+            kept.append(n)
+            continue
+        if posted >= cutoff:
+            kept.append(n)
+        else:
+            print(f"  [retention] skip {n.get('id')} (posted {n.get('posted_date')})")
+    notices = kept
     if args.limit:
         notices = notices[: args.limit]
     print(f"notices: {len(notices)} 건 push…")
@@ -99,13 +114,11 @@ def main() -> int:
                     skipped += 1
                     continue
                 ext = Path(name).suffix.lower()
-                path = f"{nid}/{name}"
-                up = storage.upload_file(path, raw, MIME.get(ext, "application/octet-stream"))
+                up = storage.upload_attachment(nid, name, raw, MIME.get(ext, "application/octet-stream"))
                 if not up.get("ok"):
                     print(f"  [fail] upload {nid} {name}: {up.get('error')}")
                     failed += 1
                     continue
-                storage.register_attachment(nid, name, path, MIME.get(ext, ""), len(raw))
                 uploaded += 1
                 print(f"  [ok]   {nid} {name} ({len(raw) // 1024}KB)")
         print(f"files: uploaded={uploaded} skipped={skipped} failed={failed}")
