@@ -21,6 +21,7 @@ from agent import (
     list_models,
     set_runtime_llm,
 )
+import assistant
 import notifier
 import reminders
 import storage
@@ -35,6 +36,7 @@ STATIC_DIR = BASE_DIR / "static"
 FRONTEND_DIST_DIR = BASE_DIR / "frontend" / "dist"
 PROFILE_PATH = BASE_DIR / "data" / "profile.json"
 SETTINGS_PATH = BASE_DIR / "data" / "settings.json"
+CHAT_PATH = BASE_DIR / "data" / "chat_history.json"
 FIELDS_PATH = BASE_DIR / "data" / "notice_fields.json"
 IMAGES_PATH = BASE_DIR / "data" / "notice_images.json"
 
@@ -76,6 +78,16 @@ class ParseUrlRequest(BaseModel):
     lang: str = "ko"
 
 
+class ChatMessage(BaseModel):
+    role: str
+    content: str
+
+
+class ChatRequest(BaseModel):
+    messages: List[ChatMessage] = []
+    lang: str = "ko"
+
+
 def _load_fields() -> Dict[str, Any]:
     if not FIELDS_PATH.exists():
         return {}
@@ -102,6 +114,58 @@ def _write_settings(data: Dict[str, Any]) -> None:
     SETTINGS_PATH.parent.mkdir(parents=True, exist_ok=True)
     with open(SETTINGS_PATH, "w", encoding="utf-8") as fh:
         json.dump(data, fh, ensure_ascii=False, indent=2)
+
+
+def _chat_history() -> List[Dict[str, Any]]:
+    if not CHAT_PATH.exists():
+        return []
+    try:
+        with open(CHAT_PATH, "r", encoding="utf-8") as fh:
+            data = json.load(fh)
+        return data if isinstance(data, list) else []
+    except Exception:
+        return []
+
+
+def _save_chat(entries: List[Dict[str, Any]]) -> None:
+    CHAT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with open(CHAT_PATH, "w", encoding="utf-8") as fh:
+        json.dump(entries[-200:], fh, ensure_ascii=False, indent=2)
+
+
+@app.post("/api/assistant/chat")
+def api_assistant_chat(req: ChatRequest) -> Dict[str, Any]:
+    profile = _read_profile() or {}
+    history = [{"role": m.role, "content": m.content} for m in req.messages][-12:]
+    result = assistant.chat(history, profile, lang=req.lang)
+
+    entries = _chat_history()
+    if history:
+        last_user = history[-1]
+        if last_user.get("role") == "user":
+            entries.append({"role": "user", "content": last_user["content"],
+                            "at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")})
+            storage.push_message("user", last_user["content"])
+    if result.get("reply"):
+        entries.append({"role": "assistant", "content": result["reply"],
+                        "at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")})
+        storage.push_message("assistant", result["reply"], {"tools": result.get("tool_calls")})
+    _save_chat(entries)
+    return result
+
+
+@app.get("/api/assistant/history")
+def api_assistant_history(limit: int = Query(50)) -> Dict[str, Any]:
+    local = _chat_history()[-limit:]
+    if not local:
+        local = storage.load_messages(limit)
+    return {"messages": local}
+
+
+@app.delete("/api/assistant/history")
+def api_assistant_clear() -> Dict[str, Any]:
+    _save_chat([])
+    return {"cleared": True}
 
 
 @app.get("/api/supabase/status")

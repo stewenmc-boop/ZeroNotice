@@ -498,3 +498,27 @@ def load_settings() -> Dict[str, Any]:
     if result.get("ok") and result.get("data"):
         return result["data"][0].get("payload") or {}
     return {}
+
+
+def push_message(role: str, content: str, meta: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    if mode() == "local":
+        return {"ok": False, "skipped": True}
+    row = _with_owner({"role": role, "content": content, "meta": meta or {}})
+    return _request(
+        "POST",
+        "/rest/v1/assistant_messages",
+        headers=_user_headers(),
+        json=[row],
+    )
+
+
+def load_messages(limit: int = 50) -> List[Dict[str, Any]]:
+    if mode() == "local":
+        return []
+    result = _select(
+        "assistant_messages",
+        {"select": "role,content,created_at", "order": "created_at.desc", "limit": str(limit)},
+    )
+    if result.get("ok") and isinstance(result.get("data"), list):
+        return list(reversed(result["data"]))
+    return []

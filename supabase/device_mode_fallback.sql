@@ -37,3 +37,10 @@ create policy device_rows on public.subscriptions
 create policy device_rows on public.user_settings
     for all using (device_key = public.current_device_key())
     with check (device_key = public.current_device_key());
+
+alter table public.assistant_messages add column if not exists device_key text;
+create index if not exists assistant_messages_device_idx on public.assistant_messages (device_key, created_at desc);
+drop policy if exists device_rows on public.assistant_messages;
+create policy device_rows on public.assistant_messages
+    for all using (device_key = public.current_device_key())
+    with check (device_key = public.current_device_key());

@@ -51,6 +51,7 @@ app.py                  FastAPI 라우팅(13 endpoint) + 정적 서빙
 agent.py                LLM 호출(OpenRouter/OpenAI/Groq/Custom), 자격 판정 규칙, .ics/메일/지원서 생성, 비용 추정
 notifier.py             SMTP 발송(.ics 첨부, 다이제스트) — 자격증명은 .env 에서만
 reminders.py            관심 공지 구독 저장 + 마감 24시간 전 알림 워커(5분 주기)
+assistant.py            도구 호출 에이전트(검색·상세·구독·메일·프로필)
 storage.py              Supabase 클라이언트(공유 공지 + 사용자별 RLS 행, 익명 로그인)
 supabase/schema.sql     테이블·RLS·Storage·30일 보관 함수
 scraper.py              게시판 상세 파싱, .hwp/.hwpx/.pdf/.xlsx/.docx 텍스트 추출, 데이터 로드
@@ -89,6 +90,9 @@ static/index.html       구 버전 단일 파일 UI (dist 없을 때 폴백)
 | GET | `/api/profile` | – | `{profile}` — `data/profile.json` 로컬 저장소(개인정보, gitignore) |
 | POST | `/api/profile` | `{profile}` | 병합 저장 후 `{profile, saved}` |
 | POST | `/api/notices` | 프로필 | `{synced_at, live_portal_connected, notices[], stats}` — 각 공지에 `has_email`·`has_application_link`·`fields`(캐시) 병합 |
+| POST | `/api/assistant/chat` | `{messages, lang}` | 도구 호출 결과 + 자연어 답변 |
+| GET | `/api/assistant/history` | – | 최근 대화(로컬 우선, 없으면 Supabase) |
+| DELETE | `/api/assistant/history` | – | 대화 초기화 |
 | GET | `/api/supabase/status` | – | 설정/익명 세션/보관일수 상태 |
 | GET | `/api/settings` | – | 사용자별 AI 설정(키는 마스킹) |
 | POST | `/api/settings` | `{provider, base_url, model, api_key}` | 저장(로컬 + Supabase user_settings) |
@@ -206,3 +210,6 @@ benefit_krw, title_{ko,zh,en}, summary_{ko,zh,en}, rules, has_hwp_extracted`
 13. **배포본에는 anon key만.** `service_role` 키는 `scripts/sync_supabase.py` 전용이며 exe/dmg 에 포함하지 않는다. 사용자별 데이터는 익명 로그인 `auth.uid()` + RLS 로 격리한다.
 14. **사용자 상태 파일은 로컬이 원본.** `data/identity.json`·`data/settings.json`(AI 키)·`data/profile.json`·`data/subscriptions.json` 은 gitignore. Supabase는 백업/동기화 용도이며, 오프라인이면 로컬로 계속 동작한다.
 15. **30일 보관.** `purge_expired_notices(30)` 를 야간 실행하고, `created_at`/`posted_date` 기준으로 오래된 공지를 삭제한다(첨부·추출 캐시는 cascade).
+
+16. **비서는 도구 없이 답하지 않는다.** `assistant.py` 의 모든 사실은 `search_notices`/`get_notice`/`list_upcoming`/`get_my_profile` 결과에서만 나온다. 도구 실패 시 "확인 못 했다"고 말하고 추측하지 않는다.
+17. **비서의 쓰기 동작은 명시 요청 시에만.** `subscribe_notice`, `send_inquiry_email` 은 사용자가 그 의도를 말했을 때만 호출한다(자동 구독/자동 발송 금지).

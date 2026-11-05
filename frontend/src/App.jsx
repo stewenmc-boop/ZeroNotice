@@ -5,6 +5,7 @@ import SidebarFilter from './components/SidebarFilter';
 import NoticeListPane from './components/NoticeListPane';
 import NoticeDetailPane from './components/NoticeDetailPane';
 import { UrlParseModal, LlmConfigModal } from './components/Modals';
+import AssistantDock from './components/AssistantDock';
 
 const DEFAULT_PROFILE = {
   campus: '춘천',
@@ -332,6 +333,8 @@ export default function App() {
         open={urlModalOpen}
         onClose={() => setUrlModalOpen(false)}
       />
+
+      <AssistantDock lang={lang} onOpenNotice={setSelectedId} />
 
       {/* AI model connection modal */}
       <LlmConfigModal

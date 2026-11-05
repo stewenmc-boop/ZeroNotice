@@ -82,6 +82,18 @@ create table if not exists public.user_settings (
     updated_at timestamptz not null default now()
 );
 
+-- assistant conversation log (per user)
+create table if not exists public.assistant_messages (
+    id         bigserial primary key,
+    user_id    uuid default auth.uid(),
+    device_key text,
+    role       text not null,
+    content    text not null,
+    meta       jsonb,
+    created_at timestamptz not null default now()
+);
+create index if not exists assistant_messages_user_idx on public.assistant_messages (user_id, created_at desc);
+
 -- ---------------------------------------------------------------------------
 -- triggers
 -- ---------------------------------------------------------------------------
@@ -139,6 +151,7 @@ alter table public.attachments   enable row level security;
 alter table public.profiles      enable row level security;
 alter table public.subscriptions enable row level security;
 alter table public.user_settings enable row level security;
+alter table public.assistant_messages enable row level security;
 
 do $$
 begin
@@ -153,5 +166,6 @@ begin
         create policy own_rows on public.profiles      for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
         create policy own_rows on public.subscriptions for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
         create policy own_rows on public.user_settings for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
+        create policy own_rows on public.assistant_messages for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
     end if;
 end $$;
