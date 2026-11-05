@@ -39,12 +39,18 @@ _DEVICE_COLUMNS = None
 # config / identity
 # --------------------------------------------------------------------------- #
 def cfg() -> Dict[str, Any]:
+    """Env wins; publishable defaults keep the app usable without env vars."""
+    import public_config
+
+    url = (os.getenv("SUPABASE_URL") or public_config.SUPABASE_URL or "").strip().rstrip("/")
+    anon = (os.getenv("SUPABASE_ANON_KEY") or public_config.SUPABASE_ANON_KEY or "").strip()
     return {
-        "url": (os.getenv("SUPABASE_URL") or "").strip().rstrip("/"),
-        "anon_key": (os.getenv("SUPABASE_ANON_KEY") or "").strip(),
+        "url": url,
+        "anon_key": anon,
         "service_key": (os.getenv("SUPABASE_SERVICE_KEY") or "").strip(),
-        "bucket": (os.getenv("SUPABASE_BUCKET") or "attachments").strip(),
+        "bucket": (os.getenv("SUPABASE_BUCKET") or public_config.SUPABASE_BUCKET or "attachments").strip(),
         "retention_days": int(os.getenv("SUPABASE_RETENTION_DAYS") or 30),
+        "defaults": True,
     }
 
 

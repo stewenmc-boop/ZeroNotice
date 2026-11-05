@@ -165,8 +165,31 @@ def _save_chat(entries: List[Dict[str, Any]]) -> bool:
         return False
 
 
+def _ensure_llm() -> None:
+    """Late-bind the LLM config: env first, then per-user settings (local or Supabase)."""
+    if get_llm_status().get("configured"):
+        return
+    saved = _read_settings()
+    if not saved.get("api_key") and storage.enabled():
+        try:
+            saved = storage.load_settings() or saved
+        except Exception:
+            pass
+    if saved.get("api_key"):
+        try:
+            set_runtime_llm(
+                api_key=saved.get("api_key"),
+                model=saved.get("model"),
+                provider=saved.get("provider"),
+                base_url=saved.get("base_url"),
+            )
+        except Exception:
+            pass
+
+
 @app.post("/api/assistant/chat")
 def api_assistant_chat(req: ChatRequest) -> Dict[str, Any]:
+    _ensure_llm()
     # the UI is the source of truth for what the student sees right now
     profile = req.profile or _read_profile() or {}
     history = [{"role": m.role, "content": m.content} for m in req.messages][-12:]
@@ -694,7 +717,9 @@ def api_download_ics(notice_id: str, lang: str = Query("ko")) -> Response:
 
 
 @app.post("/api/agent/email")
-def api_generate_email(req: ActionRequest) -> Dict[str, Any]:
+def api_generate_email(
+    req: ActionRequest) -> Dict[str, Any]:
+    _ensure_llm()
     notices = load_notices()
     target = next((n for n in notices if n.get("id") == req.notice_id), None)
     if not target:
@@ -705,7 +730,9 @@ def api_generate_email(req: ActionRequest) -> Dict[str, Any]:
 
 
 @app.post("/api/agent/application")
-def api_generate_application(req: ActionRequest) -> Dict[str, Any]:
+def api_generate_application(
+    req: ActionRequest) -> Dict[str, Any]:
+    _ensure_llm()
     notices = load_notices()
     target = next((n for n in notices if n.get("id") == req.notice_id), None)
     if not target:
@@ -714,7 +741,9 @@ def api_generate_application(req: ActionRequest) -> Dict[str, Any]:
 
 
 @app.post("/api/parse-url")
-def api_parse_live_url(req: ParseUrlRequest) -> Dict[str, Any]:
+def api_parse_live_url(
+    req: ParseUrlRequest) -> Dict[str, Any]:
+    _ensure_llm()
     raw = req.url_or_text.strip()
     if not raw:
         raise HTTPException(status_code=400, detail="Empty input")
