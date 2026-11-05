@@ -1,4 +1,6 @@
+import json
 import os
+import re
 import time
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
@@ -585,12 +587,118 @@ def _identity(profile: Dict[str, Any], lang: str = "ko") -> Dict[str, Any]:
     }
 
 
+EXTRACT_KEYS = (
+    "application_url",
+    "application_method",
+    "application_method_ko",
+    "application_method_zh",
+    "application_method_en",
+    "contact_email",
+    "contact_phone",
+    "required_documents",
+    "eligibility",
+    "deadline",
+    "source_hint",
+    "confidence",
+)
+
+
+def _notice_source_text(notice: Dict[str, Any], limit: int = 6000) -> str:
+    body = (notice.get("body") or "").strip()
+    att = (notice.get("attachment_extracted_text") or "").strip()
+    att_names = ", ".join(a.get("name", "") for a in notice.get("attachments", []))
+    parts = [
+        f"제목: {notice.get('title_ko') or notice.get('title', '')}",
+        f"게시: {notice.get('posted_date', '')} / 작성: {notice.get('author', '')}",
+        f"첨부파일: {att_names}",
+        f"본문:\n{body}",
+    ]
+    if att:
+        parts.append(f"첨부 추출 원문:\n{att}")
+    return "\n\n".join(parts)[:limit]
+
+
+def _parse_json_block(text: str) -> Optional[Dict[str, Any]]:
+    if not text:
+        return None
+    cleaned = text.strip()
+    cleaned = re.sub(r"^```(?:json)?", "", cleaned).strip()
+    cleaned = re.sub(r"```$", "", cleaned).strip()
+    start = cleaned.find("{")
+    end = cleaned.rfind("}")
+    if start == -1 or end == -1 or end <= start:
+        return None
+    snippet = cleaned[start : end + 1]
+    try:
+        data = json.loads(snippet)
+        return data if isinstance(data, dict) else None
+    except Exception:
+        return None
+
+
+def extract_notice_fields(notice: Dict[str, Any]) -> Dict[str, Any]:
+    """Ask the LLM for structured application info. Never invents: nulls allowed."""
+    source = _notice_source_text(notice)
+    sys_prompt = (
+        "당신은 대학 공지사항에서 '신청/접수 정보'만 정확히 뽑아내는 정보 추출기입니다. "
+        "반드시 JSON 객체 하나만 출력하고, 설명 문장은 쓰지 마세요. "
+        "원문에 없는 값은 절대 추측하지 말고 null 로 두세요."
+    )
+    user_prompt = (
+        "다음 공고 원문을 읽고 아래 스키마로만 답하세요.\n"
+        "{\n"
+        '  "application_url": "신청/접수/등록 링크(원문에 있는 URL 그대로, 없으면 null)",\n'
+        '  "application_method_ko": "접수 방법 한 문장(한국어)",\n'
+        '  "application_method_zh": "报名方式一句话（中文）",\n'
+        '  "application_method_en": "how to apply in one sentence (English)",\n'
+        '  "contact_email": "문의/제출 이메일. 없으면 null",\n'
+        '  "contact_phone": "문의 전화번호. 없으면 null",\n'
+        '  "required_documents": ["제출 서류1", "제출 서류2"],\n'
+        '  "eligibility": "지원 자격 한 문장",\n'
+        '  "deadline": "마감 일시(원문 표기 그대로)",\n'
+        '  "source_hint": "이 정보가 본문/첨부파일 중 어디에서 나왔는지",\n'
+        '  "confidence": 0.0\n'
+        "}\n\n"
+        f"[공고 원문]\n{source}"
+    )
+
+    llm_res = call_llm(sys_prompt, user_prompt, temperature=0.1, max_tokens=900)
+    fields: Dict[str, Any] = {key: None for key in EXTRACT_KEYS}
+    fields["required_documents"] = []
+    fields["confidence"] = 0.0
+
+    parsed = _parse_json_block(llm_res.get("text", "")) if llm_res.get("ok") else None
+    if parsed:
+        for key in EXTRACT_KEYS:
+            if key in parsed:
+                fields[key] = parsed[key]
+        if not isinstance(fields.get("required_documents"), list):
+            fields["required_documents"] = []
+        try:
+            fields["confidence"] = float(fields.get("confidence") or 0.0)
+        except Exception:
+            fields["confidence"] = 0.0
+
+    # Deterministic fallback: scrape a URL out of the raw text ourselves.
+    if not fields.get("application_url"):
+        match = re.search(r"https?://[^\s<>\"')\]]+", source)
+        if match:
+            fields["application_url"] = match.group(0).rstrip(".,)")
+            fields["source_hint"] = fields.get("source_hint") or "본문/첨부 URL"
+
+    return {
+        "fields": fields,
+        "engine": llm_res.get("engine", "Built-in Template Engine"),
+        "updated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+    }
+
+
 def generate_polite_email_agent(
     notice: Dict[str, Any], profile: Dict[str, Any], custom_question: str = ""
 ) -> Dict[str, Any]:
     dept = notice.get("author", "담당 부서")
-    email = notice.get("email") or "knu@kangwon.ac.kr"
-    phone = notice.get("phone", "033-250-6114")
+    email = (notice.get("email") or "").strip()
+    phone = (notice.get("phone") or "").strip()
     title_ko = notice.get("title_ko") or notice.get("title", "")
     ident = _identity(profile)
     ph = PLACEHOLDER["ko"]
@@ -649,6 +757,7 @@ def generate_polite_email_agent(
         "subject": subject,
         "body": body,
         "engine": engine,
+        "has_email": bool(email),
         "missing_fields": ident["missing"],
         "identity_used": {
             "name": ident["name_raw"],
@@ -707,6 +816,7 @@ def generate_application_draft_agent(
         "draft": draft,
         "attachments": notice.get("attachments", []),
         "engine": engine,
+        "has_email": bool(email),
         "missing_fields": ident["missing"],
         "identity_used": {
             "name": ident["name_raw"],

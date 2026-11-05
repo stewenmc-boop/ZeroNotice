@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, X, Bookmark, FileText, Clock } from 'lucide-react';
+import { Search, X, Bookmark, FileText, Clock, Link2 } from 'lucide-react';
 
 const STATUS = {
   eligible: { dot: 'bg-emerald-500', text: 'text-emerald-700', key: 'badgeEligible' },
@@ -109,6 +109,15 @@ export default function NoticeListPane({
                     <span className={`font-medium ${status.text}`}>{t[status.key]}</span>
                     <span className="text-line">|</span>
                     <span className="truncate text-faint">{n.category}</span>
+                    {n.has_application_link && (
+                      <span
+                        title={t.hasLink}
+                        className="inline-flex shrink-0 items-center gap-0.5 rounded-[5px] bg-emerald-50 px-1 py-0.5 text-[10px] font-medium text-emerald-700 ring-1 ring-emerald-100"
+                      >
+                        <Link2 className="h-2.5 w-2.5" />
+                        {t.hasLink}
+                      </span>
+                    )}
                     {hasHwpText && (
                       <span
                         title={t.badgeHwp}

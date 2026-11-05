@@ -2,7 +2,7 @@ import json
 import os
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
@@ -12,6 +12,7 @@ from pydantic import BaseModel
 
 from agent import (
     call_llm,
+    extract_notice_fields,
     filter_and_evaluate_notices,
     generate_application_draft_agent,
     generate_ics_content,
@@ -30,6 +31,7 @@ BASE_DIR = Path(__file__).parent
 STATIC_DIR = BASE_DIR / "static"
 FRONTEND_DIST_DIR = BASE_DIR / "frontend" / "dist"
 PROFILE_PATH = BASE_DIR / "data" / "profile.json"
+FIELDS_PATH = BASE_DIR / "data" / "notice_fields.json"
 
 app = FastAPI(title="ZeroNotice (제로노티스) — 강원대학교 공지·HWP 판독 AI 비서")
 
@@ -69,6 +71,23 @@ class ParseUrlRequest(BaseModel):
     lang: str = "ko"
 
 
+def _load_fields() -> Dict[str, Any]:
+    if not FIELDS_PATH.exists():
+        return {}
+    try:
+        with open(FIELDS_PATH, "r", encoding="utf-8") as fh:
+            data = json.load(fh)
+        return data if isinstance(data, dict) else {}
+    except Exception:
+        return {}
+
+
+def _save_fields(data: Dict[str, Any]) -> None:
+    FIELDS_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with open(FIELDS_PATH, "w", encoding="utf-8") as fh:
+        json.dump(data, fh, ensure_ascii=False, indent=2)
+
+
 class ProfileStoreRequest(BaseModel):
     profile: Dict[str, Any]
 
@@ -83,6 +102,11 @@ def _read_profile() -> Dict[str, Any]:
         return data if isinstance(data, dict) else {}
     except Exception:
         return {}
+
+
+class ExtractRequest(BaseModel):
+    ids: List[str] = []
+    force: bool = False
 
 
 class LlmConfigRequest(BaseModel):
@@ -120,6 +144,40 @@ def api_set_groq(req: LlmConfigRequest) -> Dict[str, Any]:
     return api_set_llm(req)
 
 
+@app.get("/api/notices/{notice_id}/fields")
+def api_notice_fields(notice_id: str, force: bool = Query(False)) -> Dict[str, Any]:
+    cache = _load_fields()
+    if not force and notice_id in cache:
+        return {"id": notice_id, "cached": True, **cache[notice_id]}
+    notice = next((n for n in load_real_knu_notices() if n.get("id") == notice_id), None)
+    if not notice:
+        raise HTTPException(status_code=404, detail="Notice not found")
+    result = extract_notice_fields(notice)
+    cache[notice_id] = result
+    _save_fields(cache)
+    return {"id": notice_id, "cached": False, **result}
+
+
+@app.post("/api/notices/extract")
+def api_extract_notices(req: ExtractRequest) -> Dict[str, Any]:
+    notices = load_real_knu_notices()
+    cache = _load_fields()
+    targets = [n for n in notices if not req.ids or n.get("id") in req.ids]
+    done, skipped, failed = 0, 0, 0
+    for notice in targets:
+        nid = notice.get("id")
+        if not req.force and nid in cache:
+            skipped += 1
+            continue
+        try:
+            cache[nid] = extract_notice_fields(notice)
+            done += 1
+        except Exception:
+            failed += 1
+    _save_fields(cache)
+    return {"done": done, "skipped": skipped, "failed": failed, "total": len(cache)}
+
+
 @app.get("/api/profile")
 def api_get_profile() -> Dict[str, Any]:
     return {"profile": _read_profile()}
@@ -145,6 +203,18 @@ def api_get_notices(req: ProfileRequest) -> Dict[str, Any]:
     sync_res = sync_live_knu_notices(live_check=req.live_check)
     profile_dict = req.model_dump()
     evaluated = filter_and_evaluate_notices(sync_res["notices"], profile_dict)
+
+    cache = _load_fields()
+    for item in evaluated["notices"]:
+        item["has_email"] = bool((item.get("email") or "").strip())
+        cached = cache.get(item.get("id"))
+        if cached:
+            item["fields"] = cached.get("fields")
+            item["fields_engine"] = cached.get("engine")
+            item["has_application_link"] = bool((cached.get("fields") or {}).get("application_url"))
+        else:
+            item["has_application_link"] = False
+
     return {
         "synced_at": sync_res["synced_at"],
         "live_portal_connected": sync_res["live_portal_connected"],

@@ -18,6 +18,7 @@ import {
   Building2,
   Search,
   ArrowRight,
+  Link2,
 } from 'lucide-react';
 
 const VERDICT_STYLE = {
@@ -78,12 +79,15 @@ export default function NoticeDetailPane({
   const [appCopied, setAppCopied] = useState(false);
 
   const [hwpKeyword, setHwpKeyword] = useState('');
+  const [fields, setFields] = useState(null);
+  const [fieldsLoading, setFieldsLoading] = useState(false);
 
   useEffect(() => {
     setEmailResult(null);
     setAppResult(null);
     setEmailQuestion('');
     setHwpKeyword('');
+    setFields(notice?.fields || null);
     setActiveTab('summary');
   }, [notice?.id]);
 
@@ -144,8 +148,20 @@ export default function NoticeDetailPane({
     }
   };
 
-  const copyText = (text, setFlag) => {
-    navigator.clipboard.writeText(text || '');
+  const handleExtractFields = async () => {
+    setFieldsLoading(true);
+    try {
+      const res = await fetch(`/api/notices/${encodeURIComponent(notice.id)}/fields`);
+      const data = await res.json();
+      setFields(data.fields || null);
+    } catch (err) {
+      console.error('Failed to extract application fields:', err);
+    } finally {
+      setFieldsLoading(false);
+    }
+  };
+
+  const copyText = (text, setFlag) => {    navigator.clipboard.writeText(text || '');
     setFlag(true);
     setTimeout(() => setFlag(false), 1800);
   };
@@ -197,6 +213,15 @@ export default function NoticeDetailPane({
             <span className="text-faint">
               {t.postedOn} {notice.posted_date}
             </span>
+            {notice.verified_at && (
+              <>
+                <span className="text-line">/</span>
+                <span className="inline-flex items-center gap-1 text-emerald-700">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                  {t.verifiedAt} {String(notice.verified_at).slice(5, 16)}
+                </span>
+              </>
+            )}
           </div>
 
           <div className="ml-auto flex flex-wrap items-center justify-end gap-1.5">
@@ -308,11 +333,13 @@ export default function NoticeDetailPane({
                   <span className="truncate">{notice.author}</span>
                 </div>
                 <div className="mt-1 space-y-0.5 text-meta text-muted">
-                  <div className="flex items-center gap-1">
-                    <Phone className="h-3 w-3 shrink-0 text-faint" />
-                    <span className="whitespace-nowrap tabular-nums">{notice.phone}</span>
-                    <CopyButton value={notice.phone} label="copy" />
-                  </div>
+                  {notice.phone && (
+                    <div className="flex items-center gap-1">
+                      <Phone className="h-3 w-3 shrink-0 text-faint" />
+                      <span className="whitespace-nowrap tabular-nums">{notice.phone}</span>
+                      <CopyButton value={notice.phone} label="copy" />
+                    </div>
+                  )}
                   {notice.email && (
                     <div className="flex min-w-0 items-center gap-1">
                       <Mail className="h-3 w-3 shrink-0 text-faint" />
@@ -325,6 +352,106 @@ export default function NoticeDetailPane({
                 </div>
               </div>
             </div>
+
+            <section className="rounded-card p-5 ring-1 ring-line">
+              <div className="mb-3 flex items-center justify-between gap-3">
+                <div className="flex items-center gap-1.5 text-meta font-semibold uppercase tracking-[0.08em] text-muted">
+                  <Link2 className="h-3.5 w-3.5" />
+                  <span>{t.siTitle}</span>
+                </div>
+                <button
+                  onClick={handleExtractFields}
+                  disabled={fieldsLoading}
+                  className="inline-flex h-7 items-center gap-1 rounded-chip px-2 text-meta font-medium text-ink ring-1 ring-line transition hover:ring-ink/30 disabled:opacity-50"
+                >
+                  <Sparkles className="h-3 w-3" />
+                  <span>
+                    {fieldsLoading ? '...' : fields ? t.siRefresh : t.siExtractBtn}
+                  </span>
+                </button>
+              </div>
+
+              {!fields ? (
+                <p className="text-meta leading-5 text-muted">{t.siEmpty}</p>
+              ) : (
+                <div className="space-y-3">
+                  {fields.application_url && (
+                    <a
+                      href={fields.application_url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex h-9 w-full items-center justify-center gap-2 rounded-control bg-ink px-3 text-label font-medium text-white transition hover:bg-ink/90"
+                    >
+                      <Link2 className="h-3.5 w-3.5" />
+                      <span>{t.siLink}</span>
+                      <ExternalLink className="h-3 w-3 opacity-70" />
+                    </a>
+                  )}
+                  {fields.application_url && (
+                    <div className="truncate font-mono text-[10px] text-faint">
+                      {fields.application_url}
+                    </div>
+                  )}
+
+                  {(fields[`application_method_${lang}`] ||
+                    fields.application_method_ko ||
+                    fields.application_method) && (
+                    <div>
+                      <div className="mb-0.5 text-meta text-faint">{t.siMethod}</div>
+                      <div className="text-body leading-6 text-zinc-700">
+                        {fields[`application_method_${lang}`] ||
+                          fields.application_method_ko ||
+                          fields.application_method}
+                      </div>
+                    </div>
+                  )}
+
+                  {fields.required_documents?.length > 0 && (
+                    <div>
+                      <div className="mb-1 text-meta text-faint">{t.siDocs}</div>
+                      <div className="flex flex-wrap gap-1">
+                        {fields.required_documents.map((doc, idx) => (
+                          <span
+                            key={idx}
+                            className="rounded-chip bg-accent-soft px-1.5 py-0.5 text-meta text-muted"
+                          >
+                            {doc}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="flex flex-wrap items-center gap-2 text-meta text-muted">
+                    <span className="text-faint">{t.siContact}</span>
+                    {fields.contact_email ? (
+                      <a
+                        href={`mailto:${fields.contact_email}`}
+                        className="truncate text-ink hover:underline"
+                      >
+                        {fields.contact_email}
+                      </a>
+                    ) : null}
+                    {fields.contact_phone ? (
+                      <span className="tabular-nums text-ink">{fields.contact_phone}</span>
+                    ) : null}
+                    {!fields.contact_email && !fields.contact_phone && (
+                      <span className="text-faint">{t.siNoEmail}</span>
+                    )}
+                  </div>
+
+                  <div className="flex items-center gap-1.5 border-t border-line pt-2 text-[10px] text-faint">
+                    <span>
+                      {t.siSource}: {fields.source_hint || '-'}
+                    </span>
+                    <span>·</span>
+                    <span className="tabular-nums">
+                      {Math.round((Number(fields.confidence) || 0) * 100)}%
+                    </span>
+                  </div>
+                </div>
+              )}
+            </section>
 
             <section className="rounded-card p-5 ring-1 ring-line">
               <div className="mb-2 flex items-center gap-1.5 text-meta font-semibold uppercase tracking-[0.08em] text-muted">
@@ -508,15 +635,19 @@ export default function NoticeDetailPane({
                       )}
                       <span>{emailCopied ? t.btnCopied : t.btnCopy}</span>
                     </button>
-                    <a
-                      href={`mailto:${encodeURIComponent(emailResult.email || '')}?subject=${encodeURIComponent(emailResult.subject || '')}&body=${encodeURIComponent(emailResult.body || '')}`}
-                      className="inline-flex h-8 items-center gap-1.5 rounded-control bg-ink px-2.5 text-label font-medium text-white transition hover:bg-ink/90"
-                    >
-                      <Send className="h-3.5 w-3.5" />
-                      <span>
-                        {t.btnSendMailApp} ({emailResult.email})
-                      </span>
-                    </a>
+                    {emailResult.email ? (
+                      <a
+                        href={`mailto:${encodeURIComponent(emailResult.email)}?subject=${encodeURIComponent(emailResult.subject || '')}&body=${encodeURIComponent(emailResult.body || '')}`}
+                        className="inline-flex h-8 items-center gap-1.5 rounded-control bg-ink px-2.5 text-label font-medium text-white transition hover:bg-ink/90"
+                      >
+                        <Send className="h-3.5 w-3.5" />
+                        <span>
+                          {t.btnSendMailApp} ({emailResult.email})
+                        </span>
+                      </a>
+                    ) : (
+                      <span className="text-meta leading-5 text-amber-700">{t.siNoEmail}</span>
+                    )}
                   </div>
                 </div>
               )}

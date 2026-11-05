@@ -64,7 +64,9 @@ export default function App() {
     label: 'OpenRouter',
     model: '',
   });
-  const [selectedId, setSelectedId] = useState('knu-real-02');
+  const [selectedId, setSelectedId] = useState(
+    () => new URLSearchParams(window.location.search).get('notice') || 'knu-real-02'
+  );
   const [loading, setLoading] = useState(false);
 
   const [urlModalOpen, setUrlModalOpen] = useState(false);

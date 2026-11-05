@@ -47,12 +47,14 @@ python app.py                                # / 가 dist/index.html 로 서빙�
 ## 3. 구조
 
 ```
-app.py                  FastAPI 라우팅(7 endpoint) + 정적 서빙
+app.py                  FastAPI 라우팅(13 endpoint) + 정적 서빙
 agent.py                LLM 호출(OpenRouter/OpenAI/Groq/Custom), 자격 판정 규칙, .ics/메일/지원서 생성, 비용 추정
-scraper.py              게시판 상세 파싱, .hwp/.hwpx 텍스트 추출, 데이터 로드
+scraper.py              게시판 상세 파싱, .hwp/.hwpx/.pdf/.xlsx/.docx 텍스트 추출, 데이터 로드
+scripts/refresh_notices.py  원문 재수집(본문·첨부·연락처) — source_title/verified_at 기록
 data/real_knu_notices.json    실제 공지 22건 (수동/스크립트 수집 스냅샷)
 data/fallback_notices.json   오프라인 데모용 대체 데이터
 data/profile.json           사용자 학적 정보 로컬 저장소(gitignore, /api/profile 로 읽고 씀)
+data/notice_fields.json      공지별 AI 추출 결과(신청 링크·접수 방법·문의처) 캐시
 data/user_logs.json          실측 템플릿(빈 슬롯) — 코드 미참조, docs/measurement-protocol.md 참고
 frontend/src/           React 18 + Vite 5 + Tailwind + lucide-react
   App.jsx               3-pane 워크스페이스, /api/notices 호출, localStorage 상태
@@ -80,7 +82,9 @@ static/index.html       구 버전 단일 파일 UI (dist 없을 때 폴백)
 | GET | `/api/llm/models?provider=&free_only=` | – | 제공자 모델 목록(10분 캐시, OpenRouter는 `:free`만) |
 | GET | `/api/profile` | – | `{profile}` — `data/profile.json` 로컬 저장소(개인정보, gitignore) |
 | POST | `/api/profile` | `{profile}` | 병합 저장 후 `{profile, saved}` |
-| POST | `/api/notices` | 프로필 | `{synced_at, live_portal_connected, notices[], stats}` |
+| POST | `/api/notices` | 프로필 | `{synced_at, live_portal_connected, notices[], stats}` — 각 공지에 `has_email`·`has_application_link`·`fields`(캐시) 병합 |
+| GET | `/api/notices/{id}/fields?force=` | – | AI가 뽑은 신청 정보(링크·접수방법·서류·문의처·confidence) |
+| POST | `/api/notices/extract` | `{ids, force}` | 전체/선택 공지 일괄 추출 후 `data/notice_fields.json` 저장 |
 | GET | `/api/agent/ics/{notice_id}?lang=` | – | `text/calendar` 파일 |
 | POST | `/api/agent/email` | `{notice_id, profile, custom_question, lang}` | `{department,email,phone,subject,body,engine}` |
 | POST | `/api/agent/application` | `{notice_id, profile, lang}` | `{notice_title, draft, attachments, engine}` |
@@ -163,3 +167,13 @@ benefit_krw, title_{ko,zh,en}, summary_{ko,zh,en}, rules, has_hwp_extracted`
 2. 一个页面只有一个强调色（`ink`）。状态色只出现在 11px 的圆点/文字上，不做大面积填充。
 3. 数字一律 `tabular-nums`；D-day 只出现一次（详情页判定卡右上角）。
 
+
+---
+
+## 10. 신청 정보 추출 규칙 (2026-11-05 추가)
+
+1. **링크·메일·전화는 원문에서만.** `extract_notice_fields()` 는 `application_url`/`contact_email`/`contact_phone` 이 원문에 없으면 `null` 로 둔다. 스크래퍼도 더 이상 `033-250-6114` 같은 대체 전화번호를 넣지 않는다.
+2. **없으면 UI에서 숨긴다.** 공고에 이메일이 없으면 메일 발송 버튼을 렌더링하지 않고 "이메일 없음 → 전화 문의" 안내로 대체한다.
+3. **출처와 신뢰도를 함께 보여준다.** 카드 하단에 `source_hint` + `confidence` 를 표시한다.
+4. **접수 방법은 3개 언어**로 저장한다(`application_method_ko/zh/en`). 공지 원문은 한국어이므로 번역은 모델이 담당한다.
+5. **원문 대조 기록**: `refresh_notices.py` 가 `source_title`/`verified_at`/`source_status` 를 남기고, UI 헤더에 "원문 확인" 배지로 노출한다.

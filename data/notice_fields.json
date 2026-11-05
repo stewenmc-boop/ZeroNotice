@@ -1,0 +1,433 @@
+{
+  "knu-real-09": {
+    "fields": {
+      "application_url": "http://sugang.kangwon.ac.kr",
+      "application_method": null,
+      "application_method_ko": "PC 또는 스마트폰으로 http://sugang.kangwon.ac.kr에 접속하여 온라인 수강신청을 한다.",
+      "application_method_zh": "通过电脑或智能手机访问 http://sugang.kangwon.ac.kr 进行在线选课申请。",
+      "application_method_en": "Apply online by accessing http://sugang.kangwon.ac.kr via PC or smartphone.",
+      "contact_email": null,
+      "contact_phone": null,
+      "required_documents": [],
+      "eligibility": "당해 학기 재학 중인 자, 휴학생, 타대학 학점교류 허가생이 신청할 수 있다.",
+      "deadline": "2026. 11. 3.(화) 10:00 ~ 11. 5.(목) 18:00",
+      "source_hint": "본문",
+      "confidence": 0.95
+    },
+    "engine": "DeepSeek · deepseek-flash · 4018ms",
+    "updated_at": "2026-11-05 22:39:31"
+  },
+  "knu-real-01": {
+    "fields": {
+      "application_url": null,
+      "application_method": null,
+      "application_method_ko": "첨부파일 매뉴얼을 참고하여 신청하며, 최소 3개 이상 근로지를 선택해야 합니다.",
+      "application_method_zh": "参考附件手册进行申请，必须选择至少3个以上工作地点。",
+      "application_method_en": "Apply by referring to the attached manual, and you must select at least 3 work sites.",
+      "contact_email": null,
+      "contact_phone": "1599-2290",
+      "required_documents": [],
+      "eligibility": null,
+      "deadline": "2026. 10. 30.(금) 9시 ~ 11. 12.(목) 18시",
+      "source_hint": "본문",
+      "confidence": 0.9
+    },
+    "engine": "DeepSeek · deepseek-flash · 4247ms",
+    "updated_at": "2026-11-05 22:39:06"
+  },
+  "knu-real-02": {
+    "fields": {
+      "application_url": null,
+      "application_method": null,
+      "application_method_ko": "이메일(khh8997@kangwon.ac.kr)로 제출",
+      "application_method_zh": "通过电子邮件(khh8997@kangwon.ac.kr)提交",
+      "application_method_en": "Submit via email to khh8997@kangwon.ac.kr",
+      "contact_email": "khh8997@kangwon.ac.kr",
+      "contact_phone": "033-250-8967",
+      "required_documents": [
+        "장학생 신청서",
+        "창업아이디어 및 창업활동내역서"
+      ],
+      "eligibility": "강원대학교 재학생(학부, 대학원생)으로 전체 학기 성적 평점 평균 3.5점(4.5만점 기준) 이상이고 소득분위 0구간~4구간에 해당하는 자",
+      "deadline": "2026.11.13.(금) 23:59 까지",
+      "source_hint": "본문 및 첨부파일",
+      "confidence": 0.9
+    },
+    "engine": "DeepSeek · deepseek-flash · 4966ms",
+    "updated_at": "2026-11-05 22:39:11"
+  },
+  "knu-real-03": {
+    "fields": {
+      "application_url": null,
+      "application_method": null,
+      "application_method_ko": null,
+      "application_method_zh": null,
+      "application_method_en": null,
+      "contact_email": null,
+      "contact_phone": null,
+      "required_documents": [],
+      "eligibility": "국가장학금 2차 신청(8.12.~9.9.)을 한 학생",
+      "deadline": "9.9.",
+      "source_hint": "본문",
+      "confidence": 0.9
+    },
+    "engine": "DeepSeek · deepseek-flash · 3797ms",
+    "updated_at": "2026-11-05 22:39:15"
+  },
+  "knu-real-05": {
+    "fields": {
+      "application_url": null,
+      "application_method": null,
+      "application_method_ko": "장학사정관 면담 후 추천서를 받아 K-Cloud 장학신청 및 서류를 온라인 제출(파일업로드)합니다.",
+      "application_method_zh": "与奖学审查官面谈后取得推荐书，然后在K-Cloud提交奖学金申请并在线提交材料（文件上传）。",
+      "application_method_en": "After an interview with the scholarship officer and receiving a recommendation letter, apply for the scholarship on K-Cloud and submit documents online (file upload).",
+      "contact_email": null,
+      "contact_phone": null,
+      "required_documents": [
+        "장학사정관 추천서",
+        "가족관계증명서",
+        "소득증빙자료",
+        "세목별 과세증명서",
+        "유형별 증빙서류"
+      ],
+      "eligibility": "장학생 선발 공고일 기준 재학 중인 학부생으로 직전학기 6학점 이상 이수자 중 직전학기 평점평균 1.5(70점) 이상인 자",
+      "deadline": "2026. 9. 1.(화) ~ 12. 18.(금)까지(상시접수)",
+      "source_hint": "본문",
+      "confidence": 0.9
+    },
+    "engine": "DeepSeek · deepseek-flash · 4189ms",
+    "updated_at": "2026-11-05 22:39:19"
+  },
+  "knu-real-07": {
+    "fields": {
+      "application_url": "https://sugang.inha.ac.kr",
+      "application_method": null,
+      "application_method_ko": "학생이 소속 학과에 제출하고, 학과에서 춘천교육지원과 또는 삼척교육지원과로 제출합니다.",
+      "application_method_zh": "学生向所属学科提交，学科再提交至春川教育支援科或三陟教育支援科。",
+      "application_method_en": "Students submit to their department, which then submits to the Chuncheon or Samcheok Education Support Office.",
+      "contact_email": null,
+      "contact_phone": null,
+      "required_documents": [
+        "수학신청자 명단",
+        "다른 대학 수학 지원서"
+      ],
+      "eligibility": "징계받은 사실이 없는 재학생이어야 하며, 학사학위취득유예자, 휴학생, 2027년 2월 졸업예정자는 신청할 수 없습니다.",
+      "deadline": "춘천캠퍼스: 2026. 11. 17.(화) 18:00까지(학생은 2026. 11. 16.(월) 18:00까지 소속학과 제출), 삼척캠퍼스: 2026. 11. 17.(화) 18:00까지(학생은 2026. 11. 16.(월) 18:00까지 소속학과 제출)",
+      "source_hint": "본문",
+      "confidence": 0.9
+    },
+    "engine": "DeepSeek · deepseek-flash · 4107ms",
+    "updated_at": "2026-11-05 22:39:23"
+  },
+  "knu-real-08": {
+    "fields": {
+      "application_url": null,
+      "application_method": null,
+      "application_method_ko": "K-Cloud > 학부생서비스 > 교과 > 학적 > 부·복수전공 신청 및 확인 메뉴에서 신청합니다.",
+      "application_method_zh": "在K-Cloud > 本科生服务 > 课程 > 学籍 > 副·双专业申请及确认菜单中申请。",
+      "application_method_en": "Apply via K-Cloud > Undergraduate Services > Courses > Academic Affairs > Application and Confirmation for Minor/Double Major.",
+      "contact_email": null,
+      "contact_phone": null,
+      "required_documents": [],
+      "eligibility": "신청 마감일 현재 2개(편입생은 1개) 이상의 정규학기를 이수하였거나 이수 예정인 재학생 및 휴학생(단, 신청 마감일이 속한 학기에 수료 또는 졸업 예정인 학생과 학사학위취득유예 학생은 제외)",
+      "deadline": "2026. 11. 9.(월) 10:00 ~ 11. 19.(목) 18:00",
+      "source_hint": "본문",
+      "confidence": 0.95
+    },
+    "engine": "DeepSeek · deepseek-flash · 4529ms",
+    "updated_at": "2026-11-05 22:39:27"
+  },
+  "knu-real-10": {
+    "fields": {
+      "application_url": null,
+      "application_method": null,
+      "application_method_ko": "학생이 소속 학과에 제출하고, 학과에서 춘천교육지원과 또는 삼척교육지원과로 제출합니다.",
+      "application_method_zh": "学生向所属学科提交，学科再提交至春川教育支援科或三陟教育支援科。",
+      "application_method_en": "Students submit to their department, which then submits to the Chuncheon or Samcheok Education Support Office.",
+      "contact_email": null,
+      "contact_phone": null,
+      "required_documents": [
+        "수학신청자 명단 1부",
+        "다른 대학 수학 지원서 1부"
+      ],
+      "eligibility": "징계받은 사실이 없는 재학생이어야 하며, 학사학위취득유예자, 휴학생, 2027년 2월 졸업예정자(서울시립대학교)는 신청할 수 없습니다.",
+      "deadline": "춘천캠퍼스: 2026. 11. 10.(화) 18:00까지(학생은 2026. 11. 9.(월) 18:00까지 소속학과 제출), 삼척캠퍼스: 2026. 11. 10.(화) 18:00까지(학생은 2026. 11. 9.(월) 18:00까지 소속학과 제출)",
+      "source_hint": "본문",
+      "confidence": 0.95
+    },
+    "engine": "DeepSeek · deepseek-flash · 4504ms",
+    "updated_at": "2026-11-05 22:39:36"
+  },
+  "knu-real-11": {
+    "fields": {
+      "application_url": null,
+      "application_method": null,
+      "application_method_ko": "신청기간 내에 캠퍼스간 전과 신청서(붙임3 서식)를 작성하여 제출",
+      "application_method_zh": "在申请期间内填写并提交校区间转专业申请书（附件3表格）",
+      "application_method_en": "Submit the completed inter-campus transfer application form (Attachment 3) within the application period.",
+      "contact_email": null,
+      "contact_phone": null,
+      "required_documents": [
+        "캠퍼스간 전과 신청서(서식)"
+      ],
+      "eligibility": "캠퍼스 간 전과는 원 소속 학과(전공)의 전출 허가를 받아야 함",
+      "deadline": "2026. 11. 23.(월) 09:00 ~ 11. 30.(월) 18:00 (기간연장없음)",
+      "source_hint": "본문 및 첨부파일(붙임1, 붙임3)",
+      "confidence": 0.8
+    },
+    "engine": "DeepSeek · deepseek-flash · 5271ms",
+    "updated_at": "2026-11-05 22:39:41"
+  },
+  "knu-real-13": {
+    "fields": {
+      "application_url": "https://unicef.thechildrenfesta.com/",
+      "application_method": null,
+      "application_method_ko": "참가 신청 링크에서 사전등록하면 되며, 신청 상황에 따라 조기 마감될 수 있고 참석 확인은 별도 문자로 안내됩니다.",
+      "application_method_zh": "通过参会申请链接进行预先登记，根据申请情况可能提前截止，参会确认将通过单独短信通知。",
+      "application_method_en": "Pre-register via the participation application link; early closure may occur depending on registration status, and attendance confirmation will be sent via separate text message.",
+      "contact_email": null,
+      "contact_phone": null,
+      "required_documents": [],
+      "eligibility": "디지털 환경과 아동·청소년의 마음건강에 관심 있는 누구나",
+      "deadline": "~11/19",
+      "source_hint": "본문",
+      "confidence": 0.95
+    },
+    "engine": "DeepSeek · deepseek-flash · 3632ms",
+    "updated_at": "2026-11-05 22:39:45"
+  },
+  "knu-real-14": {
+    "fields": {
+      "application_url": "https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancInfo.do?panId=2015122300020986&ccrCnntSysDsCd=03&uppAisTpCd=22&aisTpCd=38&mi=1069",
+      "application_method": null,
+      "application_method_ko": "방문 또는 등기우편으로 제출",
+      "application_method_zh": "亲自访问或通过挂号信提交",
+      "application_method_en": "Submit in person or by registered mail",
+      "contact_email": null,
+      "contact_phone": "033-258-4137, 4158",
+      "required_documents": [
+        "임대신청서",
+        "사업계획서",
+        "표준재무제표증명원",
+        "지식재산권 증빙서류",
+        "기업인증사항 증빙서류"
+      ],
+      "eligibility": "창업(BI)기업 또는 성장(POST BI)기업",
+      "deadline": "2026.11.23.(월) ~ 11.27.(금) 영업일 10:00~12:00, 13:00~16:00",
+      "source_hint": "본문 및 첨부파일(2. 임대신청서 및 사업계획서 서식 등.hwpx)",
+      "confidence": 0.9
+    },
+    "engine": "DeepSeek · deepseek-flash · 5192ms",
+    "updated_at": "2026-11-05 22:39:50"
+  },
+  "knu-real-15": {
+    "fields": {
+      "application_url": "https://forms.cloud.microsoft/pages/responsepage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAMAAGo8UftUNTFFS1I0UjRBV043REpOWjRNMlVPVDdVSS4u&route=shorturl",
+      "application_method": null,
+      "application_method_ko": "신청링크를 통해 참가 신청",
+      "application_method_zh": "通过报名链接申请参加",
+      "application_method_en": "Apply via the application link",
+      "contact_email": null,
+      "contact_phone": null,
+      "required_documents": [],
+      "eligibility": "삼척캠퍼스 재학생으로 영어 수준과 상관없이 누구나 참여 가능",
+      "deadline": null,
+      "source_hint": "본문",
+      "confidence": 0.9
+    },
+    "engine": "DeepSeek · deepseek-flash · 3574ms",
+    "updated_at": "2026-11-05 22:39:54"
+  },
+  "knu-real-16": {
+    "fields": {
+      "application_url": "https://bit.ly/4BlqUbr",
+      "application_method": null,
+      "application_method_ko": "첨부 포스터의 QR코드 또는 링크(https://bit.ly/4BlqUbr)를 통해 신청합니다.",
+      "application_method_zh": "通过附件海报中的二维码或链接（https://bit.ly/4BlqUbr）进行报名。",
+      "application_method_en": "Apply via the QR code on the attached poster or the link (https://bit.ly/4BlqUbr).",
+      "contact_email": "bootplus@kangwon.ac.kr",
+      "contact_phone": "033-250-8776",
+      "required_documents": [],
+      "eligibility": "인공지능 관련 학과 전공자 중 만 19~34세 미취업 청년(졸업생·구직자 및 1년 이상 장기 휴학생 참여 가능)이며, 재학생 및 주 30시간 이상 근로자는 지원 불가합니다.",
+      "deadline": "2026. 11. 30.(월)",
+      "source_hint": "본문",
+      "confidence": 0.95
+    },
+    "engine": "DeepSeek · deepseek-flash · 3873ms",
+    "updated_at": "2026-11-05 22:39:58"
+  },
+  "knu-real-17": {
+    "fields": {
+      "application_url": null,
+      "application_method": null,
+      "application_method_ko": "개인별 네이버폼 제출(포스터 QR코드)",
+      "application_method_zh": "个人通过Naver表单提交（海报二维码）",
+      "application_method_en": "Submit an individual Naver Form (poster QR code).",
+      "contact_email": null,
+      "contact_phone": null,
+      "required_documents": [],
+      "eligibility": "강원대학교 춘천캠퍼스 교직원 및 재학생 100명 내외",
+      "deadline": "2026. 11. 9.(월) 10:00 ~ 11. 11.(수) 13:00 까지",
+      "source_hint": "본문",
+      "confidence": 0.95
+    },
+    "engine": "DeepSeek · deepseek-flash · 3653ms",
+    "updated_at": "2026-11-05 22:40:01"
+  },
+  "knu-real-18": {
+    "fields": {
+      "application_url": "https://forms.gle/RHPPLNT1u4Daujd27",
+      "application_method": null,
+      "application_method_ko": "구글 폼 링크(https://forms.gle/RHPPLNT1u4Daujd27)를 통해 신청합니다.",
+      "application_method_zh": "通过谷歌表单链接（https://forms.gle/RHPPLNT1u4Daujd27）进行报名。",
+      "application_method_en": "Apply via the Google Form link (https://forms.gle/RHPPLNT1u4Daujd27).",
+      "contact_email": "bootplus@kangwon.ac.kr",
+      "contact_phone": "033-250-8772",
+      "required_documents": [],
+      "eligibility": "만 19~34세 미취업 청년(졸업생 및 1년 이상 장기 휴학생 참여 가능, 사업자등록증 보유 시 휴업·사업 미영위·사업소득 월 250만원 미만인 사업자 신청 가능)",
+      "deadline": "2026. 12. 6.(일)",
+      "source_hint": "본문",
+      "confidence": 0.95
+    },
+    "engine": "DeepSeek · deepseek-flash · 3749ms",
+    "updated_at": "2026-11-05 22:40:05"
+  },
+  "knu-real-20": {
+    "fields": {
+      "application_url": null,
+      "application_method": null,
+      "application_method_ko": null,
+      "application_method_zh": null,
+      "application_method_en": null,
+      "contact_email": null,
+      "contact_phone": "033-250-6202",
+      "required_documents": [],
+      "eligibility": "춘천시내 고등학생",
+      "deadline": null,
+      "source_hint": "본문",
+      "confidence": 0.9
+    },
+    "engine": "DeepSeek · deepseek-flash · 3605ms",
+    "updated_at": "2026-11-05 22:40:09"
+  },
+  "knu-real-21": {
+    "fields": {
+      "application_url": null,
+      "application_method": null,
+      "application_method_ko": null,
+      "application_method_zh": null,
+      "application_method_en": null,
+      "contact_email": null,
+      "contact_phone": null,
+      "required_documents": [],
+      "eligibility": null,
+      "deadline": null,
+      "source_hint": "본문",
+      "confidence": 0.0
+    },
+    "engine": "DeepSeek · deepseek-flash · 3450ms",
+    "updated_at": "2026-11-05 22:40:12"
+  },
+  "knu-real-23": {
+    "fields": {
+      "application_url": null,
+      "application_method": null,
+      "application_method_ko": "QR 코드로 참여 신청합니다.",
+      "application_method_zh": "通过二维码报名参加。",
+      "application_method_en": "Apply to participate via QR code.",
+      "contact_email": null,
+      "contact_phone": "640-2551",
+      "required_documents": [],
+      "eligibility": "강릉캠퍼스 학생들 모두 참여 가능합니다.",
+      "deadline": null,
+      "source_hint": "본문",
+      "confidence": 0.9
+    },
+    "engine": "DeepSeek · deepseek-flash · 3550ms",
+    "updated_at": "2026-11-05 22:40:16"
+  },
+  "knu-real-26": {
+    "fields": {
+      "application_url": null,
+      "application_method": null,
+      "application_method_ko": null,
+      "application_method_zh": null,
+      "application_method_en": null,
+      "contact_email": null,
+      "contact_phone": null,
+      "required_documents": [],
+      "eligibility": null,
+      "deadline": null,
+      "source_hint": "본문",
+      "confidence": 0.0
+    },
+    "engine": "DeepSeek · deepseek-flash · 3380ms",
+    "updated_at": "2026-11-05 22:40:19"
+  },
+  "knu-real-27": {
+    "fields": {
+      "application_url": null,
+      "application_method": null,
+      "application_method_ko": "교수학습개발원 홈페이지를 통한 온라인 접수(홈페이지 접속이 안될 경우 jyh0908@kangwon.ac.kr 메일로 제출)",
+      "application_method_zh": "通过教学学习开发院网站进行在线申请（若网站无法访问，请通过电子邮件jyh0908@kangwon.ac.kr提交）",
+      "application_method_en": "Apply online through the Teaching and Learning Development Center website (if the website is inaccessible, submit via email to jyh0908@kangwon.ac.kr).",
+      "contact_email": "jyh0908@kangwon.ac.kr",
+      "contact_phone": "033-250-7163, 7389",
+      "required_documents": [
+        "참가 신청서",
+        "저작물 활용 동의서",
+        "프로젝트 제안·결과서"
+      ],
+      "eligibility": "춘천·삼척·도계 캠퍼스 소속 강원대학교 재학생(개인 또는 팀 단위 참여)",
+      "deadline": "2026. 11. 23.(월) 23:59까지",
+      "source_hint": "본문",
+      "confidence": 0.95
+    },
+    "engine": "DeepSeek · deepseek-flash · 4232ms",
+    "updated_at": "2026-11-05 22:40:23"
+  },
+  "knu-real-29": {
+    "fields": {
+      "application_url": null,
+      "application_method": null,
+      "application_method_ko": "전자우편(data@ksponco.or.kr)을 통한 접수",
+      "application_method_zh": "通过电子邮件(data@ksponco.or.kr)提交报名",
+      "application_method_en": "Submit applications via email to data@ksponco.or.kr.",
+      "contact_email": "data@ksponco.or.kr",
+      "contact_phone": null,
+      "required_documents": [
+        "참가신청서",
+        "기획서",
+        "개인정보 수집"
+      ],
+      "eligibility": "공공데이터에 관심 있는 국민 누구나, 개인, 기업 또는 팀(팀장 포함 5인 이내) 공모 가능",
+      "deadline": "26년 12월 1일(화) 18:00까지",
+      "source_hint": "첨부파일",
+      "confidence": 0.9
+    },
+    "engine": "DeepSeek · deepseek-flash · 4555ms",
+    "updated_at": "2026-11-05 22:40:28"
+  },
+  "knu-real-30": {
+    "fields": {
+      "application_url": null,
+      "application_method": null,
+      "application_method_ko": "참가신청서 등 붙임서류를 작성하여 이메일(heosj@nia.or.kr)로 접수",
+      "application_method_zh": "填写参赛申请表等附件材料后通过电子邮件(heosj@nia.or.kr)提交。",
+      "application_method_en": "Submit the application form and other attached documents by email to heosj@nia.or.kr.",
+      "contact_email": "heosj@nia.or.kr",
+      "contact_phone": "044-205-4469",
+      "required_documents": [
+        "참가신청서",
+        "아이디어 제안서",
+        "참여 확약서"
+      ],
+      "eligibility": "재난안전 AI 서비스 개발에 관심 있는 전 국민 누구나(개인 또는 2~3인 팀) 참가 가능",
+      "deadline": "‘26. 11. 9.(월) 23시 59분",
+      "source_hint": "첨부파일(공고문.hwpx, 제출서류.hwpx)",
+      "confidence": 0.95
+    },
+    "engine": "DeepSeek · deepseek-flash · 4152ms",
+    "updated_at": "2026-11-05 22:40:32"
+  }
+}
