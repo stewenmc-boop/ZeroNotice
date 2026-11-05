@@ -42,6 +42,17 @@ IMAGES_PATH = BASE_DIR / "data" / "notice_images.json"
 
 app = FastAPI(title="ZeroNotice (제로노티스) — 강원대학교 공지·HWP 판독 AI 비서")
 
+
+@app.exception_handler(Exception)
+def api_exception_handler(request, exc):  # noqa: ANN001
+    """Never return an HTML error page: the UI expects JSON."""
+    from fastapi.responses import JSONResponse
+
+    return JSONResponse(
+        status_code=500,
+        content={"error": f"{type(exc).__name__}: {str(exc)[:200]}", "path": str(request.url.path)},
+    )
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
