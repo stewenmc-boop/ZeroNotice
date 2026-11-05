@@ -222,6 +222,26 @@ CRON_SECRET=<임의 문자열>       # /api/cron/reminders 보호용
 
 > 주의: `/tmp` 는 인스턴스가 바뀌면 사라집니다. 영속 데이터는 Supabase(공지)와 사용자 브라우저(localStorage)가 기준입니다.
 
+## 6.8 공지 데이터 소스와 로그인
+
+**공지는 Supabase가 1순위**입니다. `scraper.load_notices()` 가 Supabase `notices` 테이블을 읽고(60초 캐시), 실패하면 번들 `data/real_knu_notices.json` 으로 폴백합니다. `/api/status` 의 `notices_source` 로 현재 소스를 확인할 수 있습니다(`supabase` / `local`).
+
+**사용자별 데이터**(프로필·구독·AI 키·대화)는 Supabase `profiles` / `subscriptions` / `user_settings` / `assistant_messages` 에 저장되며, RLS 로 본인 행만 보입니다. 신원 확인 방식은 세 가지:
+
+| 방식 | 조건 | 상태 |
+|---|---|---|
+| 카카오 로그인 | Supabase → Authentication → Providers → Kakao (REST API 키) | `GET /api/auth/kakao/start` → 콜백 → 세션 저장 |
+| 익명 로그인 | Supabase → Sign In/Providers → Anonymous sign-ins | 자동 |
+| 디바이스 키 | `supabase/device_mode_fallback.sql` 실행 | 자동 폴백 |
+
+로그인 전에는 `data/settings.json`(로컬)에만 저장되고, 로그인 후에는 `user_settings` 로 미러링됩니다. AI 키 우선순위는 **배포 환경변수 → 사용자 설정** 입니다(Vercel env 가 있으면 그게 우선).
+
+카카오 설정 순서:
+1. Kakao Developers → 내 애플리케이션 → REST API 키 발급
+2. 카카오 로그인 활성화, Redirect URI 에 `https://<project>.supabase.co/auth/v1/callback` 등록
+3. Supabase → Authentication → Providers → Kakao 에 REST API 키/시크릿 입력
+4. 끝 — 앱 우측 상단 `카카오 로그인` 버튼이 동작합니다.
+
 ## 7. 프로젝트 구조
 
 ```

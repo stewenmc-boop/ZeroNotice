@@ -170,6 +170,36 @@ def extract_hwp_bytes(raw_bytes: bytes) -> str:
         return ""
 
 
+_NOTICE_CACHE: Dict[str, Any] = {"ts": 0.0, "rows": [], "source": "local"}
+
+
+def load_notices(force: bool = False) -> List[Dict[str, Any]]:
+    """Shared notices: Supabase first (single source for every install), local JSON as fallback."""
+    import time
+
+    try:
+        import storage
+
+        if storage.enabled():
+            if not force and _NOTICE_CACHE["rows"] and time.time() - _NOTICE_CACHE["ts"] < 60:
+                return _NOTICE_CACHE["rows"]
+            result = storage.fetch_notices(200)
+            rows = result.get("data") or []
+            payloads = [row.get("payload") for row in rows if isinstance(row, dict) and row.get("payload")]
+            if result.get("ok") and payloads:
+                _NOTICE_CACHE.update({"ts": time.time(), "rows": payloads, "source": "supabase"})
+                return payloads
+    except Exception:
+        pass
+    rows = load_real_knu_notices()
+    _NOTICE_CACHE.update({"ts": time.time(), "rows": rows, "source": "local"})
+    return rows
+
+
+def notices_source() -> str:
+    return _NOTICE_CACHE.get("source", "local")
+
+
 def load_real_knu_notices() -> List[Dict[str, Any]]:
     if REAL_NOTICES_PATH.exists():
         with open(REAL_NOTICES_PATH, "r", encoding="utf-8") as f:

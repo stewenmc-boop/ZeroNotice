@@ -141,6 +141,57 @@ def sign_in_anonymous() -> Dict[str, Any]:
         return {"ok": False, "error": f"{type(exc).__name__}: {str(exc)[:200]}"}
 
 
+def set_session(payload: Dict[str, Any]) -> Dict[str, Any]:
+    """Persist a session returned by Supabase auth (password, OAuth, anonymous)."""
+    user = payload.get("user") or {}
+    identity = {
+        "user_id": user.get("id"),
+        "email": user.get("email"),
+        "provider": (user.get("app_metadata") or {}).get("provider"),
+        "access_token": payload.get("access_token"),
+        "refresh_token": payload.get("refresh_token"),
+        "expires_at": payload.get("expires_at") or (int(time.time()) + int(payload.get("expires_in") or 3600)),
+        "created_at": datetime.now(timezone.utc).isoformat(),
+    }
+    current = _load_identity()
+    if current.get("device_key"):
+        identity["device_key"] = current["device_key"]
+    _save_identity(identity)
+    _LAST_AUTH_ERROR = ""
+    return identity
+
+
+def current_user() -> Dict[str, Any]:
+    identity = _load_identity()
+    return {
+        "user_id": identity.get("user_id"),
+        "email": identity.get("email"),
+        "provider": identity.get("provider") or ("anonymous" if identity.get("user_id") else None),
+        "mode": mode(),
+    }
+
+
+def clear_session() -> None:
+    identity = _load_identity()
+    _save_identity({"device_key": identity.get("device_key", "")} if identity.get("device_key") else {})
+
+
+def exchange_pkce(auth_code: str, code_verifier: str) -> Dict[str, Any]:
+    c = cfg()
+    try:
+        resp = requests.post(
+            f"{c['url']}/auth/v1/token?grant_type=pkce",
+            headers=_anon_headers(),
+            json={"auth_code": auth_code, "code_verifier": code_verifier},
+            timeout=TIMEOUT,
+        )
+        if resp.status_code != 200:
+            return {"ok": False, "status": resp.status_code, "error": resp.text[:250]}
+        return {"ok": True, **set_session(resp.json())}
+    except Exception as exc:  # noqa: BLE001
+        return {"ok": False, "error": f"{type(exc).__name__}: {str(exc)[:200]}"}
+
+
 def _refresh(identity: Dict[str, Any]) -> Dict[str, Any]:
     c = cfg()
     refresh_token = identity.get("refresh_token")

@@ -23,13 +23,31 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
+def _settings_overrides() -> Dict[str, Any]:
+    """Per-user SMTP overrides saved through /api/settings (Supabase-mirrored)."""
+    try:
+        import json
+
+        import paths
+
+        path = paths.readable("settings.json")
+        if path.exists():
+            with open(path, "r", encoding="utf-8") as fh:
+                data = json.load(fh)
+            return data if isinstance(data, dict) else {}
+    except Exception:
+        pass
+    return {}
+
+
 def smtp_config() -> Dict[str, Any]:
+    override = _settings_overrides()
     return {
-        "host": os.getenv("SMTP_HOST", "smtp.qq.com").strip(),
-        "port": int(os.getenv("SMTP_PORT", "465") or 465),
-        "user": (os.getenv("SMTP_USER") or "").strip(),
-        "auth_code": (os.getenv("SMTP_AUTH_CODE") or "").strip(),
-        "from_name": (os.getenv("SMTP_FROM_NAME") or "ZeroNotice").strip(),
+        "host": (override.get("smtp_host") or os.getenv("SMTP_HOST", "smtp.qq.com")).strip(),
+        "port": int(override.get("smtp_port") or os.getenv("SMTP_PORT", "465") or 465),
+        "user": (override.get("smtp_user") or os.getenv("SMTP_USER") or "").strip(),
+        "auth_code": (override.get("smtp_auth_code") or os.getenv("SMTP_AUTH_CODE") or "").strip(),
+        "from_name": (override.get("smtp_from_name") or os.getenv("SMTP_FROM_NAME") or "ZeroNotice").strip(),
     }
 
 

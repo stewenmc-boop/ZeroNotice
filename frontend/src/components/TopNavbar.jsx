@@ -16,6 +16,8 @@ export default function TopNavbar({
   onOpenUrlModal,
   onOpenGroqModal,
   onToggleSidebar,
+  authUser,
+  onLogout,
 }) {
   return (
     <header className="z-30 flex h-14 shrink-0 items-center justify-between gap-4 border-b border-line bg-white px-5">
@@ -89,6 +91,28 @@ export default function TopNavbar({
             style={{ background: llmStatus?.configured ? '#10b981' : '#d4d4d8' }}
           />
         </button>
+
+        {authUser ? (
+          <button
+            onClick={onLogout}
+            title={authUser.email || authUser.user_id}
+            className="inline-flex h-8 max-w-[140px] items-center gap-1.5 truncate rounded-control px-2.5 text-label font-medium text-muted ring-1 ring-line transition hover:text-ink"
+          >
+            <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+            <span className="truncate">{authUser.email || authUser.provider}</span>
+          </button>
+        ) : (
+          <button
+            onClick={async () => {
+              const res = await fetch('/api/auth/kakao/start');
+              const data = await res.json();
+              if (data.url) window.location.href = data.url;
+            }}
+            className="inline-flex h-8 items-center gap-1.5 rounded-control bg-[#FEE500] px-2.5 text-label font-semibold text-[#191919] ring-1 ring-black/5 transition hover:brightness-95"
+          >
+            {lang === 'ko' ? '카카오 로그인' : lang === 'zh' ? '카카오 登录' : 'Kakao login'}
+          </button>
+        )}
 
         <div className="seg ml-1">
           {LANGS.map((item) => (

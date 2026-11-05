@@ -14,7 +14,7 @@ from typing import Any, Dict, List, Optional
 import agent
 import notifier
 import reminders
-from scraper import load_real_knu_notices
+from scraper import load_notices
 
 MAX_ROUNDS = 4
 
@@ -135,7 +135,7 @@ TOOLS: List[Dict[str, Any]] = [
 # helpers
 # --------------------------------------------------------------------------- #
 def _notices() -> List[Dict[str, Any]]:
-    return load_real_knu_notices()
+    return load_notices()
 
 
 def _fields(notice_id: str) -> Dict[str, Any]:

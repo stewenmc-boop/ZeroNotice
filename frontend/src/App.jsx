@@ -71,6 +71,7 @@ export default function App() {
   const [loading, setLoading] = useState(false);
 
   const [urlModalOpen, setUrlModalOpen] = useState(false);
+  const [authUser, setAuthUser] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(
     () => new URLSearchParams(window.location.search).get('sidebar') === '1'
   );
@@ -79,6 +80,13 @@ export default function App() {
   );
 
   const t = I18N[lang] || I18N.ko;
+
+  useEffect(() => {
+    fetch('/api/auth/me')
+      .then((r) => r.json())
+      .then((d) => setAuthUser(d?.user?.user_id ? d.user : null))
+      .catch(() => {});
+  }, []);
 
   // Persist user preferences
   useEffect(() => {
@@ -268,6 +276,8 @@ export default function App() {
         onOpenUrlModal={() => setUrlModalOpen(true)}
         onOpenGroqModal={() => setGroqModalOpen(true)}
         onToggleSidebar={() => setSidebarOpen((v) => !v)}
+        authUser={authUser}
+        onLogout={async () => { await fetch('/api/auth/logout', { method: 'POST' }); setAuthUser(null); }}
       />
 
       {/* Main 3-Pane Workspace */}

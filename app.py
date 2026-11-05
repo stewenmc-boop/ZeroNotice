@@ -1,12 +1,16 @@
+import base64
+import hashlib
 import json
 import os
+import secrets
+import urllib.parse
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, HTMLResponse, Response
+from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
@@ -27,6 +31,7 @@ import paths
 import reminders
 import storage
 from scraper import (
+    load_notices,
     load_real_knu_notices,
     parse_knu_detail_url,
     sync_live_knu_notices,
@@ -190,6 +195,60 @@ def api_assistant_clear() -> Dict[str, Any]:
     return {"cleared": True}
 
 
+@app.get("/api/auth/me")
+def api_auth_me() -> Dict[str, Any]:
+    user = storage.current_user()
+    return {"user": user, "supabase": storage.status()}
+
+
+@app.get("/api/auth/kakao/start")
+def api_auth_kakao_start(request: Request) -> Dict[str, Any]:
+    c = storage.cfg()
+    if not c["url"]:
+        raise HTTPException(status_code=400, detail="SUPABASE_URL 이 설정되지 않았습니다.")
+    verifier = secrets.token_urlsafe(48)
+    challenge = (
+        base64.urlsafe_b64encode(hashlib.sha256(verifier.encode()).digest()).decode().rstrip("=")
+    )
+    identity = storage._load_identity()
+    identity["pkce_verifier"] = verifier
+    storage._save_identity(identity)
+    redirect_to = f"{str(request.base_url).rstrip('/')}/api/auth/kakao/callback"
+    url = (
+        f"{c['url']}/auth/v1/authorize?provider=kakao"
+        f"&redirect_to={urllib.parse.quote(redirect_to, safe='')}"
+        f"&code_challenge={challenge}&code_challenge_method=s256"
+    )
+    return {"url": url, "provider": "kakao"}
+
+
+@app.get("/api/auth/kakao/callback")
+def api_auth_kakao_callback(code: str = Query("")) -> Any:
+    identity = storage._load_identity()
+    verifier = identity.get("pkce_verifier", "")
+    if not code or not verifier:
+        return RedirectResponse(url="/?login=error")
+    result = storage.exchange_pkce(code, verifier)
+    if not result.get("ok"):
+        return RedirectResponse(url="/?login=error")
+    profile = storage.load_profile() or {}
+    if profile:
+        local = _read_profile()
+        merged = {**profile, **{k: v for k, v in local.items() if v not in (None, "")}}
+        try:
+            with open(PROFILE_PATH, "w", encoding="utf-8") as fh:
+                json.dump(merged, fh, ensure_ascii=False, indent=2)
+        except Exception:
+            pass
+    return RedirectResponse(url="/?login=ok")
+
+
+@app.post("/api/auth/logout")
+def api_auth_logout() -> Dict[str, Any]:
+    storage.clear_session()
+    return {"logged_out": True}
+
+
 @app.get("/api/supabase/status")
 def api_supabase_status() -> Dict[str, Any]:
     return storage.status()
@@ -319,6 +378,7 @@ def api_status() -> Dict[str, Any]:
     llm = get_llm_status()
     return {
         "status": "ok",
+        "notices_source": __import__("scraper").notices_source(),
         "llm": llm,
         "groq": llm,  # backward compatibility for older UI builds
         "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -377,7 +437,7 @@ def api_subscribe(req: SubscribeRequest) -> Dict[str, Any]:
 def api_subscriptions_run(req: ReminderRunRequest) -> Dict[str, Any]:
     profile = _read_profile() or {}
     result = reminders.run_check(
-        load_real_knu_notices(), profile, lang=req.lang, force_ids=req.force_ids or None
+        load_notices(), profile, lang=req.lang, force_ids=req.force_ids or None
     )
     return {"profile_email": profile.get("email", ""), **result}
 
@@ -390,7 +450,7 @@ def api_cron_reminders(request: Request, lang: str = Query("ko")) -> Dict[str, A
         if provided != expected:
             raise HTTPException(status_code=401, detail="invalid cron secret")
     profile = _read_profile() or {}
-    result = reminders.run_check(load_real_knu_notices(), profile, lang=lang)
+    result = reminders.run_check(load_notices(), profile, lang=lang)
     return {"cron": True, "profile_email": profile.get("email", ""), **result}
 
 
@@ -402,7 +462,7 @@ def api_notify_status() -> Dict[str, Any]:
 
 @app.post("/api/notify/notice")
 def api_notify_notice(req: NotifyRequest) -> Dict[str, Any]:
-    notice = next((n for n in load_real_knu_notices() if n.get("id") == req.notice_id), None)
+    notice = next((n for n in load_notices() if n.get("id") == req.notice_id), None)
     if not notice:
         raise HTTPException(status_code=404, detail="Notice not found")
     ics = generate_ics_content(notice, lang=req.lang).encode("utf-8")
@@ -426,7 +486,7 @@ def api_notify_notice(req: NotifyRequest) -> Dict[str, Any]:
 
 @app.post("/api/notify/digest")
 def api_notify_digest(req: NotifyRequest) -> Dict[str, Any]:
-    notices = load_real_knu_notices()
+    notices = load_notices()
     fields = _load_fields()
 
     def deadline_key(n):
@@ -467,7 +527,7 @@ def api_notice_fields(notice_id: str, force: bool = Query(False)) -> Dict[str, A
     cache = _load_fields()
     if not force and notice_id in cache:
         return {"id": notice_id, "cached": True, **cache[notice_id]}
-    notice = next((n for n in load_real_knu_notices() if n.get("id") == notice_id), None)
+    notice = next((n for n in load_notices() if n.get("id") == notice_id), None)
     if not notice:
         raise HTTPException(status_code=404, detail="Notice not found")
     result = extract_notice_fields(_merge_image_info(notice, _load_images()))
@@ -479,7 +539,7 @@ def api_notice_fields(notice_id: str, force: bool = Query(False)) -> Dict[str, A
 @app.post("/api/notices/extract")
 def api_extract_notices(req: ExtractRequest) -> Dict[str, Any]:
     images = _load_images()
-    notices = [_merge_image_info(n, images) for n in load_real_knu_notices()]
+    notices = [_merge_image_info(n, images) for n in load_notices()]
     cache = _load_fields()
     targets = [n for n in notices if not req.ids or n.get("id") in req.ids]
     done, skipped, failed = 0, 0, 0
@@ -526,7 +586,7 @@ def api_llm_models(provider: str = Query(""), free_only: bool = Query(True)) -> 
 def api_get_notices(req: ProfileRequest) -> Dict[str, Any]:
     sync_res = sync_live_knu_notices(live_check=req.live_check)
     profile_dict = req.model_dump()
-    evaluated = filter_and_evaluate_notices(sync_res["notices"], profile_dict)
+    evaluated = filter_and_evaluate_notices(load_notices(), profile_dict)
 
     cache = _load_fields()
     images = _load_images()
@@ -572,7 +632,7 @@ def api_get_notices(req: ProfileRequest) -> Dict[str, Any]:
 
 @app.get("/api/agent/ics/{notice_id}")
 def api_download_ics(notice_id: str, lang: str = Query("ko")) -> Response:
-    notices = load_real_knu_notices()
+    notices = load_notices()
     target = next((n for n in notices if n.get("id") == notice_id), None)
     if not target:
         raise HTTPException(status_code=404, detail="Notice not found")
@@ -588,7 +648,7 @@ def api_download_ics(notice_id: str, lang: str = Query("ko")) -> Response:
 
 @app.post("/api/agent/email")
 def api_generate_email(req: ActionRequest) -> Dict[str, Any]:
-    notices = load_real_knu_notices()
+    notices = load_notices()
     target = next((n for n in notices if n.get("id") == req.notice_id), None)
     if not target:
         raise HTTPException(status_code=404, detail="Notice not found")
@@ -599,7 +659,7 @@ def api_generate_email(req: ActionRequest) -> Dict[str, Any]:
 
 @app.post("/api/agent/application")
 def api_generate_application(req: ActionRequest) -> Dict[str, Any]:
-    notices = load_real_knu_notices()
+    notices = load_notices()
     target = next((n for n in notices if n.get("id") == req.notice_id), None)
     if not target:
         raise HTTPException(status_code=404, detail="Notice not found")
@@ -676,7 +736,9 @@ def _start_reminder_worker() -> None:
         if storage.enabled():
             storage.ensure_session()
             saved = _read_settings() or storage.load_settings() or {}
-            if saved.get("api_key") or saved.get("model"):
+            # deployment env wins; saved settings only fill the gap
+            env_key = (os.getenv("LLM_API_KEY") or "").strip()
+            if not env_key and (saved.get("api_key") or saved.get("model")):
                 set_runtime_llm(
                     api_key=saved.get("api_key"),
                     model=saved.get("model"),
