@@ -16,6 +16,7 @@ import hashlib
 import json
 import os
 import time
+import uuid
 import urllib.parse
 from datetime import datetime, timezone
 from pathlib import Path
@@ -30,6 +31,7 @@ ROOT = Path(__file__).parent
 IDENTITY_PATH = ROOT / "data" / "identity.json"
 TIMEOUT = 20.0
 _LAST_AUTH_ERROR = ""
+_DEVICE_COLUMNS = None
 
 
 # --------------------------------------------------------------------------- #
@@ -87,9 +89,15 @@ def _service_headers() -> Dict[str, str]:
 def _user_headers() -> Dict[str, str]:
     c = cfg()
     identity = ensure_session()
+    if identity.get("access_token"):
+        return {
+            "apikey": c["anon_key"],
+            "Authorization": f"Bearer {identity.get('access_token', '')}",
+            "Content-Type": "application/json",
+        }
     return {
         "apikey": c["anon_key"],
-        "Authorization": f"Bearer {identity.get('access_token', '')}",
+        "x-device-key": _device_key(),
         "Content-Type": "application/json",
     }
 
@@ -169,6 +177,53 @@ def ensure_session() -> Dict[str, Any]:
     return identity
 
 
+def _device_key() -> str:
+    identity = _load_identity()
+    key = identity.get("device_key")
+    if not key:
+        key = uuid.uuid4().hex
+        identity["device_key"] = key
+        _save_identity(identity)
+    return key
+
+
+def _device_user_id() -> str:
+    return str(uuid.uuid5(uuid.NAMESPACE_URL, "zeronotice:" + _device_key()))
+
+
+def _session_ok() -> bool:
+    return bool(ensure_session().get("access_token"))
+
+
+def _device_columns_exist() -> bool:
+    """Probe once whether the fallback SQL has been applied."""
+    global _DEVICE_COLUMNS
+    if _DEVICE_COLUMNS is not None:
+        return _DEVICE_COLUMNS
+    c = cfg()
+    try:
+        resp = requests.get(
+            f"{c['url']}/rest/v1/profiles?select=device_key&limit=1",
+            headers={"apikey": c["anon_key"], "x-device-key": _device_key()},
+            timeout=TIMEOUT,
+        )
+        _DEVICE_COLUMNS = resp.status_code == 200
+    except Exception:
+        _DEVICE_COLUMNS = False
+    return _DEVICE_COLUMNS
+
+
+def mode() -> str:
+    """'auth' (anonymous JWT) | 'device' (x-device-key fallback) | 'local'."""
+    if not enabled():
+        return "local"
+    if _session_ok():
+        return "auth"
+    if _device_columns_exist():
+        return "device"
+    return "local"
+
+
 def status() -> Dict[str, Any]:
     c = cfg()
     identity = _load_identity()
@@ -181,7 +236,8 @@ def status() -> Dict[str, Any]:
         "user_id": identity.get("user_id"),
         "anonymous": bool(identity.get("user_id")),
         "auth_error": _LAST_AUTH_ERROR,
-        "per_user_sync": bool(identity.get("user_id")),
+        "mode": mode(),
+        "per_user_sync": mode() in ("auth", "device"),
     }
 
 
@@ -365,26 +421,44 @@ def purge_old(days: Optional[int] = None) -> Dict[str, Any]:
 
 
 # --------------------------------------------------------------------------- #
-# per-user data (RLS enforced by the anonymous JWT)
+# per-user data (RLS: auth.uid() in auth mode, x-device-key in fallback mode)
 # --------------------------------------------------------------------------- #
+def _owner() -> Dict[str, str]:
+    """Who am I on this install?"""
+    current = mode()
+    if current == "auth":
+        identity = ensure_session()
+        return {"mode": "auth", "user_id": identity.get("user_id", ""), "device_key": ""}
+    if current == "device":
+        return {"mode": "device", "user_id": _device_user_id(), "device_key": _device_key()}
+    return {"mode": "local", "user_id": "", "device_key": ""}
+
+
+def _with_owner(row: Dict[str, Any]) -> Dict[str, Any]:
+    owner = _owner()
+    if owner["mode"] == "auth":
+        row["user_id"] = owner["user_id"]
+    elif owner["mode"] == "device":
+        row["user_id"] = owner["user_id"]
+        row["device_key"] = owner["device_key"]
+    return row
+
+
 def push_profile(profile: Dict[str, Any]) -> Dict[str, Any]:
     if not profile:
         return {"ok": True, "skipped": True}
-    identity = ensure_session()
-    if not identity.get("user_id"):
-        return {"ok": False, "error": "no session"}
-    row = {
-        "user_id": identity["user_id"],
+    if mode() == "local":
+        return {"ok": False, "skipped": True, "error": "per-user sync unavailable"}
+    row = _with_owner({
         "payload": profile,
         "email": profile.get("email"),
         "student_id": profile.get("student_id"),
-    }
+    })
     return _upsert("profiles", [row], "user_id")
 
 
 def load_profile() -> Dict[str, Any]:
-    identity = ensure_session()
-    if not identity.get("user_id"):
+    if mode() == "local":
         return {}
     result = _select("profiles", {"select": "*", "limit": "1"})
     if result.get("ok") and result.get("data"):
@@ -393,35 +467,32 @@ def load_profile() -> Dict[str, Any]:
 
 
 def push_subscriptions(subs: Dict[str, Any]) -> Dict[str, Any]:
-    identity = ensure_session()
-    if not identity.get("user_id"):
-        return {"ok": False, "error": "no session"}
+    if mode() == "local":
+        return {"ok": False, "skipped": True, "error": "per-user sync unavailable"}
     rows = [
-        {"user_id": identity["user_id"], "notice_id": nid,
-         "reminded_at": (meta or {}).get("reminded_at")}
+        _with_owner({
+            "notice_id": nid,
+            "reminded_at": (meta or {}).get("reminded_at"),
+        })
         for nid, meta in (subs or {}).items()
     ]
     return _upsert("subscriptions", rows, "user_id,notice_id")
 
 
 def delete_subscription(notice_id: str) -> Dict[str, Any]:
+    if mode() == "local":
+        return {"ok": False, "skipped": True}
     return _delete("subscriptions", {"notice_id": f"eq.{notice_id}"})
 
 
 def push_settings(settings: Dict[str, Any]) -> Dict[str, Any]:
-    identity = ensure_session()
-    if not identity.get("user_id"):
-        return {"ok": False, "error": "no session"}
-    return _upsert(
-        "user_settings",
-        [{"user_id": identity["user_id"], "payload": settings}],
-        "user_id",
-    )
+    if mode() == "local":
+        return {"ok": False, "skipped": True, "error": "per-user sync unavailable"}
+    return _upsert("user_settings", [_with_owner({"payload": settings})], "user_id")
 
 
 def load_settings() -> Dict[str, Any]:
-    identity = ensure_session()
-    if not identity.get("user_id"):
+    if mode() == "local":
         return {}
     result = _select("user_settings", {"select": "*", "limit": "1"})
     if result.get("ok") and result.get("data"):
