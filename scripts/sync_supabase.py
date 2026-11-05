@@ -84,11 +84,12 @@ def main() -> int:
     print(f"notices: {len(notices)} 건 push…")
     print("  →", storage.push_notices(notices))
 
-    fields = load("notice_fields.json", {})
+    kept_ids = {n.get("id") for n in notices}
+    fields = {k: v for k, v in load("notice_fields.json", {}).items() if k in kept_ids}
     print(f"fields: {len(fields)} 건 push…")
     print("  →", storage.push_fields(fields))
 
-    images = load("notice_images.json", {})
+    images = {k: v for k, v in load("notice_images.json", {}).items() if k in kept_ids}
     print(f"images: {len(images)} 건 push…")
     print("  →", storage.push_images(images))
 
