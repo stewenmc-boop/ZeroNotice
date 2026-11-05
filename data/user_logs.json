@@ -1,98 +1,26 @@
-[
-  {
-    "id": "log-008",
-    "timestamp": "2026-11-05 18:44:42",
-    "user_nickname": "Guest User",
-    "persona": "춘천 · 첨단AI공학부 (Y3, GPA 3.8)",
-    "action_taken": "Notice Match + .ics & Email Draft",
-    "filtered_out_count": 3,
-    "matched_count": 6,
-    "saved_minutes": 120.8,
-    "potential_benefit_krw": 4180000,
-    "feedback": "Saved 40+ mins of notice searching!"
+{
+  "schema_version": 1,
+  "status": "template",
+  "updated_at": "2026-11-05",
+  "note": "실측 전 템플릿입니다. docs/measurement-protocol.md 절차로 팀 외 3명 이상을 측정한 뒤 measurements 배열을 채우세요. 현재 코드는 이 파일을 읽지 않으며, 발표·PPT 근거 자료로만 사용합니다.",
+  "field_spec": {
+    "id": "log-001 형식",
+    "measured_at": "YYYY-MM-DD HH:MM",
+    "participant": "익명 코드(P1, P2...) + 캠퍼스/학년만. 이름·학번은 기록하지 않음",
+    "task": "측정에 사용한 과제 1문장(모든 참가자 동일)",
+    "baseline_minutes": "도구 없이 수행한 시간(분, 소수 1자리)",
+    "assisted_minutes": "ZeroNotice로 수행한 시간(분, 소수 1자리)",
+    "baseline_correct": "정답 여부 true/false",
+    "assisted_correct": "정답 여부 true/false",
+    "anxiety_before": "과제 전 불안 1~5",
+    "anxiety_after": "과제 후 불안 1~5",
+    "note": "특이사항(중도 포기, 재질문 등)"
   },
-  {
-    "id": "log-007",
-    "timestamp": "2026-11-05 18:44:42",
-    "user_nickname": "Guest User",
-    "persona": "춘천 · 첨단AI공학부 (Y3, GPA 3.8)",
-    "action_taken": "Notice Match + .ics & Email Draft",
-    "filtered_out_count": 3,
-    "matched_count": 6,
-    "saved_minutes": 120.8,
-    "potential_benefit_krw": 4180000,
-    "feedback": "Saved 40+ mins of notice searching!"
+  "formula": {
+    "saved_minutes": "baseline_minutes - assisted_minutes",
+    "saved_krw": "(saved_minutes / 60) * hourly_wage_krw",
+    "hourly_wage_krw": 10000,
+    "assumption": "시간당 10,000원은 발표용 가정값. 실제 적용 시 근거(최저임금/교내 근로장학 시급)를 슬라이드에 명시할 것"
   },
-  {
-    "id": "log-006",
-    "timestamp": "2026-11-05 18:44:41",
-    "user_nickname": "Guest User",
-    "persona": "춘천 · 첨단AI공학부 (Y3, GPA 3.8)",
-    "action_taken": "Notice Match + .ics & Email Draft",
-    "filtered_out_count": 3,
-    "matched_count": 6,
-    "saved_minutes": 120.8,
-    "potential_benefit_krw": 4180000,
-    "feedback": "Saved 40+ mins of notice searching!"
-  },
-  {
-    "id": "log-005",
-    "timestamp": "2026-11-05 18:44:41",
-    "user_nickname": "Guest User",
-    "persona": "춘천 · 첨단AI공학부 (Y3, GPA 3.8)",
-    "action_taken": "Notice Match + .ics & Email Draft",
-    "filtered_out_count": 3,
-    "matched_count": 6,
-    "saved_minutes": 120.8,
-    "potential_benefit_krw": 4180000,
-    "feedback": "Saved 40+ mins of notice searching!"
-  },
-  {
-    "id": "log-004",
-    "timestamp": "2026-11-05 18:44:33",
-    "user_nickname": "Guest User",
-    "persona": "춘천 · 첨단AI공학부 (Y3, GPA 3.8)",
-    "action_taken": "Notice Match + .ics & Email Draft",
-    "filtered_out_count": 3,
-    "matched_count": 6,
-    "saved_minutes": 120.8,
-    "potential_benefit_krw": 4180000,
-    "feedback": "stewen"
-  },
-  {
-    "id": "log-001",
-    "timestamp": "2026-11-05 17:52:14",
-    "user_nickname": "김*현 (타팀 참가자 #1)",
-    "persona": "춘천캠퍼스 · 첨단AI공학부 3학년 (GPA 3.8)",
-    "action_taken": "맞춤 장학공지 필터링 + 200만원 장학금 신청서 초안 & .ics 캘린더 생성",
-    "filtered_out_count": 5,
-    "matched_count": 4,
-    "saved_minutes": 41.5,
-    "potential_benefit_krw": 2500000,
-    "feedback": "학교 홈페이지에서 삼척/강릉 공지까지 다 눌러보느라 매번 30분씩 썼는데, 내 학점과 학과에 맞는 공지만 골라주고 신청서 초안까지 바로 나와서 진짜 편합니다!"
-  },
-  {
-    "id": "log-002",
-    "timestamp": "2026-11-05 17:58:03",
-    "user_nickname": "L* Wei (유학생 사용자 #2)",
-    "persona": "춘천캠퍼스 · 외국인 유학생 2학년 (TOPIK 4급)",
-    "action_taken": "중·한 번역 매칭 + 국제교류처 TOPIK 장학금 문의 이메일(경어) 자동 작성",
-    "filtered_out_count": 5,
-    "matched_count": 4,
-    "saved_minutes": 46.0,
-    "potential_benefit_krw": 3700000,
-    "feedback": "한국어 공지문이 너무 길어서 장학금 자격 확인하기가 항상 불안했는데, 중국어로 바로 요약해주고 국제교류처에 보낼 정중한 한국어 이메일을 3초 만에 만들어줘서 최고예요."
-  },
-  {
-    "id": "log-003",
-    "timestamp": "2026-11-05 18:02:40",
-    "user_nickname": "박*준 (교직원/지역주민 #3)",
-    "persona": "춘천캠퍼스 교직원 및 춘천시민",
-    "action_taken": "열린강좌(생성형 AI 마스터클래스) 및 미래도서관 북콘서트 일정 .ics 다운로드",
-    "filtered_out_count": 7,
-    "matched_count": 2,
-    "saved_minutes": 39.0,
-    "potential_benefit_krw": 180000,
-    "feedback": "학생 전용 학사공지 사이에서 교직원이나 춘천시민이 참여할 수 있는 문화행사만 쏙 골라내주어 숨은 탐색 비용이 완전히 사라졌습니다."
-  }
-]
+  "measurements": []
+}
