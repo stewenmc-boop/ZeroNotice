@@ -51,10 +51,12 @@ app.py                  FastAPI 라우팅(13 endpoint) + 정적 서빙
 agent.py                LLM 호출(OpenRouter/OpenAI/Groq/Custom), 자격 판정 규칙, .ics/메일/지원서 생성, 비용 추정
 scraper.py              게시판 상세 파싱, .hwp/.hwpx/.pdf/.xlsx/.docx 텍스트 추출, 데이터 로드
 scripts/refresh_notices.py  원문 재수집(본문·첨부·연락처) — source_title/verified_at 기록
+scripts/ocr_notices.py      포스터 OCR + 링크 HTTP 검증 (ocr_image.ps1 호출)
 data/real_knu_notices.json    실제 공지 22건 (수동/스크립트 수집 스냅샷)
 data/fallback_notices.json   오프라인 데모용 대체 데이터
 data/profile.json           사용자 학적 정보 로컬 저장소(gitignore, /api/profile 로 읽고 씀)
 data/notice_fields.json      공지별 AI 추출 결과(신청 링크·접수 방법·문의처) 캐시
+data/notice_images.json      포스터 OCR 결과(텍스트·검증된 링크·이메일·전화) 캐시
 data/user_logs.json          실측 템플릿(빈 슬롯) — 코드 미참조, docs/measurement-protocol.md 참고
 frontend/src/           React 18 + Vite 5 + Tailwind + lucide-react
   App.jsx               3-pane 워크스페이스, /api/notices 호출, localStorage 상태
@@ -177,3 +179,6 @@ benefit_krw, title_{ko,zh,en}, summary_{ko,zh,en}, rules, has_hwp_extracted`
 3. **출처와 신뢰도를 함께 보여준다.** 카드 하단에 `source_hint` + `confidence` 를 표시한다.
 4. **접수 방법은 3개 언어**로 저장한다(`application_method_ko/zh/en`). 공지 원문은 한국어이므로 번역은 모델이 담당한다.
 5. **원문 대조 기록**: `refresh_notices.py` 가 `source_title`/`verified_at`/`source_status` 를 남기고, UI 헤더에 "원문 확인" 배지로 노출한다.
+
+6. **이미지 정보는 OCR + 검증 후에만.** `ocr_notices.py` 는 OCR 텍스트에서 뽑은 링크를 `check_link()` 로 실제 요청해 200이 뜬 것만 저장한다. 검증에 실패한 링크는 `rejected_links` 에 남기고 UI에 노출하지 않는다.
+7. **목록 필터/검색은 추출 정보까지 포함한다.** `has_application_link` 플래그와 `fields.*`/`image_links` 를 검색 haystack 에 넣어야 "링크만 보기"가 실제로 동작한다.

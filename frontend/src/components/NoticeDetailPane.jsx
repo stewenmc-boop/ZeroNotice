@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   ExternalLink,
   Bookmark,
@@ -68,7 +68,12 @@ export default function NoticeDetailPane({
   progress,
   onChangeProgress,
 }) {
-  const [activeTab, setActiveTab] = useState('summary'); // summary | agent | hwp | original
+  const initialTab = (() => {
+    const fromUrl = new URLSearchParams(window.location.search).get('tab');
+    return ['summary', 'agent', 'hwp', 'original'].includes(fromUrl) ? fromUrl : 'summary';
+  })();
+  const firstTabRun = useRef(true);
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [emailQuestion, setEmailQuestion] = useState('');
   const [emailLoading, setEmailLoading] = useState(false);
   const [emailResult, setEmailResult] = useState(null);
@@ -83,12 +88,15 @@ export default function NoticeDetailPane({
   const [fieldsLoading, setFieldsLoading] = useState(false);
 
   useEffect(() => {
+    if (!notice) return;
     setEmailResult(null);
     setAppResult(null);
     setEmailQuestion('');
     setHwpKeyword('');
-    setFields(notice?.fields || null);
-    setActiveTab('summary');
+    setFields(notice.fields || null);
+    setActiveTab(firstTabRun.current ? initialTab : 'summary');
+    firstTabRun.current = false;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [notice?.id]);
 
   if (!notice) {
@@ -104,6 +112,9 @@ export default function NoticeDetailPane({
   const benefit = notice[`benefit_label_${lang}`] || notice.benefit_label_ko || '';
   const verdict = notice[`verdict_${lang}`] || notice.verdict_ko || '';
   const attachments = notice.attachments || [];
+  const imageAttachments = attachments.filter((a) =>
+    /\.(png|jpe?g|gif|webp|bmp)$/i.test(a.name || '')
+  );
   const extractedHwp = notice.attachment_extracted_text || '';
   const vStyle = VERDICT_STYLE[notice.match_status] || VERDICT_STYLE.ineligible;
   const VIcon = vStyle.Icon;
@@ -716,6 +727,51 @@ export default function NoticeDetailPane({
         {/* ---------- HWP ---------- */}
         {activeTab === 'hwp' && (
           <div className="space-y-4">
+            {imageAttachments.length > 0 && (
+              <section className="rounded-card p-5 ring-1 ring-line">
+                <h3 className="mb-3 text-meta font-semibold uppercase tracking-[0.08em] text-faint">
+                  {t.imageHeader}
+                </h3>
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                  {imageAttachments.map((att, idx) => (
+                    <a
+                      key={idx}
+                      href={att.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="group block overflow-hidden rounded-control ring-1 ring-line transition hover:ring-ink/30"
+                    >
+                      <img
+                        src={att.url}
+                        alt={att.name}
+                        loading="lazy"
+                        className="h-36 w-full bg-canvas object-cover"
+                      />
+                      <div className="truncate px-2 py-1.5 text-[10px] text-muted">
+                        {att.name}
+                      </div>
+                    </a>
+                  ))}
+                </div>
+                {notice.image_links?.length > 0 && (
+                  <div className="mt-3 border-t border-line pt-3">
+                    <div className="mb-1 text-meta text-faint">{t.siLink}</div>
+                    {notice.image_links.map((link, idx) => (
+                      <a
+                        key={idx}
+                        href={link}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="block truncate font-mono text-[11px] text-ink hover:underline"
+                      >
+                        {link}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </section>
+            )}
+
             <section className="rounded-card p-5 ring-1 ring-line">
               <h3 className="mb-3 text-meta font-semibold uppercase tracking-[0.08em] text-faint">
                 {t.filesHeader}

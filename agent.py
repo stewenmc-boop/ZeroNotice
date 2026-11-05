@@ -615,6 +615,12 @@ def _notice_source_text(notice: Dict[str, Any], limit: int = 6000) -> str:
     ]
     if att:
         parts.append(f"첨부 추출 원문:\n{att}")
+    image_text = (notice.get("image_text") or "").strip()
+    image_links = notice.get("image_links") or []
+    if image_text:
+        parts.append(f"이미지(포스터) OCR 텍스트:\n{image_text[:1500]}")
+    if image_links:
+        parts.append("이미지에서 확인된 링크: " + ", ".join(image_links))
     return "\n\n".join(parts)[:limit]
 
 

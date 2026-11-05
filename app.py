@@ -32,6 +32,7 @@ STATIC_DIR = BASE_DIR / "static"
 FRONTEND_DIST_DIR = BASE_DIR / "frontend" / "dist"
 PROFILE_PATH = BASE_DIR / "data" / "profile.json"
 FIELDS_PATH = BASE_DIR / "data" / "notice_fields.json"
+IMAGES_PATH = BASE_DIR / "data" / "notice_images.json"
 
 app = FastAPI(title="ZeroNotice (제로노티스) — 강원대학교 공지·HWP 판독 AI 비서")
 
@@ -80,6 +81,33 @@ def _load_fields() -> Dict[str, Any]:
         return data if isinstance(data, dict) else {}
     except Exception:
         return {}
+
+
+def _load_images() -> Dict[str, Any]:
+    if not IMAGES_PATH.exists():
+        return {}
+    try:
+        with open(IMAGES_PATH, "r", encoding="utf-8") as fh:
+            data = json.load(fh)
+        return data if isinstance(data, dict) else {}
+    except Exception:
+        return {}
+
+
+def _merge_image_info(notice: Dict[str, Any], images: Dict[str, Any]) -> Dict[str, Any]:
+    """Attach OCR results (links/emails/phones) found inside poster images."""
+    info = images.get(notice.get("id"))
+    if not info:
+        return notice
+    notice = dict(notice)
+    notice["image_links"] = info.get("links") or []
+    notice["image_emails"] = info.get("emails") or []
+    notice["image_phones"] = info.get("phones") or []
+    notice["image_text"] = "\n".join(
+        item.get("text", "") for item in info.get("images", [])
+    )[:2000]
+    notice["image_checked_at"] = info.get("checked_at")
+    return notice
 
 
 def _save_fields(data: Dict[str, Any]) -> None:
@@ -152,7 +180,7 @@ def api_notice_fields(notice_id: str, force: bool = Query(False)) -> Dict[str, A
     notice = next((n for n in load_real_knu_notices() if n.get("id") == notice_id), None)
     if not notice:
         raise HTTPException(status_code=404, detail="Notice not found")
-    result = extract_notice_fields(notice)
+    result = extract_notice_fields(_merge_image_info(notice, _load_images()))
     cache[notice_id] = result
     _save_fields(cache)
     return {"id": notice_id, "cached": False, **result}
@@ -160,7 +188,8 @@ def api_notice_fields(notice_id: str, force: bool = Query(False)) -> Dict[str, A
 
 @app.post("/api/notices/extract")
 def api_extract_notices(req: ExtractRequest) -> Dict[str, Any]:
-    notices = load_real_knu_notices()
+    images = _load_images()
+    notices = [_merge_image_info(n, images) for n in load_real_knu_notices()]
     cache = _load_fields()
     targets = [n for n in notices if not req.ids or n.get("id") in req.ids]
     done, skipped, failed = 0, 0, 0
@@ -205,15 +234,35 @@ def api_get_notices(req: ProfileRequest) -> Dict[str, Any]:
     evaluated = filter_and_evaluate_notices(sync_res["notices"], profile_dict)
 
     cache = _load_fields()
+    images = _load_images()
     for item in evaluated["notices"]:
         item["has_email"] = bool((item.get("email") or "").strip())
+        image_info = images.get(item.get("id")) or {}
+        if image_info:
+            item["image_links"] = image_info.get("links") or []
+            item["image_emails"] = image_info.get("emails") or []
+            item["image_phones"] = image_info.get("phones") or []
+
         cached = cache.get(item.get("id"))
-        if cached:
-            item["fields"] = cached.get("fields")
-            item["fields_engine"] = cached.get("engine")
-            item["has_application_link"] = bool((cached.get("fields") or {}).get("application_url"))
-        else:
-            item["has_application_link"] = False
+        fields = dict(cached.get("fields") or {}) if cached else {}
+        item["fields"] = fields or None
+        item["fields_engine"] = cached.get("engine") if cached else None
+
+        # A poster can carry the apply link even when the body has none.
+        if not fields.get("application_url") and image_info.get("links"):
+            fields["application_url"] = image_info["links"][0]
+            fields["source_hint"] = fields.get("source_hint") or "이미지 OCR"
+            fields["confidence"] = max(float(fields.get("confidence") or 0), 0.7)
+            item["fields"] = fields
+            item["fields_from_image"] = True
+        if not fields.get("contact_email") and image_info.get("emails"):
+            fields["contact_email"] = image_info["emails"][0]
+            item["fields"] = fields
+        if not fields.get("contact_phone") and image_info.get("phones"):
+            fields["contact_phone"] = image_info["phones"][0]
+            item["fields"] = fields
+
+        item["has_application_link"] = bool(fields.get("application_url"))
 
     return {
         "synced_at": sync_res["synced_at"],

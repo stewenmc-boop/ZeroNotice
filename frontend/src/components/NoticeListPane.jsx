@@ -24,6 +24,7 @@ export default function NoticeListPane({
   const filteredNotices = notices.filter((n) => {
     if (subFilter === 'ELIGIBLE' && n.match_status === 'ineligible') return false;
     if (subFilter === 'HWP' && !n.attachment_extracted_text) return false;
+    if (subFilter === 'LINK' && !n.has_application_link) return false;
     return true;
   });
 
@@ -55,6 +56,7 @@ export default function NoticeListPane({
           <div className="inline-flex items-center gap-0.5">
             {[
               { key: 'ALL', label: t.filterAll },
+              { key: 'LINK', label: t.filterLink },
               { key: 'ELIGIBLE', label: t.filterEligible },
               { key: 'HWP', label: t.filterHwp },
             ].map((tab) => (

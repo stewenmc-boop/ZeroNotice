@@ -211,6 +211,12 @@ export default function App() {
           n.body,
           n.attachment_extracted_text,
           n.author,
+          n.fields?.application_url,
+          n.fields?.application_method_ko,
+          n.fields?.application_method_zh,
+          n.fields?.application_method_en,
+          (n.fields?.required_documents || []).join(' '),
+          (n.image_links || []).join(' '),
         ]
           .filter(Boolean)
           .join(' ')
