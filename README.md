@@ -70,6 +70,7 @@ npm run build               # 수정 후 반드시 재빌드 → frontend/dist �
 |---|---|---|
 | **OpenRouter** | `https://openrouter.ai/api/v1` | `:free` 모델은 무료. 키: <https://openrouter.ai/keys> |
 | **OpenAI** | `https://api.openai.com/v1` | 유료. 키: <https://platform.openai.com/api-keys> |
+| **DeepSeek** | `https://api.deepseek.com` | `deepseek-flash` / `deepseek-v4-pro`. 키: <https://platform.deepseek.com/api_keys> |
 | **Groq** | `https://api.groq.com/openai/v1` | 무료 쿼터. 키: <https://console.groq.com/keys> |
 | **Custom** | 직접 입력 | 사내/로컬 OpenAI 호환 엔드포인트(vLLM, Ollama, LM Studio 등) |
 

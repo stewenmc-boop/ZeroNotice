@@ -24,6 +24,12 @@ PROVIDERS: Dict[str, Dict[str, str]] = {
         "default_model": "gpt-4o-mini",
         "keys_url": "https://platform.openai.com/api-keys",
     },
+    "deepseek": {
+        "label": "DeepSeek",
+        "base_url": "https://api.deepseek.com",
+        "default_model": "deepseek-flash",
+        "keys_url": "https://platform.deepseek.com/api_keys",
+    },
     "groq": {
         "label": "Groq",
         "base_url": "https://api.groq.com/openai/v1",
@@ -159,6 +165,30 @@ def _candidate_models(primary: str) -> List[str]:
     return seen
 
 
+def _fallback_chain(primary: str) -> List[str]:
+    """Only try models the configured provider can actually serve."""
+    provider = RUNTIME_CONFIG["provider"]
+    meta = PROVIDERS.get(provider, {})
+    if provider == "openrouter":
+        raw = [primary, "meta-llama/llama-3.3-70b-instruct:free", "deepseek/deepseek-chat:free"]
+    else:
+        raw = [primary, meta.get("default_model", "")]
+    chain: List[str] = []
+    for item in raw:
+        if item and item not in chain:
+            chain.append(item)
+    return chain
+
+
+def _post_completion(base: str, payload: Dict[str, Any]) -> requests.Response:
+    return requests.post(
+        f"{base}/chat/completions",
+        headers=_headers(),
+        json=payload,
+        timeout=90.0,
+    )
+
+
 def call_llm(
     system_prompt: str,
     user_prompt: str,
@@ -190,50 +220,68 @@ def call_llm(
             "engine": "Built-in Template Engine",
         }
 
-    last_error = ""
     primary_model = RUNTIME_CONFIG["model"] or _auto_model()
-    for model_name in _candidate_models(primary_model):
-        started = time.time()
-        try:
-            resp = requests.post(
-                f"{base}/chat/completions",
-                headers=_headers(),
-                json={
-                    "model": model_name,
-                    "messages": [
-                        {"role": "system", "content": system_prompt},
-                        {"role": "user", "content": user_prompt},
-                    ],
-                    "temperature": temperature,
-                    "max_tokens": max_tokens,
-                },
-                timeout=40.0,
-            )
-            if resp.status_code == 200:
-                payload = resp.json()
-                content = (payload["choices"][0]["message"].get("content") or "").strip()
+    provider = RUNTIME_CONFIG["provider"]
+    last_error = ""
+    started = time.time()
+
+    for model_name in _fallback_chain(primary_model):
+        # Reasoning models can spend the whole budget on hidden reasoning,
+        # leaving `content` empty. First budget is the requested one, the
+        # second is a wider retry when we hit finish_reason == "length".
+        for budget in (max_tokens, min(max(max_tokens * 3, 2000), 4000)):
+            payload: Dict[str, Any] = {
+                "model": model_name,
+                "messages": [
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt},
+                ],
+                "temperature": temperature,
+                "max_tokens": budget,
+            }
+            # DeepSeek V4 family: skip the thinking phase for task output.
+            if provider == "deepseek":
+                payload["thinking"] = {"type": "disabled"}
+
+            attempt_start = time.time()
+            try:
+                resp = _post_completion(base, payload)
+                if resp.status_code != 200:
+                    last_error = f"HTTP {resp.status_code}: {resp.text[:180]}"
+                    break  # same model with a bigger budget will not help
+                data = resp.json()
+                choice = (data.get("choices") or [{}])[0]
+                message = choice.get("message") or {}
+                content = (message.get("content") or "").strip()
+                finish = choice.get("finish_reason")
+                if not content and finish == "length" and budget < 4000:
+                    last_error = "empty content (budget consumed by reasoning)"
+                    continue  # retry this model with the wider budget
+                if not content:
+                    # last resort: some reasoning models only fill reasoning_content
+                    content = (message.get("reasoning_content") or "").strip()
                 if content:
-                    latency = int((time.time() - started) * 1000)
+                    latency = int((time.time() - attempt_start) * 1000)
                     return {
                         "ok": True,
                         "text": content,
                         "latency_ms": latency,
                         "model": model_name,
-                        "provider": RUNTIME_CONFIG["provider"],
+                        "provider": provider,
                         "engine": _engine_label(model_name, latency),
                     }
                 last_error = "empty completion"
-            else:
-                last_error = f"HTTP {resp.status_code}: {resp.text[:180]}"
-        except Exception as exc:  # noqa: BLE001 - demo must never crash
-            last_error = f"{type(exc).__name__}: {str(exc)[:160]}"
+                break
+            except Exception as exc:  # noqa: BLE001 - demo must never crash
+                last_error = f"{type(exc).__name__}: {str(exc)[:160]}"
+                break
 
     return {
         "ok": False,
         "text": "",
-        "latency_ms": 0,
+        "latency_ms": int((time.time() - started) * 1000),
         "model": primary_model,
-        "provider": RUNTIME_CONFIG["provider"],
+        "provider": provider,
         "error": last_error,
         "engine": "Built-in Template Engine",
     }
