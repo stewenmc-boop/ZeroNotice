@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>ZeroNotice — 요약</title>
+<style>
+  :root { --ink:#0b0b0f; --muted:#6f6f78; --faint:#a1a1aa; --line:#ececf0; --emerald:#10b981; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; height: 100vh; background: #fff; color: var(--ink);
+    font-family: "Malgun Gothic", system-ui, sans-serif; display: flex; flex-direction: column;
+    padding: 64px 80px; letter-spacing: -0.01em;
+  }
+  .kicker { font-size: 14px; letter-spacing: .14em; color: var(--emerald); font-weight: 700; text-transform: uppercase; }
+  h1 { font-size: 54px; line-height: 1.18; margin: 18px 0 10px; letter-spacing: -0.03em; }
+  .sub { color: var(--muted); font-size: 20px; margin-bottom: 36px; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .card { border: 1px solid var(--line); border-radius: 18px; padding: 26px 26px 24px; }
+  .card h2 { font-size: 17px; margin: 0 0 12px; }
+  .card p, .card li { font-size: 15px; line-height: 1.65; color: #3f3f46; margin: 0; }
+  .card ul { margin: 0; padding-left: 18px; }
+  .num { font-size: 12px; font-weight: 700; color: var(--emerald); letter-spacing: .1em; }
+  .foot { margin-top: auto; display: flex; justify-content: space-between; color: var(--faint); font-size: 14px; border-top: 1px solid var(--line); padding-top: 18px; }
+</style>
+</head>
+<body>
+  <div class="kicker">Summary</div>
+  <h1>무엇을 해결했고, 어떻게 만들었나</h1>
+  <div class="sub">공지의 숨은 비용을 0으로 — 탐색·판독·판정·신청·알림을 하나의 흐름으로</div>
+
+  <div class="grid">
+    <section class="card">
+      <div class="num">01</div>
+      <h2>해결한痛点</h2>
+      <ul>
+        <li>빈 본문 + HWP/PDF/XLSX 첨부 → 서버에서 직접 파싱</li>
+        <li>자격요건 대조 → 규칙 엔진이 즉시 판정</li>
+        <li>신청 경로 분산 → AI가 링크·서류·문의처 추출</li>
+        <li>마감 망각 → 24시간 전 메일 + 캘린더</li>
+      </ul>
+    </section>
+    <section class="card">
+      <div class="num">02</div>
+      <h2>AI로 개발한 방식</h2>
+      <ul>
+        <li>문제 정의 → 데이터 수집 → 수직 슬라이스 순서로 진행</li>
+        <li>규칙은 코드, 언어는 LLM: 역할을 먼저 분리</li>
+        <li>모든 변경 후 실제 API 호출로 검증(스크린샷·로그)</li>
+        <li>에이전트에게 프로젝트 규칙을 문서로 고정</li>
+      </ul>
+    </section>
+    <section class="card">
+      <div class="num">03</div>
+      <h2>문서화</h2>
+      <ul>
+        <li>AGENTS.md — 구조·API·금지사항·디자인 토큰</li>
+        <li>README — 실행법·배포·데이터 신뢰성</li>
+        <li>docs/ — 측정 프로토콜, Vercel 체크리스트, 발표 스크립트</li>
+        <li>커밋 메시지 = 변경 이유와 검증 결과</li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="foot">
+    <span>ZeroNotice · 2026 KNU AI Hackathon</span>
+    <span>github.com/stewenmc-boop/ZeroNotice</span>
+  </div>
+</body>
+</html>
