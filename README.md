@@ -4,6 +4,17 @@
 > 데모 영상: ZeroNotice_데모영상.mp4 (3분, 실제 앱 화면 녹화 + 한국어 나레이션) · 발표자료: ZeroNotice_발표자료.pdf
 > 강원대학교 공지 탐색과 `.hwp` 첨부파일 열람의 **'숨은 비용(시간·에너지·금전·불안)'** 을 0(Zero)에 가깝게 만드는 AI 공지 비서
 
+## 데모 영상 (3분)
+
+[![ZeroNotice 데모 영상](docs/demo_poster.png)](ZeroNotice_데모영상.mp4)
+
+실제 앱 화면을 그대로 녹화했습니다(합성 아님). 목록·필터 → 자격 판정 → 신청 정보 → 첨부/포스터 → AI 메일 생성 → AI 비서 → 마감 알림 → 저장소·문서 → 요약 순서입니다.
+
+- 한국어 나레이션 · 1440×900 · 3:00
+- 재생: 위 이미지를 클릭하거나 [`ZeroNotice_데모영상.mp4`](ZeroNotice_데모영상.mp4) 를 내려받아 재생
+- 장면별 타임라인: [`docs/PITCH_SCRIPT_KO.md`](docs/PITCH_SCRIPT_KO.md)
+- 다시 만들기: `node scripts/demo_record.js` → `python scripts/narration.py` → `python scripts/make_demo_video.py`
+
 ---
 
 ## 1. 한 문장 문제 정의
