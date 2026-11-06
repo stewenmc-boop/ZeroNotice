@@ -1,6 +1,7 @@
 # ⚡ ZeroNotice (제로노티스)
 
-> **2026 KNU AI HACKATHON · Zero to One 출품작**
+> **2026 KNU AI HACKATHON · Zero to One 출품작**  
+> 데모 영상: ZeroNotice_데모영상.mp4 (72초, 한국어 나레이션) · 발표자료: ZeroNotice_발표자료.pdf
 > 강원대학교 공지 탐색과 `.hwp` 첨부파일 열람의 **'숨은 비용(시간·에너지·금전·불안)'** 을 0(Zero)에 가깝게 만드는 AI 공지 비서
 
 ---
